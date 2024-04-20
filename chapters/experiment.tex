@@ -2,19 +2,44 @@
 
 \chapter{Experiment}
 \label{chp:experiment}
+%\epigraph{Las dein Auge am Rohr, Sagredo. Was du siehst, ist, dass es keinen Unterschied zwischen Himmel und Erde gibt. Heute ist der 10. Januar 1610. Die Menschheit trägt in ihr Journal ein: Himmel abgeschafft.}{Bertolt Brecht, Leben des Galilei}
+
+\epigraph{Keep your eye at the telescope, Sagredo. What you see means that there is no difference between Heaven
+and Earth. Today is the 10th January 1610. Mankind will write in its journal: Heaven abolished}{Bertolt Brecht, \textit{Life of Galileo}}
 \section{The Large Hadron Collider}
+\textit{Description of LHC}
+\textit{Description of LHC 
+}
 
 \section{The LHCb Detector}
-\subsection{VELO}
+\textit{general overview of the U1 detector. Each module has one dedicated section.
+}
+\subsection{VErtex LOcator}
 \subsection{Upstream Tracker}
 \subsection{Magnet}
 \subsection{Scintillating Fibre Tracker}
 \subsection{RICH}
 \subsection{Calorimeters}
 \subsection{Muon Stations}
-\section{DAQ System and Real Time Analysis}
+\section{Real Time Analysis}
+\textit{general description of the DAQ and its importance}
 
-\subsection{}
+In Run 3, LHCb introduces an innovative trigger system, marking the first time that all collision events at the LHC undergo a real-time and offline-level quality reconstruction, operating at an average frequency of 30 MHz. This decision arises from the need for detailed and flexible trigger selections crucial for the physics events targeted by LHCb. However, reconstructing events at this frequency, especially tracks, poses a significant computational challenge. To address this, LHCb adopts a heterogeneous computing system. In this setup, the initial trigger level (HLT1) relies entirely on an array of GPUs, leaving CPU resources for the subsequent level (HLT2), where thorough event reconstructions occur at a reduced rate compared to HLT1. Additionally, heterogeneous computing solutions are employed for lower-level tasks, with ongoing research and development activities aimed at preparing for future LHCb runs, where the collaboration plans to increase the operational luminosity by another order of magnitude compared to Run 3.\\
+\subsection{Event Builder}
+\textit{description of EB, with a focus on PCIe40 board and TELL40s
+}
+
+\subsection{Timing and Fast Control}
+\textit{importance of clocks and trigger information for the front-end and readout systems.
+}
+
+\subsection{Event Filter Farm}
+\textit{description of HLT1 and HLT2, with a focus on Allen and Alignment and Calibration Buffer
+}
+
+\subsection{Experimental Control System}
+\textit{Description of ECS with a focus on WinCC.
+}
 
 %Example of \autoref{alg:1} reference.
 

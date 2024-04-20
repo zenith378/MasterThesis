@@ -61,7 +61,7 @@
     {\endoldenumerate\end{spacing}}
 
 % Text layout.
-\RequirePackage[outer=1.2in, inner=1.2in, twoside, a4paper]{geometry}
+\RequirePackage[outer=1.2in, inner=1in, top=1.2in,bottom=1.3in, twoside, a4paper]{geometry}
 \usepackage{ragged2e}
 %\RaggedRight
 \RequirePackage{graphicx}
@@ -72,8 +72,14 @@
 \RequirePackage{amsmath}
 \RequirePackage{mathtools}
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
-\RequirePackage{siunitx}
+\RequirePackage[per-mode=reciprocal]{siunitx}
+\usepackage{epigraph}
+%\usepackage{polyglossia}
 
+%\setmainlanguage{english}
+%\setotherlanguages{sanskrit} %% or other languages
+
+%\newfontfamily\devanagarifont[Script=Devanagari]{Lohit Devanagari}
 % Fonts.
 \RequirePackage{color}
 \RequirePackage{hyperref}
@@ -216,11 +222,14 @@
 
 
 \renewcommand{\frontmatter}{
-	\pagenumbering{roman}
-	\input{frontmatter/personalize}
-	\maketitle
-	\frontispiece
-	%\dedicationpage
+	%\pagenumbering{roman}
+	\input{frontmatter/personalize}\pagestyle{empty}%
+	\maketitle\pagestyle{empty}%
+	\frontispiece\pagestyle{empty}%
+        \dummypage\pagestyle{empty}%
+         \pagenumbering{roman}
+	\dedicationpage
+        \citationpage
 	\abstractpage
 	\tableofcontents
 	\phantomsection
@@ -313,16 +322,37 @@
 	\vspace*{\fill}
 }
 
-\newcommand{\dedicationpage}{
+\newcommand{\dummypage}{
 	\phantomsection
 	\setcounter{page}{3}
 	\vspace*{\fill}
-	\scshape \noindent \input{frontmatter/dedication}
+	\scshape \noindent \input{frontmatter/dummy}
 	\vspace*{\fill}
 	\cleardoublepage
 	\rm
 }
 
+\newcommand{\dedicationpage}{
+	\phantomsection
+        \setcounter{page}{1}
+	\vspace*{\fill}
+	\scshape \noindent \flushright \input{frontmatter/dedication}
+	\vspace*{\fill}
+	\cleardoublepage
+        \justifying
+	\rm
+}
+
+
+\newcommand{\citationpage}{
+	\phantomsection
+	%\setcounter{page}{3}
+	\vspace*{\fill}
+	\scshape \noindent \input{frontmatter/citation}
+	\vspace*{\fill}
+	\cleardoublepage
+	\rm
+}
 
 
 \newcommand{\acknowledgments}{
@@ -342,7 +372,7 @@
 
 \newcommand{\abstractpage}{
 	\phantomsection
-	\setcounter{page}{5}
+	%\setcounter{page}{5}
 	\addcontentsline{toc}{chapter}{Abstract}
 	\chapter*{Abstract}
 	\input{frontmatter/abstract}
@@ -351,7 +381,7 @@
 \newcommand{\appendixA}{
 	\phantomsection
 	\addcontentsline{toc}{chapter}{A}
-	\chapter*{Abstract}
+	\chapter*{Appendix A}
 	\input{chapters/appendixA}
 }
 
