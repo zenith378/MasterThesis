@@ -96,8 +96,8 @@
 \newfontfamily{\smallcaps}[RawFeature={+c2sc,+scmp}]{EB Garamond}
 \setsansfont[Scale=MatchLowercase, BoldFont={Lato Bold}]{Lato Regular}
 \setmonofont[Scale=MatchLowercase]{Source Code Pro}
-\RequirePackage[labelfont={bf,sf,footnotesize,singlespacing},
-                textfont={sf,footnotesize,singlespacing},
+\RequirePackage[labelfont={bf,small,color=SchoolColor},
+                textfont={small},
                 justification={justified,RaggedRight},
                 singlelinecheck=false,
                 margin=0pt,
@@ -142,7 +142,7 @@
 \RequirePackage{fancyhdr}
 \RequirePackage[medium, md, sc]{titlesec} % format for the title of the sections
 \setlength{\headheight}{15pt}
-\pagestyle{plain}
+
 \RequirePackage{titling}
 
 % Front matter.
@@ -161,6 +161,7 @@
 \renewcommand\bibname{References}
 %\RequirePackage[super,comma,numbers]{natbib}
 \RequirePackage[comma,numbers]{natbib}
+
 \renewcommand{\bibnumfmt}[1]{[#1]}
 \RequirePackage[palatino]{quotchap}
 \renewcommand*{\chapterheadstartvskip}{\vspace*{-0.5\baselineskip}}
@@ -191,7 +192,8 @@
      \clubpenalty4000
      \@clubpenalty \clubpenalty
      \widowpenalty4000%
-     \sfcode`\.\@m}
+     \sfcode`\.\@m
+     }
     {\def\@noitemerr
       {\@latex@warning{Empty `thebibliography' environment}}
      \endlist}
@@ -395,7 +397,7 @@
             \acronyms
 
     %\input{endmatter/personalize}
-    \clearpage
+    %\clearpage
     %\bibliography{references}
     \addcontentsline{toc}{chapter}{References}
     %\bibliographystyle{apalike2}
@@ -412,6 +414,7 @@
 	%\phantomsection
 	%\addcontentsline{toc}{chapter}{List of tables}
 	%\listoftables
-	\cleardoublepage
+	%\cleardoublepage
 
 }
+
