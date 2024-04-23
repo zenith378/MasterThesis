@@ -182,18 +182,18 @@ The unique feature of the LHCb muon detector system is its segmented structure, 
     \caption{Workflow of the RTA paradigm, from the detector readout to analysis production}
     \label{fig:RTA}
 \end{figure}
-With the increase in instantaneous luminosity at the LHCb interaction point, the demand for more accurate measurements has driven the collaboration to completely renew its readout and trigger systems. The upgraded system operates at an average event rate of 30 MHz, processing every event with a fully software-based trigger system that integrates information from all sub-detectors. The need for more efficient trigger systems emerged from simulation studies showing that the trigger sequence used during Run-1 and Run-2 would lead to a loss of efficiency in hadronic B-meson decay channels as the instantaneous luminosity increased. The first stage of the previous trigger system, L0, relied on transverse energy $E_T$ measurements from several sub-detectors, including charged hadrons, muons, electrons, or photons. This resulted in high efficiencies for dimuon events but reduced efficiency for fully hadronic signal decays. Additionally, the increase in the $E_T$ threshold to manage trigger rates with higher luminosities compromised signal efficiency in hadronic channels, causing saturation of the trigger yield.
+With the increase in instantaneous luminosity at the LHCb interaction point, the demand for more accurate measurements has driven the collaboration to completely renew its readout and trigger systems. The upgraded system operates at an average event rate of 30 MHz, processing every event with a fully software-based trigger system that integrates information from all sub-detectors. The need for more efficient trigger systems emerged from simulation studies showing that the trigger sequence used during Run-1 and Run-2 would lead to a loss of efficiency in hadronic B-meson decay channels as the instantaneous luminosity increased\cite{CERN-LHCC-2011-001}. The first stage of the previous trigger system, L0, relied on transverse energy $E_T$ measurements from several sub-detectors, including charged hadrons, muons, electrons, or photons. This resulted in high efficiencies for dimuon events but reduced efficiency for fully hadronic signal decays. Additionally, the increase in the $E_T$ threshold to manage trigger rates with higher luminosities compromised signal efficiency in hadronic channels, causing saturation of the trigger yield.
 
-The revamped DAQ and trigger system at LHCb is designed to overcome these limitations. The new system operates at full LHC bunch crossing rate, with event reconstruction based on precise measurements of momentum and impact parameters. The readout system can handle high input data flow, on the order of 50 TB/s, while the software-based trigger can process data at an average rate of 30 MHz.
+The revamped DAQ and trigger system at LHCb is designed to overcome these limitations\cite{CERN-LHCC-2018-014}. The new system operates at full LHC bunch crossing rate, with event reconstruction based on precise measurements of momentum and impact parameters. The readout system can handle high input data flow, on the order of 50 TB/s, while the software-based trigger can process data at an average rate of 30 MHz.
 
 The trigger system now implements a two-stage full software solution:
 \begin{itemize}
 \item HLT1: The first stage, implemented on Graphics Processing Units (GPUs), operates on Event Builder (EB) nodes, reducing the data rate by a factor of 30-60.
-\item HLT2: The second stage, running on Central Processing Units (CPUs) allows for detailed event reconstruction with quasi-offline precision.
+\item HLT2: The second stage, running on Central Processing Units (CPUs) allows for detailed event reconstruction with quasi-offline precision\cite{Gazzoni:2670650}.
 \end{itemize}
 Between HLT1 and HLT2, a buffer is implemented where the Alignment \& Calibration phase of the detector elements is performed.
 
-The DAQ system is composed of several sub-systems:
+The DAQ system\cite{CERN-LHCC-2014-016} is composed of several sub-systems:
 \begin{itemize}
 \item Event Builder (EB)
 \item Timing and Fast Control (TFC)
@@ -214,7 +214,7 @@ The TFC system is responsible for distributing critical clock, timing, and trigg
 \subsection{Event Filter Farm}
 The Event Filter Farm (EFF) hosts the hardware architectures for the high-level triggers (HLT). The HLT sequence comprises two stages: HLT1 and HLT2, separated by a disk buffer that holds events between stages while the detector is aligned and calibrated with offline precision.
 \subsubsection{HLT1}
-The HLT1 stage aims to reject events that don't contain particles of interest while retaining those that do. It uses a subset of the full offline charged particle reconstruction and implements inclusive single or two-track selections to determine the event's interest. HLT1 is entirely implemented on GPUs in the same servers hosting the Event Builder. The Allen application, written in C++ with CUDA extensions, executes the following tasks:
+The HLT1 stage aims to reject events that don't contain particles of interest while retaining those that do. It uses a subset of the full offline charged particle reconstruction and implements inclusive single or two-track selections to determine the event's interest. HLT1 is entirely implemented on GPUs in the same servers hosting the Event Builder. The \textit{Allen} application, written in C++ with CUDA extensions, executes the following tasks\cite{CERN-LHCC-2020-006}:
 \begin{itemize}
 \item Decoding raw input into the LHCb global coordinate system
 \item Clustering detector hits
@@ -223,8 +223,8 @@ The HLT1 stage aims to reject events that don't contain particles of interest wh
 \item Reconstructing primary and secondary vertices from fitted tracks
 \item Making trigger decisions based on track parameters like impact parameter and momentum
 \end{itemize}
-\subsubsection{Alignment and Calibration}
-LHCb distinguishes between two phases:
+\subsubsection{Alignment and Calibration}\label{sec:alignment}
+LHCb distinguishes between two phases\cite{Dziurda:2640712}:
 \begin{itemize}
 \item Alignment focuses on correcting shifts and rotations in the detector's components, ensuring that the data obtained from these detectors are accurate. This process is applied to tracking detectors like VELO, UT, SciFi, and Muon systems, ensuring that their positioning aligns with the expected geometry.
 \item Calibration involves fine-tuning the responses of various sub-detectors to ensure accurate measurements. This includes calibrating the RICH, ECAL, and HCAL.
@@ -232,7 +232,7 @@ LHCb distinguishes between two phases:
 Both processes are triggered at the beginning of each LHC fill, and they are fully integrated into the LHCb control system. 
 \paragraph{Alignment}
 Alignment at LHCb involves minimizing the chi-squared $\chi^2$ of all tracks with respect to alignment parameters $\alpha$, which account for translations and rotations of detector elements. The procedure employs the iterative Newton-Raphson method, where the first and second derivatives of $\chi^2$ with respect to 
- $\alpha$ are calculated to determine the optimal adjustments needed for alignment. The data for this alignment procedure comes from tracks obtained through a Kalman filter used in track reconstruction, with the option to add vertex and mass constraints for increased precision.
+ $\alpha$ are calculated to determine the optimal adjustments needed for alignment. The data for this alignment procedure comes from tracks obtained through a Kalman filter used in track reconstruction\cite{HULSBERGEN2009471}, with the option to add vertex and mass constraints for increased precision.
 
 The alignment process has two key components:
 \begin{itemize}
@@ -252,7 +252,7 @@ While HLT1 focuses on long tracks, HLT2 conducts a full reconstruction, using in
 \subsection{Experimental Control System}
 \textit{Description of ECS with a focus on WinCC.
 }
-The ECS oversees the entire LHCb experiment, from infrastructure to data acquisition. It is a distributed system based on the commercial SCADA system, WinCC OA, and custom-developed components. The ECS features user interfaces, data archiving, alarm handling, and various device interfaces. Its tree-like control hierarchy, based on a Finite State Machine (FSM), allows commands to be propagated downstream and state information to be propagated upward. This structure provides centralized control and monitoring, ensuring efficient management of the LHCb experiment.
+The ECS\cite{GranadoCardoso:2702137} oversees the entire LHCb experiment, from infrastructure to data acquisition. It is a distributed system based on the commercial SCADA system, WinCC OA, and custom-developed components. The ECS features user interfaces, data archiving, alarm handling, and various device interfaces. Its tree-like control hierarchy, based on a Finite State Machine (FSM), allows commands to be propagated downstream and state information to be propagated upward. This structure provides centralized control and monitoring, ensuring efficient management of the LHCb experiment.
 The majority of tracks are created near the interaction point, and these are reconstructed as long tracks. However, some neutral long-lived particles, like $K^0_S$ and $\Lambda^0$, are reconstructed as downstream tracks because they decay outside the acceptance of the VELO detector. HLT1 focuses on long tracks, while HLT2 includes downstream tracks in its reconstruction sequence, allowing more comprehensive event analysis.
 
 
