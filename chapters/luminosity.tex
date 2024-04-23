@@ -222,7 +222,7 @@ Van der Meer scan luminosity measurement and beam–beam correction, Vladislav B
 \section{Luminosity at LHCb}
 In late 2009, LHCb recorded its first proton-proton (pp) collisions at an injection energy of $\sqrt{s}=\SI{0.9}{\tera\eV}$. These data were used to finalize the commissioning of the sub-detector systems, calibration, and the alignment of tracking, calorimeter, and particle identification (PID) systems. During this period, the VELO was left in the open position to accommodate the larger aperture required at lower beam energies.
 The operating conditions changed rapidly in 2010 due to the LHC ramp-up in luminosity. A critical parameter for LHCb performance is the pile-up \(\mu_{\text{vis}}\), defined in Eq. \ref{mu_def} as the average number of visible interactions per beam-beam crossing. Luminosities started around $\sim \SI{1e28}{\per\centi\meter\squared\per\second}$ with almost no pile-up but eventually reached $\sim \SI{1e32}{\per\centi\meter\squared\per\second}$ with $\mu_{\text{vis}} \approx 2.5$.
-While the highest luminosity in 2010 was already 75\% of the LHCb design luminosity, the pile-up was much larger due to the low number of bunches in the machine. Despite this, the trigger and reconstruction systems demonstrated efficient performance under these conditions.
+While the highest luminosity in 2010 was already 75\% of the LHCb design luminosity, the pile-up was much larger due to the low number of bunches in the machine. Despite this, the trigger and reconstruction systems demonstrated efficient performance under these conditions\cite{det_perf}.
 
 \begin{figure}
     \centering
@@ -275,8 +275,10 @@ During Run-1 and Run-2, online luminosity estimates had a precision of 10\% and 
 \paragraph{PLUME}
 A dedicated luminometer sub-detector, PLUME (Probe for LUminosity MEasurement), was introduced for Run-3 to improve both online and offline luminosity measurement precision. PLUME consists of 24 hodoscopes (couples of detector modules read out for coincidences in both modules) surrounding the beampipe, pointing at the nominal interaction point, and located approximately 1.7 meters upstream from the collision region. It covers a high-pseudorapidity range $(2.4 < \eta < 3.1)$.
 
-Each hodoscope module is composed of 10 × 10 × \SI{5}{\milli\meter\cubic} quartz crystals, coupled with photomultipliers that detect Cherenkov light generated when high-speed particles traverse the quartz. Online luminosity measurement is performed by counting coincidences in at least one hodoscope, identifying tracks coming from the interaction region, and suppressing background activity.
+Each hodoscope module is composed of 10 × 10 × \SI{5}{\milli\meter\tothe{3}} quartz crystals, coupled with photomultipliers that detect Cherenkov light generated when high-speed particles traverse the quartz. Online luminosity measurement is performed by counting coincidences in at least one hodoscope, identifying tracks coming from the interaction region, and suppressing background activity.
 In addition to the PLUME detector, LHCb introduced several other luminosity counters for online monitoring and offline luminosity measurement. This redundancy provides stability cross-checks and helps evaluate systematic uncertainties.
+
+A problem with the luminosity linearity has been discovered in September 2022: due to non-negligible rate of random coincidences the PLUME showed divergencies from the expected linear behaviour. Since 7th of July 2022 PLUME luminosity corrected for non-linearity using HLT1 counters, rendering de-facto PLUME an offline luminosity estimator.
 
 DA AGGIUNGERE QUALCOSA SULLA NON LINEARITÀ DI PLUME?
 
