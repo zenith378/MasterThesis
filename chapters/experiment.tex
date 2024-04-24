@@ -234,7 +234,7 @@ Both processes are triggered at the beginning of each LHC fill, and they are ful
 Alignment at LHCb involves minimizing the chi-squared $\chi^2$ of all tracks with respect to alignment parameters $\alpha$, which account for translations and rotations of detector elements. The procedure employs the iterative Newton-Raphson method, where the first and second derivatives of $\chi^2$ with respect to 
  $\alpha$ are calculated to determine the optimal adjustments needed for alignment. The data for this alignment procedure comes from tracks obtained through a Kalman filter used in track reconstruction\cite{HULSBERGEN2009471}, with the option to add vertex and mass constraints for increased precision.
 
-The alignment process has two key components:
+The alignment process has two key components\cite{Saur:20230E}:
 \begin{itemize}
 \item Analyzer: This part runs the track reconstruction, computes the $\chi^2$ derivatives, and saves them to binary files. It uses multi-threaded reconstruction based on 163 nodes, allowing for efficient data processing.
 \item Iterator: This component collects the derivatives from the Analyzer, performs the minimization step, and checks for convergence. If there is a significant difference between the previous and new alignment constants, the updated constants are used in the HLT2 trigger, ensuring that subsequent data collection reflects the corrected alignment.
