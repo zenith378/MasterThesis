@@ -3,7 +3,17 @@
 \chapter{Embedded reconstruction of local primitives}
 \label{chp:retina}
 \epigraph{We here propose to do just what Copernicus did in attempting to explain the celestial movements. When he found that he could make no further progress by assuming that all the heavenly bodies revolved round the spectator, he reversed the process and tried the experiment of assuming the spectator revolved, while the stars remained at rest.}{Immanuel Kant, \textit{Critique of Pure Reason}}
-\textit{Iniziare la ricostruzione a tempo 0 in maniera embedded durante il readout}
+%\textit{Iniziare la ricostruzione a tempo 0 in maniera embedded durante il readout}
+
+The LHCb collaboration has made of "real-time analysis" one of his trademark, being the first HEP experiment to implement a fully online software-based trigger. However, even if the RTA project showed outstanding results, this idea relies mostly on leveraging the power of parallel computing such as the one of GPUs. 
+At an operational level, the real-time reconstruction described in Section \ref{sec:rta} run the same algorithms that are usually run offline for the reconstruction but in a much faster way. This processing relies heavily on centralized servers, or farms of GPUs. This approach, however, at the core-level is resource-intensive and time-consuming, leading to potential bottlenecks in data processing. With Moore's Law showing signs of saturation, traditional centralized-based processing is becoming less viable for tasks that demand rapid and efficient computation.
+
+An alternative to this centralized model is ``edge computing". This philosophy shifts computational tasks from centralized servers to locations closer to the data source, such as directly within or near the detector. The key principle here is to start the reconstruction in an embedded way directly inthe readout of the detector. Currently, raw data (like a sequence of hits on the VELO) is read and then reassembled to extract meaningful information. If smarter algorithms could be developed to exploit only the relevant data—such as luminosity, detector position, or beamline position—it would make the process more efficient by reducing unnecessary computation. While this approach may sacrifice some flexibility, it could dramatically speed up processing and focus resources on the data that truly matters.
+
+This chapter explores the concept of "embedded local primitives," which are raw-like data points that align closely with the specific quantities that need to be measured. The central module for enabling this approach is the Field Programmable Gate Array (FPGA), which allows for rapid computation of these primitives. A prime example of how this technique is already aiding in track reconstruction is the RETINA project. The first phase of the RETINA algorithm involves a 2D-clustering phase entirely developed in firmware, which is central to this chapter, as it is a crucial step in defining the primitive at the heart of this study.
+
+I will introduce the specific primitive used in this thesis—the counters developed on the VELO detector. These counters enable real-time measurements of luminosity, beamline position, and VELO detector position. By embedding the computation directly within the detector hardware, these counters offer a swift and efficient means of processing data on the spot, minimizing latency and improving the speed and accuracy of crucial measurements. 
+
 
 \section[The Field Programmable Gate Array]{The Field Programmable Gate Array $\bigl($FPGA$\bigr)$}
 \textit{brief description of a FPGA is and whhy is it useful}

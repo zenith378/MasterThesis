@@ -86,7 +86,7 @@ The luminosity is proportional to the overlap integral of the two  $\rho_1$, $\r
 \end{figure}
 
 \begin{equation}
-    \mathcal{L} \propto K\cdot\int\int\int\int_{-\infty}^{+\infty}\rho_1(x,y,s,s_0)\rho_2(x,y,s,s_0)dxdydsds_0.\label{lumi_propto}
+    \mathcal{L} \propto K\cdot\iiiint_{-\infty}^{+\infty}\rho_1(x,y,s,s_0)\rho_2(x,y,s,s_0)dxdydsds_0.\label{lumi_propto}
 \end{equation}
 
 Assuming colliding bunches moving against each other that meet at $s_0$, we have to take into account the kinematic factor\cite{Moller}:
@@ -95,7 +95,7 @@ Assuming colliding bunches moving against each other that meet at $s_0$, we have
 \end{equation}
 By further assuming head-on collisions ($\vec{v_1}=-\vec{v_2}$) and that all densities are uncorrelated in all planes, we can write:
 \begin{equation}
-        \mathcal{L} = 2 N_1 N_2 f N_b\cdot\int\int\int\int_{\infty}^{+\infty}\rho_{1x}(x)\rho_{1y}(y)\rho_{1s}(s+s_0)\rho_{2x}(x)\rho_{2y}(y)\rho_{2s}(s+s_0)dxdydsds_0.\label{beam_overlap}
+        \mathcal{L} = 2 N_1 N_2 f N_b\cdot\iiiint_{\infty}^{+\infty}\rho_{1x}(x)\rho_{1y}(y)\rho_{1s}(s+s_0)\rho_{2x}(x)\rho_{2y}(y)\rho_{2s}(s+s_0)dxdydsds_0.\label{beam_overlap}
 \end{equation}
 
 where:
@@ -119,12 +119,12 @@ Let's assume equal beams, i.e.  $\sigma_{iz} = \sigma_{iz}$ for $i=1,2$, z=$x,y,
 Using this information, the integral for luminosity can be derived by first considering the overlap integral of the Gaussian distributions as in equation \eqref{beam_overlap}:
 
 \begin{equation}
-\mathcal{L} = \frac{2  N_1 N_2 f N_b}{(\sqrt{2\pi})^6 \sigma_x^2\sigma_y^2\sigma_s^2}\int\int\int\int e^{-\frac{x^2}{2 \sigma_x^2}} e^{-\frac{y^2}{2 \sigma_y^2}} e^{-\frac{s^2}{2 \sigma_s^2}}e^{-\frac{s_0^2}{2 \sigma_s^2}}dxdydsds_0.
+\mathcal{L} = \frac{2  N_1 N_2 f N_b}{(\sqrt{2\pi})^6 \sigma_x^2\sigma_y^2\sigma_s^2}\iiiint e^{-\frac{x^2}{2 \sigma_x^2}} e^{-\frac{y^2}{2 \sigma_y^2}} e^{-\frac{s^2}{2 \sigma_s^2}}e^{-\frac{s_0^2}{2 \sigma_s^2}}dxdydsds_0.
 \end{equation}
 
 After integrating over $s$ and $s_0$\footnote{Gassuain integral: $\int_{-\infty}^{+\infty}e^{-at^2}dt = \sqrt{\tfrac{\pi}{a}}$}, we git a first intermediate result:
 \begin{equation}
-    \mathcal{L} = \frac{2  N_1 N_2 f N_b}{8(\sqrt{\pi})^4 \sigma_x^2\sigma_y^2}\int\int \exp\left(-\frac{x^2}{2 \sigma_x^2}\right) \exp\left(-\frac{y^2}{2 \sigma_y^2}\right) dxdy .
+    \mathcal{L} = \frac{2  N_1 N_2 f N_b}{8(\sqrt{\pi})^4 \sigma_x^2\sigma_y^2}\iint \exp\left(-\frac{x^2}{2 \sigma_x^2}\right) \exp\left(-\frac{y^2}{2 \sigma_y^2}\right) dxdy .
 \end{equation}
 
 Finally, after integration over x and y, we get the well-known formula of luminosity for colliding Gaussian beams with head-on collisions:
@@ -139,79 +139,6 @@ If we generalize to the case where the x and y beam profiles are unequal but sti
 \mathcal{L} = \frac{N_1  N_2  f  N_b}{2 \pi \sqrt{(\sigma_{1x}^2 + \sigma_{2x}^2)(\sigma_{1y}^2 + \sigma_{2y}^2)}}.
 \end{equation}
 
-\subsection{Effect of crossing angles and beam displacement}
-When beams do not collide head-on but with a small transverse offset, or if they cross at an angle, modifications to the standard luminosity calculation are required. These changes arise from differences in the spatial distribution of the beams during collision. In this section, we derive the luminosity for cases with crossing angles and offsets, leading to a more general formula.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{figures/lumi_geometry.png}
-    \caption{Schematic view of two bunches colliding at a finite crossing angle and an offset between the two beams with respect to the reference xs}
-    \label{fig:lumi-geometry}
-\end{figure}
-
-Consider a scenario where two beams do not collide head-on but cross with an angle and have transverse offsets. The modified geometry is shown in Figure \ref{fig:lumi-geometry}, where beam 1 is displaced by \(d_1\) and beam 2 by \(d_2\) with respect to their reference orbits. The following coordinate transformations are applied:
-
-\begin{equation}
-\begin{aligned}[t]
-x_1 &= d_1 + x \cos(\phi),  \\
-s_1 &= s \cos(\varphi) - x \sin(\varphi),
-\end{aligned}
-\qquad
-\begin{aligned}[t]
-       x_2 &= d_2 + x \cos(\varphi), \\
-        s_2 &= s \cos(\varphi) + x \sin(\varphi).
-\end{aligned}
-\end{equation}
-
-Using these transformations, we calculate the luminosity for this modified setup. Following similar integration strategies and approximations as before, but taking into account the coordinate transformations, we can derive the luminosity for this scenario.
-
-After integrating over the \(y\) and \(s_0\) coordinates, the luminosity formula for beams with crossing angles and transverse offsets becomes:
-
-\begin{align}
-\mathcal{L} = \frac{N_1 N_2  f  N_b}{8 \pi^2  \sigma_x^2 \sigma_y  \sigma_s} 2 \cos^2\frac{\varphi} {2}\int\int &e^{-\frac{x^2 \cos^2(\varphi/2) + s^2 \sin^2(\varphi/2)}{2 \sigma_x^2}}e^{-\frac{x^2 \sin^2(\varphi/2) + s^2 \cos^2(\varphi/2)}{2 \sigma_x^2}}\\
-\times & e^{-\frac{d_1^2+d_2^2+2(d_1+d_2)x\cos(\varphi/2)-2(d_2-d_1)s\sin(\varphi/2)}{2\sigma_x^2}}dxds.
-\end{align}
-
-Integrating over \(x\)\footnote{eccxtended gaussian integral: $\int_{-\infty}^{+\infty}e^{-(at^2+bt+c)}dt = \sqrt{\pi/a}e^{\frac{b^2-ac}{a}}$}, the resulting expression for luminosity, including the effects of crossing angles and offsets, is:
-
-\begin{equation}
-\mathcal{L} = \frac{N_1 \cdot N_2 \cdot f \cdot N_b}{8 \pi^2 \sigma_s} 2\cos\frac{\varphi}{2} \int_{-\infty}^{+\infty}W \frac{e^{-As^2 + 2Bs}}{\sigma_x\sigma_y}ds,
-\end{equation}
-
-where \(A\) and \(B\) are defined as follows:
-
-\begin{equation}
-A = \frac{\sin^2\frac{\varphi}{2}}{\sigma_x^2} + \frac{\cos^2\frac{\varphi}{2}}{\sigma_s^2} \frac{d_2 - d_1}{2 \sigma_x^2}, \quad
-B = \frac{(d_2 - d_1)\sin(\varphi/2)}{2 \sigma_x^2}.
-\end{equation}
-
-and 
-
-\begin{equation}
-    W = e^{-\frac{1}{4\sigma_x^2}(d_2-d_1)^2}
-\end{equation}
-
-With these definitions, the factorization of the luminosity formula becomes straightforward. The following correction factors emerge:
-\begin{itemize}
-\item $W$ accounts for the presence of beam offsets.
-\item $e^{B^2/A}$ represents the reduction due to crossing angles and offsets.
-\item $S$ is a calculated luminosity reduction factor for crossing angles alone, defined as:
-\end{itemize}
-
-\begin{equation}
-  S = \frac{1}{\sqrt{1 + \left( \frac{\sigma_s}{\sigma_x} \tan \frac{\varphi}{2} \right)^2}} \approx \frac{1}{\sqrt{1 + \left( \frac{\sigma_s}{\sigma_x} \frac{\varphi}{2} \right)^2}}
-\end{equation}
-
-which can be interpreted as a correction to the beam size, thus introducing an ``effective beam size":
-\begin{equation}
-    \sigma_{eff} = \sigma \sqrt{1+\biggl(\frac{\sigma_s}{\sigma_x}\frac{\varphi}{2}\biggr)^2}.
-\end{equation}
-
-Thus, the final expression for luminosity in the presence of crossing angles and beam offsets is:
-
-\begin{equation}
-\mathcal{L} = \frac{N_1  N_2  f  N_b}{4 \pi  \sigma_x  \sigma_y} \cdot W \cdot e^{B^2/A} \cdot S.
-\end{equation}
 
 \section{An absolute luminosity calibration: The Van der Meer scan}
 The Van der Meer (VdM) method is a foundational technique used in particle physics to measure the absolute luminosity at an accelerator by performing transverse beam separations. It involves separating beams in the transverse plane and measuring the average number of interactions between two colliding bunches. 
@@ -232,7 +159,7 @@ From \eqref{vdm_1} and \eqref{vdm_2} we obtain the VdM formula:
 
 where we defined the specific number of interactions
 \begin{equation}
-\mu_{sp}=\frac{\mu}{N_1 N_2}.
+\mu_{sp}=\frac{\mu}{N_1 N_2}.\label{mu_sp}
 \end{equation}
 
 The derivation of \eqref{sigma_vdm} uses only $\mu _{sp}$ but not $\mu$ or $N_{1,2}$ separately. Therefore, it remains valid even if $\mu$ and $N_1N_2$ change arbitrarily but proportionally during the scan, e.g. due to a gradual decrease of beam currents with time. It is required, however, that $\rho_{1,2}$ remain constant.
@@ -259,7 +186,7 @@ This factorization is critical for simplifying the calibration process, particul
 
 Given this factorization, the overlap integral becomes easier to calculate by reducing it to a product of one-dimensional integrals  along the lines $\Delta x = \Delta x_0$, $\Delta y = \Delta y_0$:
 \begin{equation}
-\sigma = \frac{\int \mu _{sp}(\Delta x, \Delta y_0)\, d\Delta x \times \int \mu _{sp}(\Delta x_0, \Delta y)\, d\Delta y}{\mu _{sp}(\Delta x_0, \Delta y_0)}.
+\sigma = \frac{\int \mu _{sp}(\Delta x, \Delta y_0)\, d\Delta x \times \int \mu _{sp}(\Delta x_0, \Delta y)\, d\Delta y}{\mu _{sp}(\Delta x_0, \Delta y_0)}.\label{definition_sigma_vdm}
 \end{equation}
 The integrals in the enumerator can be measured in two one-dimensional scans over $\Delta x$ at fixed $\Delta y_0$ and vice versa. Note that the formula is valid for any point $(\Delta x_0, \Delta y_0$).It might be advantageous to choose $(\Delta x_0, \Delta y_0$) not far from the point of maximal luminosity to collect sufficient statistics of interactions. This simplification is advantageous in a large-scale accelerator like the LHC because it allows for one-dimensional scans along \(\Delta x\) and \(\Delta y\), reducing beam time and minimizing potential errors due to slow drifts in beam orbits. The bias from not scanned coordinate is minimized at the maximum of $\mu$ where the derivative of e.g. $\mu_{sp}(\Delta x_0, \Delta_y)$ on $\Delta x_0$ is zero.
 
@@ -285,12 +212,12 @@ In late 2009, LHCb recorded its first proton-proton (pp) collisions at an inject
 The operating conditions changed rapidly in 2010 due to the LHC ramp-up in luminosity. A critical parameter for LHCb performance is the pile-up \(\mu_{\text{vis}}\), defined in Eq. \ref{mu_def} as the average number of visible interactions per beam-beam crossing. Luminosities started around $\sim \SI{1e28}{\per\centi\meter\squared\per\second}$ with almost no pile-up but eventually reached $\sim \SI{1e32}{\per\centi\meter\squared\per\second}$ with $\mu_{\text{vis}} \approx 2.5$.
 While the highest luminosity in 2010 was already 75\% of the LHCb design luminosity, the pile-up was much larger due to the low number of bunches in the machine. Despite this, the trigger and reconstruction systems demonstrated efficient performance under these conditions\cite{det_perf}.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{figures/lumiRun2.png}
-    \caption{Integrated luminosity during Run1 and Run2, interspersed by the LS1.}
-    \label{fig:lumiRun1Run2}
-\end{figure}
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=\textwidth]{figures/lumiRun2.png}
+%    \caption{Integrated luminosity during Run1 and Run2, interspersed by the LS1.}
+%    \label{fig:lumiRun1Run2}
+%\end{figure}
 
 The LHC beam energy was 3.5 TeV during 2010 and 2011. In 2011, the number of bunches in the machine increased to about 1300, allowing for a reduction in pile-up while LHCb operated at a luminosity of $\SI{3.5e32}{\per\centi\meter\squared\per\second}$. This was 1.75 times the design luminosity of $\sim \SI{2e32}{\per\centi\meter\squared\per\second}$. The instantaneous luminosity directly delivered by the LHC was too high with respect to the target luminosity the LHCb experiment has been designed for, since of the too high event rate and irradiation dose to which the detectors would be subjected. Since of the higher detector hits multiplicity, track and vertex reconstructions would suffer of high event pile-up, that increases combinatorial background and complicates track reconstruction.
 To cope with this issue, in 2011 the LHCb experiment introduced a luminosity levelling procedure at the LHCb interaction point to keep the instantaneous luminosity stable within about 5\% during a fill. This was achieved by adjusting the transverse overlap of the beams. For one particularly long fill, a maximum overlap with head-on beams was reached only after 15 hours. This levelling minimized the effects of luminosity decay and allowed LHCb to maintain a consistent trigger configuration, reducing systematic uncertainties due to changing detector occupancy.
@@ -299,7 +226,7 @@ In 2012, the LHC beam energy was increased to $\SI{4}{\tera\eV}$, and LHCb took 
 
 
 For Run3, LHCb plan to further increase this value by 5, reaching an instantaneous luminosity of $\SI{2e33}{\per\centi\meter\squared\per\second}$
-An overview of the luminosity integrated until the end of Run 2 is depicted in Figure \ref{fig:lumiRun1Run2}.
+%An overview of the luminosity integrated until the end of Run 2 is depicted in Figure \ref{fig:lumiRun1Run2}.
 
 \subsection{Luminosity leveling}
 
@@ -379,20 +306,12 @@ A common method to measure luminosity in particle accelerators is through relati
 
 The luminosity measurement can then be expressed as:
 \begin{equation}
-    \langle\mathcal{L}_{bunch}\rangle =  \langle\mu_{vis}\rangle\frac{f_{rev}}{\sigma_{vis}}
+    \langle\mathcal{L}_{bunch}\rangle =  \langle\mu_{vis}\rangle\frac{f_{rev}}{\sigma_{vis}}\label{lumi_per_bunch}
 \end{equation}
 
 where $\langle\mu_{vis}\rangle$ is the visible pile-up, which can be calculated from the count rates or primary vertex measurements. The visible cross-section $\sigma_{vis}$  accounts for the acceptance-efficiency factor, with 
 $\sigma_{vis} = \epsilon \sigma_{inel}$
 In principle, $\langle\mu_{vis}\rangle$ is proportional to the luminosity up to a constant scale factor, enabling relative measurements. However, non-linearities can occur, particularly at high luminosity values, due to detector saturation or other factors.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/muscan.png}
-    \caption{Linearity of cluster counters during mu scan of November 2022}
-    \label{fig:muscan}
-\end{figure}
-
 
 Absolute luminosity measurements are possible once the visible cross-section is known, often calibrated using the Van der Meer scan, allowing for an absolute luminosity value derived from the relative measurements. In this context, the VELO cluster counters, mentioned in Section \ref{sec:velo_counters}, are employed to measure  $\langle\mu_{vis}\rangle$. This involves counting clusters $N_i$ in a defined sensor region over $N_{evt}$ events and correlating them to visible pile-up using linearity properties:
 \begin{equation}
@@ -401,9 +320,19 @@ Absolute luminosity measurements are possible once the visible cross-section is 
 
 The linearity method is simple but requires linearity across the entire range of detector counts, which may not always hold, especially at high particle multiplicities. However, intensive studies were performed on Monte Carlo simulations up to a pile-up $\mu = 28$, showing perfect linearity for these luminosity counters\cite{dan}. The linear behaviour is also confirmed on collision data in several fills, such as the one depicted in Figure \ref{fig:muscan}.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/muscan.png}
+    \caption{Linearity of cluster counters during mu scan of November 2022}
+    \label{fig:muscan}
+\end{figure}
+
+
 \subsection{Calibration of each counter with VdM scan}
-Each one of the 208 cluster counters is calibrated during the VdM scan independently. As an exemple, I use as a reference for the explanation the VdM Scan performed on 7th September 2023. 
-It was a full 5 hours program with two symmetric scans and two 2-dimensional scans. Two additional symmetric, 2-dimensional scans two Length Scale Calibrations (LSC) were performed with smog. An overview of the VdM Fill is reported in Figure \ref{fig:inner_vdm_sep}.
+Each one of the 208 cluster counters is calibrated during the VdM scan independently. To explain the process, I'll use the VdM scan conducted on September 7, 2023, as an example.
+It was a full 5 hours program with two symmetric scans and two 2-dimensional scans. Two additional symmetric, 2-dimensional scans two Length Scale Calibrations (LSC) were performed with smog. Figure \ref{fig:inner_vdm_sep} provides an overview of the VdM scan setup, illustrating the raw mean counts per event for the inner counters and the x and y positions of the two beams.
+
+
 
 \begin{figure}
     \centering
@@ -413,19 +342,21 @@ It was a full 5 hours program with two symmetric scans and two 2-dimensional sca
 \end{figure}
 
 
+During the initial phase of the scan, background noise was negligible, allowing the measurements to focus on the counts related to proton-proton (pp) interactions. However, after the SMOG injection ($\approx$17:40), the background due to collisions of proton bunches with empty bunches becomes important. As described in Section \ref{sec:velo_counters}, there are implemented 4 different counters for each bunch crossing type, allowing the subtraction of the background as an online procedure. In the calibration phase this step is perfected offline. 
 
+Another important step in the calibration involves normalizing the counters to account for variations in the bunch population throughout the fill. This division allows for the estimation of $\mu_{sp}$ defined in \eqref{mu_sp}. This is crucial for obtaining accurate and consistent results.
 
-Although in the first part of the Fill the background is negligible, the counts relative to eb,be an ee collisions are removed. The counters are also normalized to the bunch population of the fill. The results of these operations are reported in Figure \ref{fig:bkg_sub_calib}, where the region used for the calibration is also highlighted in the purple box.
+Figure \ref{fig:bkg_sub_calib} shows the corrected data with the background subtracted, highlighting in a purple box the VdM steps used in the calibration. These steps are, in chronological order, a symmetric X scan, asymmetric Y scan and a 2D scan (or turtle scan). 
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/calibration_period.png}
-    \caption{Behaviour of the counters with subtracted background. Notice in fact how there is no more baseline after 17:30, as it were in Figure \ref{fig:inner_vdm_sep}. Additionally, the region used for the calibration is highlighted in the purple box. In this selected region a symmetric scan in X, a symmetric scan in Y and a 2D scan were performed.}
+    \caption{Behaviour of the counters with subtracted background. Notice in fact how there is no more baseline after 17:40, as it were in Figure \ref{fig:inner_vdm_sep}. Additionally, the region used for the calibration is highlighted in the purple box. In this selected region a symmetric scan in X, a symmetric scan in Y and a 2D scan were performed.}
     \label{fig:bkg_sub_calib}
 \end{figure}
 
+The calibration involves fitting a 2D Gaussian to the counter data as a function of x and y displacements, as described in \eqref{sigma_vdm}. This step is necessary to establish the relationship between the observed counts and the expected Gaussian distribution, providing a means to correct for potential misalignments or shifts in the detector response. Figure \ref{fig:fit_example} illustrates an example of such a 2D Gaussian fit, along with the corresponding residuals, demonstrating how the calibration is carried out.
 
-During the Symmetric X/Y and 2-dimensional scan of the VdM (15:50-17:20), the counters are calibrated, i.e. a 2D Gaussian fit to counters as function of x and y displacements is performed. An example is depicted in Figure \ref{fig:fit_example}.
 
 \begin{figure}
     \centering
@@ -441,11 +372,17 @@ During the Symmetric X/Y and 2-dimensional scan of the VdM (15:50-17:20), the co
     \label{fig:fit_example}
 \end{figure}
 
-The visible cross section is then computed for each counters as the result of the integral of the fitted function, i.e.:
+The underlying density function for the distribution of the counts as a function of the displacements $x$ and $y$ in a bivariate Gaussian, whose analytical form is given by Equation \eqref{2d-gaus}. 
 \begin{equation}
-    \sigma_{vis}=2\pi\sigma_x\sigma_y N,
+    f(x,y|\mu_{x,y},\sigma_{x,y},\rho)=\exp{\left(-{\frac {1}{2\left[1-\rho ^{2}\right]}}\left[\left({\frac {x-\mu _{X}}{\sigma _{X}}}\right)^{2}-2\rho \left({\frac {x-\mu _{X}}{\sigma _{X}}}\right)\left({\frac {y-\mu _{Y}}{\sigma _{Y}}}\right)+\left({\frac {y-\mu _{Y}}{\sigma _{Y}}}\right)^{2}\right]\right)}\label{2d-gaus}.
 \end{equation}
-being the term on the right side of the equation, the one needed for the correct normalization of a Gaussian integral. The results of each $\sigma_{vis}$ are reported as a function of the $z$ position of the module in Figure \ref{fig:coefficient_pos}.
+
+This function describes the expected distribution of counts based on the Gaussian assumption, with key parameters such as mean $\mu$, standard deviation $\sigma$, and correlation coefficient $\rho$. To ensure proper normalization, the integral of this function is computed to obtain the normalization factor, as shown in Equation \eqref{2d-gaus-norm}. This normalization factor represents the visible cross section, $\sigma_vis$, which is the ultimate quantity to calculate for performing the calibration.
+
+\begin{equation}
+    N = 2\pi \sigma_{X}\sigma_{Y}\sqrt {1-\rho ^{2}}=\sigma_{vis}\label{2d-gaus-norm}
+\end{equation}
+ The results of each $\sigma_{vis}$ are reported as a function of the $z$ position of the module in Figure \ref{fig:coefficient_pos}, demonstrating how the calibration varies depending on the position along the detector's z-axis.
 
 \begin{figure}
     \centering
@@ -454,12 +391,12 @@ being the term on the right side of the equation, the one needed for the correct
     \label{fig:coefficient_pos}
 \end{figure}
 
-
+Once every visible cross section $\sigma_{vis}$ is calculated, each one of the counters can provide a luminosity estimation based on the definition in \eqref{lumi_per_bunch}.
 
 \subsection{Combining the counters for a single luminosity measurement}
 There is now the issue on how to combine the counters for a single luminosity measurement. In fact, the calibration with the VdM scan allowed to calculate a calibration factor for every counter, leaving potentially 208 different luminosity measurements. 
 First off, the question is what distribution follow all the different measurement at the same timestamp. 
-The distribution of all the estimation performed during the VdM fill of 7th September 2023 is reported in Figure \ref{fig:lumi_hist_ts} at two different timestamps. The distribution is not Gaussian, but it has a bell shape. Therefore, we are encouraged to use mean and standard deviation as metrics to describe peak and width of the curve. 
+The distribution of all the estimation performed during the VdM fill of 7th September 2023 is reported in Figure \ref{fig:lumi_hist_ts} at two different timestamps spaced by 15 minutes. The distribution is not Gaussian, but it has a bell shape. Therefore, we are encouraged to use mean and standard deviation as metrics to describe the peak and the width of the curve. 
 
 
 \begin{figure}
@@ -476,9 +413,10 @@ The distribution of all the estimation performed during the VdM fill of 7th Sept
     \label{fig:lumi_hist_ts}
 \end{figure}
 
-
-
-Diciamo che nelle regioni di interesse la rel std è stabile sul 5\%
+In fact, we see in the trace plots of Figure \ref{fig:std_dev_rel_std} (left) that the standard deviation of the luminosity estimations is proportional to the luminosity estimation. This encourages us to study the relative standard deviation defined as the standard deviation $\sigma$  divided by the mean $\mu$:
+\begin{equation}
+    \sigma_{rel} = \frac{\sigma}{\mu} \label{rel_std}.
+\end{equation}
 
 
 \begin{figure}
@@ -489,7 +427,23 @@ Diciamo che nelle regioni di interesse la rel std è stabile sul 5\%
 \end{figure}
 
 
-Diciamo che implementiamo 3 stimatori diversi e che si cerca il più robusto possibile. Definire robustezza di uno stimatore. 
+The relative standard deviation $\sigma_{rel}$ is plotted as a function of time in Figure \ref{fig:std_dev_rel_std} (right). One notices that the value is stable at 5\% except for the period where smog is injected in the accelerator (around 17:30) and for the time where the mean value $\mu$ of the luminosity is approximately zero (between 16:45 and 17:15).  
+
+This study assures us that the calibration is stable in the short-time term, and that all the counters provide a reasonable luminosity measurement. However, when combining a large set of measurements, it's critical to choose an appropriate estimator to ensure that the final result is reliable and robust. With a dataset containing 208 individual measurements, the presence of outliers or deviations from the assumed probability distribution cannot be excluded. Consequently, choosing a robust estimator becomes essential to mitigate the impact of such anomalies.
+
+Robustness in statistics refers to the ability of an estimator to resist the influence of outliers and remain relatively stable under deviations from standard assumptions. A robust estimator doesn't significantly change due to a small number of atypical values or when the distribution deviates from a presumed normality.
+
+In this context, I tested the performance of three different estimators to determine the best approach for combining my measurements: the mean, the median, and the trimmed mean. Each estimator has its strengths and weaknesses in terms of robustness.
+
+\begin{itemize}
+\item Mean: The mean is a common estimator, but it's highly sensitive to outliers. Even a single extreme value can significantly skew the result, making it less suitable for datasets with potential anomalies.
+\item Median: The median, which represents the middle value in a dataset, is inherently robust because it is not influenced by outliers. It's often used when the data distribution is skewed or when outliers are present.
+\item Trimmed Mean: The trimmed mean is a compromise between the mean and the median. It involves removing a specified percentage of the largest and smallest values from the dataset before calculating the mean. This approach retains some of the data's central tendency while reducing the effect of extreme values.
+\end{itemize}
+
+
+An overview of the behaviour of these three estimators during the VdM is plotted in Figure \ref{fig:lumi_estimator_location_param}. By eye, the behaviour of the three estimators in Figure \ref{fig:comparison_whole} is very similar to one another. However, in a zoomed region such as the one in Figure \ref{fig:comparison_zoom} one can notice how sudden drops in luminosity are differently registered by each one of the tested estimator. Otherwise, the behaviour of these three estimators does not really change.
+ 
 
 \begin{figure}
     \centering
@@ -501,12 +455,13 @@ Diciamo che implementiamo 3 stimatori diversi e che si cerca il più robusto pos
     \includegraphics[width=\linewidth]{figures/comparison_location.png}
     \caption{Zoom on constant region and 2D scan}\label{fig:comparison_zoom}
     \end{subfigure}
-    \caption{Comparison of three possible location parameter over the VdM Fill}
+    \caption{Comparison of three possible location parameter over the VdM Fill. In green: median, in blue: mean, in orange: trimmed mean (15\%)}
     \label{fig:lumi_estimator_location_param}
 \end{figure}
 
+In order to test the performances of these estimators, I selected a region during the VdM scan where the luminosity should be constant in time. Then, I fitted an horizontal line (Figure \ref{fig:costant_fit_location}) and computed the residuals of each estimator with respect to the fitted constant. By observing the standard deviation of the distribution of the residuals shown in Figure \ref{fig:res_location}, we can evaluate the precision in time of each estimators. Each one performed similarly, yielding a luminosity resolution of 0.5\% every 3 seconds of data taking.
 
-Spiegare che prendiamo una regione di luminosità costante per testare la robustezza dello stimatore. 
+Based on my initial tests, I found that the median and the trimmed mean were more robust estimators compared to the mean. Given the potential for outliers and the uncertainty in the underlying probability distribution, I selected the trimmed mean at 15\% as the most appropriate estimator for my final analysis. It provides a balance between the stability of the median and the information content of the mean, ensuring a reliable estimate while minimizing the influence of outliers.
 
 \begin{figure}
     \centering
@@ -522,22 +477,26 @@ Spiegare che prendiamo una regione di luminosità costante per testare la robust
     \label{fig:lumi_fit_location_param}
 \end{figure}
 
+The results of my estimator defined as the trimmed mean of the various luminosity measurement performed by each counter is depicted as a function of time during the VdM scan in the second panel of Figure \ref{fig:lumi_result_all}. 
 
-Mettiamo insieme tutti i pezzi e valutiamo la stima di luminosità che facciamo. 
+Figure \ref{fig:lumi_result_all} provide a good summary of my analysis of this VdM scan. In the first panel the average counts of each counter is reported, with its background subtracted, while on the third and fourth panel the movements of the two beams respectively in the x and y direction are depicted.
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/lumi_plot.png}
     \caption{Results of the luminosity estimator [second panel] during the VdM scan conducted on 07/09/23.
 The first panel illustrates the raw mean counts per event of the 208 counters, while the third and fourth
-panels respectively depict the x and y positions of the two beams. The visible cross section σi of each
-counter, utilized for calibrating the individual luminosity estimators, is estimated in the same VdM scan,
-utilizing a subset of symmetric x, symmetric y, and 2D scans (from approximately 15:50 to 17:20).}
+panels respectively depict the x and y positions of the two beams.}
     \label{fig:lumi_result_all}
 \end{figure}
 
 
-Long term test della calibrazione per vedere se regge. 
+To evaluate the medium-term stability of the calibration from September 7, 2023, we estimated the luminosity for Fill 9168, which took place on September 17, 2023, during the pp reference run. This estimation used the visible cross-section $\sigma_{vis}$ derived from the VdM scan. Figure \ref{fig:fill9168} provides an overview of the results from this study.
+
+In the first panel of Figure \ref{fig:fill9168}, the luminosity readings from each individual counter are displayed. Unfortunately, during this fill, only the C side of the VELO was operational, reducing our available data and resulting in a significant drop in statistics. The second panel shows the combined luminosity estimate, calculated as the trimmed mean of the functional counters. The third panel displays the relative standard deviation of the luminosity measurements for each counter. As seen in the figure, the relative standard deviation stabilizes at around 3\%, which is reasonably close to the 5\% observed during the VdM scan, considering that the statistics were effectively halved.
+
+Despite the reduced data due to limited VELO operation, the relative stability of the combined luminosity estimate indicates that the calibration from the earlier VdM scan remains reliable in the medium term. The consistency of the relative standard deviation suggests that the estimation method is robust, even with reduced sample sizes, providing confidence in the calibration's effectiveness across different datasets and time periods.
+
 
 \begin{figure}
     \centering
