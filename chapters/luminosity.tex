@@ -32,22 +32,22 @@ This relationship can be used to measure luminosity indirectly by determining \(
 \mathcal{L} = \frac{\mu_{\text{vis}} \cdot f}{\sigma_{\text{vis}}}
 \end{equation}
 
-This approach is referred to as "relative luminosity determination" because it relies on a known cross section to "calibrate" the luminosity, using it as a normalization factor. During periods of data-taking at LHCb, different "luminosity counters" record the values of visible interactions, allowing researchers to calculate \(\mu_{\text{vis}}\). This data is then used to estimate the instantaneous luminosity, enabling accurate cross-section measurements and experimental calibration.
+This approach is referred to as ``relative luminosity determination" because it relies on a known cross section to ``calibrate" the luminosity, using it as a normalization factor. During periods of data-taking at LHCb, different ``luminosity counters" record the values of visible interactions, allowing to calculate $\mu_{\text{vis}}$. This data is then used to estimate the instantaneous luminosity, enabling accurate cross-section measurements and experimental calibration.
 
 
 % Integrated Luminosity Definition
 The maximum luminosity, and therefore the instantaneous number of interactions per second, is a significant factor in particle collider experiments. However, the final figure of merit is the integrated luminosity, denoted by $\mathcal{L}_{\text{int}}$. Over a given time period \(T\), it is defined as follows:
 
 \begin{equation}
-\mathcal{L}_{\text{int}} = \int_0^T L(t) dt .
+\mathcal{L}_{\text{int}} = \int_0^T \mathcal{L}(t) dt .
 \end{equation}
-Integrated luminosity is crucial because it directly relates with the total number of events of interest, as indicated by the following expression:
+Integrated luminosity is crucial because it directly relates with the total number of events of interest:
 
 \begin{equation}
 \mathcal{L}_{\text{int}} \times \sigma_p = \text{number of events of interest}.
 \end{equation}
 
-The unit of integrated luminosity is therefore $\SI{}{\per\centi\meter\squared}$, but more often the barn unit is used, which is defined as $\SI{1}{\barn}=\SI{1e-24}{\per\centi\meter\squared}$. The integrated luminosity is therefore the statistics used for indicated the quantity of data available for the analysis.
+The unit of integrated luminosity is therefore $\SI{}{\per\centi\meter\squared}$, but more often the barn unit is used, which is defined as $\SI{1}{\barn}=\SI{1e-24}{\per\centi\meter\squared}$. The integrated luminosity is therefore the statistics used for indicating the quantity of data available for the analysis.
 
 % Luminosity Decay Model
 A key factor influencing integrated luminosity is the decay of instantaneous luminosity over time, caused by various factors like beam intensity reduction, transverse emittance growth, and bunch length increase. A common model to represent this decay assumes an exponential form:
@@ -75,7 +75,7 @@ Given this definition, the interaction rate can be expressed as:
 \]
 
 \subsection{Luminosity in Colliding Beam Experiments}
-In colliding beam experiments, both beams act as the target and the incoming beam simultaneously. The general expression for luminosity in this case involves the convolution of the 3-D distribution functions of the beams, considering the overlap integral. A schematic picture is shoen in Figure \ref{fig:lumi-def}\cite{Herr:941318}. Since the two beams are not stationary but moving through each other, the overlap integral depends on the longitudinal position of the bunches and therefore on the time as they move towards and through each other. For our integration we use the distance of the two beams to the central collision point $s_0 = ct$ as the ”time” variable. 
+In colliding beam experiments, both beams act as the target and the incoming beam simultaneously. The general expression for luminosity in this case involves the convolution of the 3-D distribution functions of the beams, considering the overlap integral. A schematic picture is shown in Figure \ref{fig:lumi-def}\cite{Herr:941318}. Since the two beams are not stationary but moving through each other, the overlap integral depends on the longitudinal position of the bunches and therefore on the time as they move towards and through each other. For our integration we use the distance of the two beams to the central collision point $s_0 = ct$ as the ”time” variable. 
 The luminosity is proportional to the overlap integral of the two  $\rho_1$, $\rho_2$ time dependent beam density distribution function:
 
 \begin{figure}
@@ -100,31 +100,31 @@ By further assuming head-on collisions ($\vec{v_1}=-\vec{v_2}$) and that all den
 
 where:
 \begin{itemize}
-    \item \( N_1 \) and \( N_2 \) are the number of particles per bunch for each beam.
-    \item \( f \) is the revolution frequency.
+    \item \( N_1 \) and \( N_2 \) are the number of particles per bunch for each beam;
+    \item \( f \) is the revolution frequency;
     \item \( N_b \) is the number of bunches in each beam.
 \end{itemize}
 
-To evaluate this integral one should know all distributions. An analytical calculation is not always possible and a numerical integration may be required. However in many cases the beams follow ”reasonable” profiles and we can obtain closed solutions. It is often assumed that the beam profiles follow Gaussian distributions. This assumption is justified because the luminosity is determined by the overlap of the core of the distributions, with the tails contributing minimally.
+To evaluate this integral one should know all distributions. An analytical calculation is not always possible and a numerical integration may be required. However in many cases the beams follow ``reasonable” profiles and we can obtain closed solutions. It is often assumed that the beam profiles follow Gaussian distributions. This assumption is justified because the luminosity is determined by the overlap of the core of the distributions, with the tails contributing minimally.
 Given Gaussian profiles, we can write the distribution function for a Gaussian beam in a general form:
 \begin{equation}
-\rho_{iz}(z) =\frac{1}{\sigma_z\sqrt{2\pi}} \exp\left( -\frac{z^2}{2 \sigma_z^2} \right) \text{ where } i=1,2, \quad z=x,y
+\rho_{iz}(z) =\frac{1}{\sigma_{iz}\sqrt{2\pi}} \exp\left( -\frac{iz^2}{2 \sigma_{iz}^2} \right) \text{ where } i=1,2, \quad z=x,y
 \end{equation}
 \begin{equation}
 \rho_{s}(s\pm s_0) =\frac{1}{\sigma_s\sqrt{2\pi}} \exp\left( -\frac{(s\pm s_0)^2}{2 \sigma_s^2} \right)
 \end{equation}
 
-Let's assume equal beams, i.e.  $\sigma_{iz} = \sigma_{iz}$ for $i=1,2$, z=$x,y,s$ and that the number of particles per bunch (\( N_1 \) and \( N_2 \)), revolution frequency (\( f \)), and number of bunches (\( N_b \)) are known. For exactly head-on collisions, where the bunches travel nearly at the speed of light, the kinematic factor becomes 2.
+Let's assume equal beams, i.e.  $\sigma_{iz} = \sigma_{jz}$ for $i=j$, z=$x,y,s$ and that the number of particles per bunch (\( N_1 \) and \( N_2 \)), revolution frequency (\( f \)), and number of bunches (\( N_b \)) are known. For exactly head-on collisions, in the relativistic limit the kinematic factor becomes 2.
 
 Using this information, the integral for luminosity can be derived by first considering the overlap integral of the Gaussian distributions as in equation \eqref{beam_overlap}:
 
 \begin{equation}
-\mathcal{L} = \frac{2  N_1 N_2 f N_b}{(\sqrt{2\pi})^6 \sigma_x^2\sigma_y^2\sigma_s^2}\iiiint e^{-\frac{x^2}{2 \sigma_x^2}} e^{-\frac{y^2}{2 \sigma_y^2}} e^{-\frac{s^2}{2 \sigma_s^2}}e^{-\frac{s_0^2}{2 \sigma_s^2}}dxdydsds_0.
+\mathcal{L} = \frac{2  N_1 N_2 f N_b}{(\sqrt{2\pi})^6 \sigma_x^2\sigma_y^2\sigma_s^2}\iiiint e^{-\frac{x^2}{ \sigma_x^2}} e^{-\frac{y^2}{\sigma_y^2}} e^{-\frac{s^2}{\sigma_s^2}}e^{-\frac{s_0^2}{\sigma_s^2}}dxdydsds_0.
 \end{equation}
 
-After integrating over $s$ and $s_0$\footnote{Gassuain integral: $\int_{-\infty}^{+\infty}e^{-at^2}dt = \sqrt{\tfrac{\pi}{a}}$}, we git a first intermediate result:
+After integrating over $s$ and $s_0$\footnote{Gassuain integral: $\int_{-\infty}^{+\infty}e^{-at^2}dt = \sqrt{\tfrac{\pi}{a}}$}, we get a first intermediate result:
 \begin{equation}
-    \mathcal{L} = \frac{2  N_1 N_2 f N_b}{8(\sqrt{\pi})^4 \sigma_x^2\sigma_y^2}\iint \exp\left(-\frac{x^2}{2 \sigma_x^2}\right) \exp\left(-\frac{y^2}{2 \sigma_y^2}\right) dxdy .
+    \mathcal{L} = \frac{2  N_1 N_2 f N_b}{8(\sqrt{\pi})^4 \sigma_x^2\sigma_y^2}\iint \exp\left(-\frac{x^2}{\sigma_x^2}\right) \exp\left(-\frac{y^2}{\sigma_y^2}\right) dxdy .\label{spec_lumi_gaus}
 \end{equation}
 
 Finally, after integration over x and y, we get the well-known formula of luminosity for colliding Gaussian beams with head-on collisions:
@@ -133,20 +133,26 @@ Finally, after integration over x and y, we get the well-known formula of lumino
 \mathcal{L} = \frac{N_1  N_2  f N_b}{4 \pi  \sigma_x \sigma_y}.
 \end{equation}
 
-If we generalize to the case where the x and y beam profiles are unequal but still assume approximately equal bunch lengths (\( \sigma_{1s} \approx \sigma_{2s} \)), we get a modified formula for luminosity:
+%If we generalize to the case where the x and y beam profiles are unequal but still assume approximately equal bunch lengths (\( \sigma_{1s} \approx \sigma_{2s} \)), we get a modified formula for luminosity:
 
-\begin{equation}
-\mathcal{L} = \frac{N_1  N_2  f  N_b}{2 \pi \sqrt{(\sigma_{1x}^2 + \sigma_{2x}^2)(\sigma_{1y}^2 + \sigma_{2y}^2)}}.
-\end{equation}
+%\begin{equation}
+%\mathcal{L} = \frac{N_1  N_2  f  N_b}{2 \pi \sqrt{(\sigma_{1x}^2 + \sigma_{2x}^2)(\sigma_{1y}^2 + \sigma_{2y}^2)}}.
+%\end{equation}
 
 
 \section{An absolute luminosity calibration: The Van der Meer scan}
-The Van der Meer (VdM) method is a foundational technique used in particle physics to measure the absolute luminosity at an accelerator by performing transverse beam separations. It involves separating beams in the transverse plane and measuring the average number of interactions between two colliding bunches. 
-In fact, combining Eq. \ref{lumi_propto} and \ref{mu_def} we can write the  average number of interactions $\mu$  with the cross section $\sigma$ normalized by the number of particles:
+The Van der Meer (VdM) method is a foundational technique used in particle physics to measure the absolute luminosity at an accelerator. It involves separating beams in the transverse plane and measuring the average number of interactions between two colliding bunches. 
+Rewriting \ref{spec_lumi_gaus} for a case of two general distribution $\rho_{1,2} (x,y)$
+\begin{equation}
+    \mathcal{L} = N_1 N_2 f N_b\iint \rho_1(x,y) \rho_2(x,y) dxdy,\label{generic_lumi}
+\end{equation}
+
+we can then combine \ref{generic_lumi} and \ref{mu_def} in order to write the average number of interactions $\mu$  with the cross section $\sigma$ normalized by the number of particles:
 
 \begin{equation}
-\frac{\mu (\Delta x,\, \Delta y)}{N_1N_2} = \sigma \frac{L}{N_1N_2} = \sigma \iint \rho _1(x_2 + \Delta x,\, y_2 + \Delta y) \rho _2(x_2,y_2) dx_2\, dy_2, \label{vdm_1}
+\frac{\mu (\Delta x,\, \Delta y)}{N_1N_2} = \frac{\sigma}{f} \frac{\mathcal{L}}{N_1N_2} = \sigma N_b \iint \rho _1(x_2 + \Delta x,\, y_2 + \Delta y) \rho _2(x_2,y_2) dx_2\, dy_2, \label{vdm_1}
 \end{equation}
+where the subscript 2 of the coordinates $x_2$, $y_2$ refers to the stationary second beam, $\mathcal{L}$ is the integrated luminosity and are $\rho_{1,2}(x,y)$ the normalized transverse particle densities of the unseparated bunches when the separation in the transverse plane $\Delta x = \Delta y = 0$.
 
 Integration over $\Delta x$ and $\Delta y$ drastically simplifies \eqref{vdm_1} since
 \begin{equation} \int \rho _1(x_2 {+} \Delta x,\, y_2 {+} \Delta y) \rho _2(x_2,y_2) dx_2\, dy_2\, d\Delta x\, d\Delta y {=} 1, \label{vdm_2} \end{equation}
@@ -154,23 +160,23 @@ as can be easily proved by substituting $x_1=x_2+\Delta x,\ y_1=y_2+\Delta y$. I
 
 From \eqref{vdm_1} and \eqref{vdm_2} we obtain the VdM formula:
 \begin{equation}
-     \sigma = \iint \frac{\mu (\Delta x,\, \Delta y)}{N_1N_2} d\Delta x\, d\Delta y=\iint \mu_{sp}d\Delta x\, d \Delta y \label{sigma_vdm}
+     \sigma = \frac{1}{N_b} \iint \frac{\mu (\Delta x,\, \Delta y)}{N_1N_2} d\Delta x\, d\Delta y= \iint \mu_{sp}d\Delta x\, d \Delta y \label{sigma_vdm}
     \end{equation}
 
 where we defined the specific number of interactions
 \begin{equation}
-\mu_{sp}=\frac{\mu}{N_1 N_2}.\label{mu_sp}
+\mu_{sp}=\frac{\mu}{N_1 N_2}\frac{1}{N_b}.\label{mu_sp}
 \end{equation}
 
 The derivation of \eqref{sigma_vdm} uses only $\mu _{sp}$ but not $\mu$ or $N_{1,2}$ separately. Therefore, it remains valid even if $\mu$ and $N_1N_2$ change arbitrarily but proportionally during the scan, e.g. due to a gradual decrease of beam currents with time. It is required, however, that $\rho_{1,2}$ remain constant.
 
 Achieving precise parallel translations of particle beams in the transverse plane requires complex configurations of magnets. To translate a single beam in one direction, four magnets are needed, positioned at the corners of a trapezoid-shaped trajectory. Consequently, for steering two beams in both transverse directions, a total of 16 magnets are necessary at each interaction point. Given this complexity, ensuring consistent and synchronized movement of all magnets becomes challenging.
 
-Due to these synchronization difficulties, continuous scans are generally avoided in favor of a stepwise approach. At the Large Hadron Collider (LHC), for example, the specific interaction rate $\mu_{sp}(\Delta x,\Delta y)$ is measured at predefined discrete points. This step-by-step method allows for interpolation or fitting to a specific function to derive the final integral. As beams are moved from one point to another, the process waits until the slowest magnet reaches its designated current value before starting the luminosity measurement.
+Due to these synchronization difficulties, continuous scans are generally avoided in favor of a stepwise approach. At the LHC, for example, the specific interaction rate $\mu_{sp}(\Delta x,\Delta y)$ is measured at predefined discrete points. This step-by-step method allows for interpolation or fitting to a specific function to derive the final integral. As beams are moved from one point to another, the process waits until the slowest magnet reaches its designated current value before starting the luminosity measurement.
 
 The stepwise scanning technique originated with Van der Meer, who invented it over 50 years ago for the Intersecting Storage Rings (ISR) accelerator\cite{Carboni:156499}. Since then, it has been successfully applied with variations at other major accelerators\cite{Rubbia:1025746}, including the LHC. The method's accuracy can range from 0.7\% to a few percent, establishing it as a reliable approach for luminosity calibration.
 
-Despite its success in hadron colliders, the van der Meer method can face challenges in electron-positron colliders due to strong beam–beam interactions. In these environments, luminosity is typically measured indirectly through Bhabha scattering events, where the quantum electrodynamics cross-section is well understood. In contrast, in hadron colliders, such as the LHC, it is harder to identify processes with accurately predicted cross-sections. Thus, in hadron accelerators, the best accuracy is typically achieved by directly measuring luminosity, following its definition.
+Despite its success in hadron colliders, the Van der Meer method can face challenges in electron-positron colliders due to strong beam–beam interactions. In these environments, luminosity is typically measured indirectly through Bhabha scattering events, where the quantum electrodynamics cross-section is well understood. In contrast, in hadron colliders, such as the LHC, it is harder to identify processes with accurately predicted cross-sections. Thus, in hadron accelerators, the best accuracy is typically achieved by directly measuring luminosity, following its definition.
 
 In accelerator physics, it's common for particle beams to oscillate in the transverse plane due to beam optics elements designed to keep particles on a stable trajectory. These oscillations can be modeled as a combination of movements along two independent axes, x and y. As a result, the density profiles \(\rho _{1,2}(x, y)\) can often be factorized into x and y components:
 
@@ -188,7 +194,7 @@ Given this factorization, the overlap integral becomes easier to calculate by re
 \begin{equation}
 \sigma = \frac{\int \mu _{sp}(\Delta x, \Delta y_0)\, d\Delta x \times \int \mu _{sp}(\Delta x_0, \Delta y)\, d\Delta y}{\mu _{sp}(\Delta x_0, \Delta y_0)}.\label{definition_sigma_vdm}
 \end{equation}
-The integrals in the enumerator can be measured in two one-dimensional scans over $\Delta x$ at fixed $\Delta y_0$ and vice versa. Note that the formula is valid for any point $(\Delta x_0, \Delta y_0$).It might be advantageous to choose $(\Delta x_0, \Delta y_0$) not far from the point of maximal luminosity to collect sufficient statistics of interactions. This simplification is advantageous in a large-scale accelerator like the LHC because it allows for one-dimensional scans along \(\Delta x\) and \(\Delta y\), reducing beam time and minimizing potential errors due to slow drifts in beam orbits. The bias from not scanned coordinate is minimized at the maximum of $\mu$ where the derivative of e.g. $\mu_{sp}(\Delta x_0, \Delta_y)$ on $\Delta x_0$ is zero.
+The integrals in the enumerator can be measured in two one-dimensional scans over $\Delta x$ at fixed $\Delta y_0$ and vice versa. Note that the formula is valid for any point $(\Delta x_0, \Delta y_0$). It might be advantageous to choose $(\Delta x_0, \Delta y_0$) not far from the point of maximal luminosity to collect sufficient statistics of interactions. This simplification is advantageous in a large-scale accelerator like the LHC because it allows for one-dimensional scans along \(\Delta x\) and \(\Delta y\), reducing beam time and minimizing potential errors due to slow drifts in beam orbits. The bias from not scanned coordinate is minimized at the maximum of $\mu$ where the derivative of e.g. $\mu_{sp}(\Delta x_0, \Delta_y)$ on $\Delta x_0$ is zero.
 
 While the XY factorization provides a powerful framework for simplifying luminosity calibration, it is not always perfect. Imperfections in accelerator design or other factors can lead to coupling between \(x\) and \(y\) coordinates, which may affect the accuracy of the factorization. These deviations are typically small but can introduce systematic errors in the calibration process.
 
@@ -196,12 +202,12 @@ To address this, the shape of the interaction vertex distributions is studied to
 
 \sloppy The best way to further improve accuracy is to perform two-dimensional scans, focusing on the central region where the majority of interactions occur. This approach was pioneered at LHCb in 2017 and can significantly reduce non-factorization systematics and improve calibration accuracy\cite{Balagura_2021}.
 
-Currently, at LHCb both in mono-directional and 2 dimensional scans are performed. First, a symmetric scan in X is performed, then a symmetric one in y and finally the 2D dimensional scan are executed. An exemple of the steps performed in the VdM scan is reported in Figure \ref{fig:vdm_steps_xy}.
+Currently, at LHCb both in mono-directional and 2 dimensional scans are performed. First, a symmetric scan in X is performed, then a symmetric one in y and finally the 2D dimensional scan are executed. An exemple of the steps performed in the VdM scan is reported in Figure \ref{fig:vdm_steps_xy}, where is clearly visible the Turtle or Cherubin-shape, hence the colloquial name ``turtle scan".
 
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{figures/vdm_steps_xy.png}
-    \caption{The displacement in x-y directions to perform a complete 2D Van der Meer scan, originating a Cherubin-like shape.}
+    \caption{The displacement in x-y directions to perform a complete 2D Van der Meer scan.}
     \label{fig:vdm_steps_xy}
 \end{figure}
 
@@ -269,7 +275,7 @@ A dedicated luminometer sub-detector, PLUME (Probe for LUminosity MEasurement), 
 Each hodoscope module is composed of 10 × 10 × \SI{5}{\milli\meter\tothe{3}} quartz crystals, coupled with photomultipliers that detect Cherenkov light generated when high-speed particles traverse the quartz. Online luminosity measurement is performed by counting coincidences in at least one hodoscope, identifying tracks coming from the interaction region, and suppressing background activity.
 In addition to the PLUME detector, LHCb introduced several other luminosity counters for online monitoring and offline luminosity measurement. This redundancy provides stability cross-checks and helps evaluate systematic uncertainties.
 
-A problem with the luminosity linearity has been discovered in September 2022: due to non-negligible rate of random coincidences the PLUME showed divergencies from the expected linear behaviour. Since 7th of July 2022 PLUME luminosity corrected for non-linearity using HLT1 counters, rendering de-facto PLUME an offline luminosity estimator.
+A problem with the luminosity linearity has been discovered in September 2022: due to non-negligible rate of random coincidences the PLUME showed divergencies from the expected linear behaviour. Since 7th of July 2022 PLUME luminosity corrected for non-linearity using HLT$1$ counters, rendering de-facto PLUME an offline luminosity estimator.
 
 
 \paragraph{Other online counters} 
@@ -283,18 +289,18 @@ In addition to PLUME, there are other counters based on minimum bias conditions 
 \paragraph{Offline counters} 
 Other than online counters, there are also implemented offline counters for more precise estimates.
 These counters are based on the number of reconstructed tracks, primary vertices, hits or energy deposited\
-We distinguish between HLT1 (processed at ∼30 kHz) and HLT2 counters (offline).
+We distinguish between HLT$1$ (processed at ∼30 kHz) and HLT$2$ counters (offline).
 
-The HLT1 counters include:
+The HLT$1$ counters include:
 \begin{itemize}
    \item Number of muon hits in the muon stations (luMUONmeter).
    \item  VELO tracks in bins of $\eta$ and reconstructed primary vertices.
    \item SciFi clusters per module combinations.
    \item Energy deposition in the ECal and HCal.
 \end{itemize}
-The HLT2 counters are:
+The HLT$2$ counters are:
 \begin{itemize}
-    \item Hits in the RICH1 and RICH2 detectors.
+    \item Hits in the RICH$1$ and RICH$2$ detectors.
     \item calorimeters counters after zero suppression 
 \end{itemize}
 

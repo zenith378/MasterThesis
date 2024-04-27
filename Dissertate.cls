@@ -399,6 +399,7 @@
     %\input{endmatter/personalize}
     %\clearpage
     %\bibliography{references}
+    \nocite{*}
     \addcontentsline{toc}{chapter}{References}
     %\bibliographystyle{apalike2}
     \bibliography{references.bib}
