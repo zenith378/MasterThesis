@@ -1,6 +1,9 @@
 \chapter{Estimating the beamline}
 \textit{Definition of luminous region, its importance in Alignment and Calibration, luminosity and other stuff}
-Definition of luminous region
+The beamline is defined as the region where the two beams of particles collide, as depicted in Figure \ref{fig:luminous-region}. The position of the beamline corresponds to the area where the primary vertices of these collisions are formed, hence beamline and luminous region are treated as synonyms.
+
+
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/luminous_region.png}
@@ -8,31 +11,191 @@ Definition of luminous region
     \label{fig:luminous-region}
 \end{figure}
 
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=\textwidth]{figures/luminous_region_var.png}
+%    \caption{Luminous regions (blue), given the overlap of two bunches with different parameters (width \sigma and crossing angle \alpha) with respect to Figure \ref{fig:luminous-region}}
+%    \label{fig:luminous-region-var}
+%\end{figure}
+
+
+Understanding the position of the beamline is critical for two main reasons:
+\begin{itemize}
+\item Luminosity Estimation Correction: The luminosity of an experiment is closely tied to the position of the beamline. If the luminosity estimate is based on an incorrect beamline position, the resulting measurements will be skewed. To provide accurate online luminosity estimates, a method is needed to correct for errors in the beamline position. This involves implementing a data point that continuously monitors the real-time beamline position to adjust the luminosity calculation accordingly.
+\item Track Reconstruction Algorithms: The current algorithms for track reconstruction has relied until 2024 on a predefined, "hardcoded" position of the beamline. If this position is not updated accurately, the precision of the track reconstruction can be compromised. A real-time estimation of the beamline position can enhance the efficiency of track reconstruction.
+\end{itemize}
+
+As already stated various times, both HLT$1$ and HLT$2$ PVs reconstruction algorithms use the beamline position as an input. Until 2023, the collobartion relied for this information on a configuration file named ``InteractionRegion", which was manually updated when necessary. In February 2024, the LHCb developed ``BeamSpot Monitor", a tool used for the automatically update of the ``InteractionRegion" configuration file.  This tool operates in the Alignment \& Calibration phase of the online trigger, accumulating statistics and booking histograms of the reconstructed PVs. Once the histograms are available, the mean and covariance are calculated, providing an estimation of the beamline position to both HLT$1$ and HLT$2$. This iterative procedure is computationally expensive and relies on the PVs reconstructed during HLT$1$.
+
+In this chapter, we explore an innovative approach to determining the beamline position in real-time without relying on traditional track reconstruction algorithms. This method provides accurate information on the beamline position, facilitating timely corrections for both luminosity estimation and track reconstruction. Through this approach, we aim to improve the overall accuracy and efficiency of the experiment's data analysis processes.
+
+It was already shown in an earlier work\cite{dan}, that the counters implemented for the luminosity are sensible to beamline displacement. An example of this sensibility is depicted in Figure \ref{fig:z_lumi_dependency}, where one can clearly see how the mean of the outer counters per event is slightly different depending on the luminus region position. 
+
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/luminous_region_var.png}
-    \caption{Luminous regions (blue), given the overlap of two bunches with different parameters (width \sigma and crossing angle \alpha) with respect to Figure \ref{fig:luminous-region}}
-    \label{fig:luminous-region-var}
+    \includegraphics[width=\textwidth]{figures/z_lumi_dependency.pdf}
+    \caption{Mean cluster counts per event of the outer counters as a function of the z position of the VELO station on which the counter is implemented. Each different line represents a different simulation on which the beamline position is displaced as indicated in the legend of the Figure.}
+    \label{fig:z_lumi_dependency}
 \end{figure}
 
-\section{Current beamline estimation at LHCb}
-\textit{How is the beam now calculated, description of the iterative procedure done during Alignment \& Calibration}
+In this chapter, I study a way to combine the 208 implemented counters to give an estimation of the beamline position in each component x, y, and z. A possibility relies on leveraging the capabilities of a dimensionality reduction technique called Principal Component Analysis, which allows to transform the data in the 208-dimensional space to a space of fewer dimensions. The hope is that the parameters of the beamline will be depenent from some of the features extracted with this method. In the next sections I will present the technique, the Monte Carlo simulations used to study the estimators and some tests on real collision data.
 
-Description of BeamSpot Monitor and the reconstruction performed at HLT1
+%The Principal Component Analysis is not the only possibility 
 
-\section{The Principal Component Analysis}
-\textit{Theoretical description of the PCA}
+
+\section[The Principal Component Analysis]{The Principal Component Analysis $\bigl($PCA$\bigr)$}
+
+The Principal Component Analysis (PCA) is a widely used statistical technique for dimensionality reduction, feature extraction, and data compression. It involves transforming a dataset into a new coordinate system with a linear orthogonal transformation designed to maximize the variance along the first principal component (the first coordinate of the transformed system), with the subsequent components containing successively decreasing variance.
+An intuition and visualizationof this transformation is given in Figure \ref{fig:pca}.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{figures/pca.jpg}
-    \caption{Schematic understanding of the Principal Component Analysis}
+    \caption{Schematic understanding of the Principal Component Analysis: suppose to have a 3 dimensional dataset (right). We can transform this space in a 2 dimensional one, with a new basis of two variables given by the two first Principal Components (PC1 and PC2), ordered by the variance captured by the projection of the data on that component.}
     \label{fig:pca}
 \end{figure}
 
 
-\section{Monte Carlo simulations}
-\textit{Description of the MC simulations available and the results on MC}
+Let $\mathbf{X}$ be a data matrix with column-wise zero empirical mean (the sample mean of each column has been shifted to zero), where $n$ are the number of samples and $p$ the number of features. PCA identifies $l$ principal components (where $l \leq p$) that capture the most variance in the data.
+
+Mathematically, PCA transforms the data by finding a set of size $l$ of $p$-dimensional vectors of weights, or coefficients, $\mathbf{w}_{(k)} = (w_1, \ldots, w_p)_{(k)}$, that map each row vector $\mathbf{x}_{(i)}$ of $\mathbf{X}$ to a new vector of ordered principal component scores $\mathbf{t}_{i} = (t_1, \ldots, t_l)_{(i)}$, defined as:
+
+\begin{equation}
+{t_{k}}_{(i)} = \mathbf{x}_{(i)} \cdot \mathbf{w}_{(k)} \quad \text{for} \quad i = 1, \ldots, n \quad k = 1, \ldots, l
+\end{equation}
+
+The goal is to maximize the variance along each principal component PC, with each coefficient vector \(\mathbf{w}\) constrained to be a unit vector. Typically, \(l\) is selected to be less than \(p\) to reduce dimensionality.
+
+
+The first PC $t_{1}$ maximises the variance of the dataset, thus the weight vector \(\mathbf{w}_{(1)}\) must satisfy the following condition:
+
+\begin{equation}
+\mathbf{w}_{(1)} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \sum_{i=1}^{n} \left( \mathbf{x}_{(i)} \cdot \mathbf{w} \right)^2 \right\}
+\end{equation}
+
+This condition can be rewritten in matrix form as:
+
+\begin{equation}
+\mathbf{w}_{(1)} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \|\mathbf{Xw}\|^2 \right\} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \mathbf{w}^{\mathsf{T}} \mathbf{X}^{\mathsf{T}} \mathbf{Xw} \right\},
+\end{equation}
+
+and since $\mathbf{w}_{(1)}$ is defined as a unit vector, we can redefine it with its normalization:
+
+\begin{equation}
+\mathbf{w}_{(1)} = \arg \max \left\{ \frac{\mathbf{w}^{\mathsf{T}} \mathbf{X}^{\mathsf{T}} \mathbf{Xw}}{\mathbf{w}^{\mathsf{T}} \mathbf{w}} \right\}\label{first_weight}
+\end{equation}
+
+The quantity to maximise is recognized as a Rayleigh quotient\cite{horn13}. A positive semidefinite matrix such as $\mathbf{X}^{\mathsf{T}} \mathbf{X}$ has the maximum possible Rayleigh quotient value as its largest eigenvalue, which occurs when $\mathbf{w}$ is the corresponding eigenvector\cite{parlett1998symmetric}.
+
+
+With $\mathbf{w}_{(1)}$ found, the first PC score of a data vector $\mathbf{x}_{(i)}$ can be calculated as:
+
+\begin{equation}
+t_{1(i)} = \mathbf{x}_{(i)} \cdot \mathbf{w}_{(1)}.
+\end{equation}
+
+In order to find subsequent components, the contribution given by $\mathbf{t}_{(1)}$ must be subtracted from the original dataset. This procedure ensures that the subsequent PC focuses on the variance that remains in the data. Iterating the reasoning, the $k$-th PC is found by subtracting the contributions given by the first $k-1$ components. We can hence define a residual matrix $\mathbf{\hat{X}}_{k}$
+
+\begin{equation}
+\mathbf{\hat{X}}_{k} = \mathbf{X} - \sum_{s=1}^{k-1} \mathbf{X} \mathbf{w}_{(s)} \mathbf{w}_{(s)}^{\mathsf{T}}.\label{dim_red_tran}
+\end{equation},
+that represents the projection of the data on a subspace orthogonal to the first $k-1$ components.
+
+Creating this matrix, the problem reduces to the case just discussed, with the solution for $\mathbf{w}_{(k)}$ being the eigenvector with the highest corresponding eigenvector of the space $\mathbf{\hat{X}}_{k}^\mathsf{T}\mathbf{\hat{X}}_{k}$. But this eigenvector of the residual space $\mathbf{\hat{X}}_{k}$ is the $k$-th  eigenvector of the $\mathbf{X}^{\mathsf{T}} \mathbf{X}$ space since eigenvectors corresponding to distinct eigenvalues are always orthogonal to one another, as stated by the spectral theorem.
+
+
+
+
+%\mathbf{w}_{(k)} = \operatorname{arg\,max}_{\|\mathbf{w}\| = 1} \left\{\|\mathbf{\hat{X}}_{k} \mathbf{w}\|^{2}\right\} = \operatorname{arg\,max} \left\{ \frac{\mathbf{w}^{\mathsf{T}} \mathbf{\hat{X}}_{k}^{\mathsf{T}} \mathbf{\hat{X}}_{k} \mathbf{w}}{\mathbf{w}^{\mathsf{T}} \mathbf{w}} \right\}.
+
+
+%The optimal value for the Rayleigh quotient is given by the maximum eigenvalue of the positive semidefinite matrix $\mathbf{X}^{\mathsf{T}} \mathbf{X}$, with the corresponding eigenvector providing the weight vector $\mathbf{w}_{(k)}$. This leads to a recursive procedure, where each subsequent principal component derives from a modified dataset.
+
+
+
+Hence, the weights $\mathbf{w}_{(k)}$ of the PCA are found by diagonalizing the sample covariance matrix $\mathbf{S}$ of the data $\mathbf{X}$, being this defined as:
+
+\begin{equation}
+\mathbf{S} =  \frac{1}{n-1} \mathbf{X}^{\mathsf{T}} \mathbf{X} -  \mathbf{\mu_X}^{\mathsf{T}}\mathbf{\mu_X}= \frac{1}{n-1} \mathbf{X}^{\mathsf{T}} \mathbf{X},
+%\operatorname {K} _{X_{i}X_{j}}=\operatorname {cov} [X_{i},X_{j}]=\operatorname {E} [(X_{i}-\operatorname {E} [X_{i}])(X_{j}-\operatorname {E} [X_{j}])]
+\end{equation}
+since $\mathbf{X}$ has column-wise zero empirical mean $\mathbf{\mu_X}=\vec{0}$. 
+In order to find the right order of the PCs, the eigenvectors of $\mathbf{S}$ are then ordered by the magnitude of their eigenvalues, with the largest eigenvalue corresponding to the direction with the most variance in the data (first PC). The (normalized) eigenvalues represent the amount of variance explained by each PC.
+
+
+\begin{algorithm}
+\caption{Principal Component Analysis (PCA)}
+\begin{algorithmic}[1]
+    \STATE \textbf{Input:} Dataset \(\mathbf{X}\), with \(n\) samples and \(p\) features, and the desired number of principal components \(l\).
+
+    \STATE \textbf{Step 1:} Compute the covariance matrix \(\mathbf{S}\) of the dataset:
+    \begin{equation*}
+    \mathbf{S} = \frac{1}{n - 1} \mathbf{X}^{\mathsf{T}} \mathbf{X}.
+    \end{equation*}
+
+    \STATE \textbf{Step 2:} Calculate the eigenvectors \(\mathbf{w}_{(k)}\) and eigenvalues \(\lambda_k\) of the covariance matrix \(\mathbf{S}\).
+
+    \STATE \textbf{Step 3:} Sort the eigenvectors \(\mathbf{w}_{(k)}\) by their corresponding eigenvalues in descending order.
+
+    \STATE \textbf{Step 4:} Calculate the first \(l\) principal components for each sample \(\mathbf{x}_{(i)}\):
+    \begin{equation*}
+    {t_{k}}_{(i)} = \mathbf{x}_{(i)} \cdot \mathbf{w}_{(k)} \quad \text{for} \quad i = 1, \ldots, n \quad k = 1, \ldots, l.
+    \end{equation*}
+    
+    \STATE \textbf{Output:} The principal component scores \(\mathbf{t}\), and the principal component vectors \(\mathbf{w}\).
+\end{algorithmic}
+\end{algorithm}
+
+
+The complete principal component decomposition of the data matrix $\mathbf{X}$ can be given in matrix form by:
+
+\begin{equation}
+\mathbf{T} = \mathbf{X} \mathbf{W},
+\end{equation}
+
+where $\mathbf{W}$ is a $p \times p$ matrix containing the eigenvectors of $\mathbf{S}$.
+
+
+
+\section{The Monte Carlo simulations}
+To assess the relationship between measured rates on both luminosity and beamline position, I perform feasibility studies using official LHCb simulations. These simulations allow us to evaluate how variations in luminosity and beamline parameters impact the detector's response.
+
+The LHCb simulation workflow encompasses multiple software applications, each responsible for a specific task. The generation of primary particles from proton-proton collisions is handled by the \textsc{Pythia} package \cite{Sj_strand_2006}, a versatile event generator. Particle decays are simulated through the \textsc{EvtGen} framework \cite{Lange:2001uf}, while the propagation of particles through the detector is modeled with the \textsc{Geant4} toolkit \cite{Agostinelli:2002hh}, which includes a detailed geometric description of all detector components.
+
+All these tasks are managed by the \textsc{Gauss} application \cite{Miglioranzi:1322402}, which integrates the different simulation stages. \textsc{Gauss} also manages various luminosity-related parameters such as pile-up, luminous region position (in \(x, y,\) and \(z\)), its width, beam crossing angle, and beamline inclination.
+
+The sub-detectors' responses to simulated particles are generated by the \textsc{Boole} application, which handles signal digitisation in the same format as the actual experiment's data acquisition system. After digitisation, the simulated data follow the same processing path as real data, passing through the same trigger, reconstruction, and analysis software. The trigger application, known as \textsc{Moore}, includes algorithms for both high-level triggers. 
+
+To investigate the impact of the VELO cluster counters on the beamline and luminosity estimations, a software version of the firmware for the luminosity counters was implemented in the \textsc{Moore} framework. This modification allows for the emulation of the hardware's functionality, enabling studies of how changes in beamline parameters affect the counters' readings.
+
+Multiple simulation scenarios were conducted to examine the effects of different settings for instantaneous luminosity and beamline parameters. All simulations are based on Minimum Bias events, representing generic pp inelastic collisions. They use the LHCb Upgrade I detector simulation with a center-of-mass energy of $\sqrt{s} = \SI{13.6}{\tera\eV}$ and a bunch spacing of \SI{25}{\nano\second}. Unless specified otherwise, each simulation analyzed $100,000$ events. The simulations covered various configurations:
+
+\begin{itemize}
+    \item A scan of event pile-up \(\nu\) from $3.8$ to $35.8$, corresponding to an instantaneous luminosity range of \SI{1e33}{\per\centi\meter\squared\per\second} to \SI{9.4e33}{\per\centi\meter\squared\per\second}. The mean position of the interaction region was set to $(0.0, 0.0, 0.0)$ mm. Simulations were conducted with both MagDown and MagUp magnet configurations.
+
+    \item A scan of the luminous region's mean $z$-position from \SI{-120}{\milli\meter} to \SI{120}{\milli\meter} at $\Delta z=\SI{20}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $x = \SI{0}{\milli\meter}$, and $y = \SI{0}{\milli\meter}$, in MagDown configuration. 
+
+    \item A scan of the luminous region's mean $y$-position from \SI{-1.5}{\milli\meter} to \SI{1.5}{\milli\meter} at $\Delta y =\SI{0.5}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $x = \SI{0}{\milli\meter}$, and $z = \SI{0}{\milli\meter}$, in MagDown configuration.
+
+     \item A scan of the luminous region's mean $x$-position from \SI{-1.5}{\milli\meter} to \SI{1.5}{\milli\meter} at $\Delta x =\SI{0.5}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $y = \SI{0}{\milli\meter}$, and $z = \SI{0}{\milli\meter}$, in MagDown configuration.
+
+\end{itemize}
+
+
+The beamline position is defined as the distribution of the PVs, hence the value reported on the bullet list indicate the average position of the PVs. The luminous region is spread for about \SI{30}{\milli\meter} in the $z$ component, while it has a width of \SI{15}{\micro\meter} in both the $x$ and $y$ directions.  
+
+\section{Creating the estimators on MC}
+
+The counters position on each station of the VELO furnish a base for a conceptual 208-dimensional vector space. Each one of these counter is a feature $p$. 
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/explained_variance_new_y.pdf}
+    \caption{Percentage of explained variance varying the number of integrated events for computing the mean number of clusters per event.}
+    \label{fig:explained_variance}
+\end{figure}
+
 
 \begin{figure}
     \centering
@@ -75,7 +238,7 @@ Description of BeamSpot Monitor and the reconstruction performed at HLT1
     \caption{Residuals from the fit}\label{fig:zres_cubic_MC}
     \end{subfigure}
     \caption{Cubic relationship between the first component calculated with the PCA and beamline position shifts in z component}
-    \label{fig:y_MC}
+    \label{fig:z_cubic_MC}
 \end{figure}
 
 
