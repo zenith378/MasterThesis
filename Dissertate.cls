@@ -142,6 +142,8 @@
 \RequirePackage{fancyhdr}
 \RequirePackage[medium, md, sc]{titlesec} % format for the title of the sections
 \setlength{\headheight}{15pt}
+\usepackage{lineno}
+\linenumbers
 
 \RequirePackage{titling}
 

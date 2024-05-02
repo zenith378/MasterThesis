@@ -64,46 +64,57 @@ Mathematically, PCA transforms the data by finding a set of size $l$ of $p$-dime
 {t_{k}}_{(i)} = \mathbf{x}_{(i)} \cdot \mathbf{w}_{(k)} \quad \text{for} \quad i = 1, \ldots, n \quad k = 1, \ldots, l
 \end{equation}
 
-The goal is to maximize the variance along each principal component PC, with each coefficient vector \(\mathbf{w}\) constrained to be a unit vector. Typically, \(l\) is selected to be less than \(p\) to reduce dimensionality.
+The goal is to maximise the variance along each principal component PC, with each coefficient vector \(\mathbf{w}\) constrained to be a unit vector. Typically, \(l\) is selected to be less than \(p\) to reduce dimensionality.
 
 
 The first PC $t_{1}$ maximises the variance of the dataset, thus the weight vector \(\mathbf{w}_{(1)}\) must satisfy the following condition:
 
 \begin{equation}
-\mathbf{w}_{(1)} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \sum_{i=1}^{n} \left( \mathbf{x}_{(i)} \cdot \mathbf{w} \right)^2 \right\}
+\mathbf{w}_{(1)} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \sum_{i=1}^{n} \left( \mathbf{x}_{(i)} \cdot \mathbf{w} \right)^2 \right\}.\label{argmax}
 \end{equation}
 
-This condition can be rewritten in matrix form as:
+Let's break it down to the single pieces: 
+\begin{itemize}
+    \item $\mathbf{x}_{(i)} \cdot \mathbf{w}$ represents the projection of a data entry on a direction in the feature space (208-dimensional) described by a vector $ \mathbf{w}$;
+    \item $ \sum_{i=1}^{n} \left( \mathbf{x}_{(i)} \cdot \mathbf{w} \right)^2$ is the variance of the projection of the whole dataset on the direction described by the vector $ \mathbf{w}$;
+    \item $\|\mathbf{w}\| = 1$ ensures that $\mathbf{w}$ is properly normalised as a unit vector;
+    \item the $\arg \max$ operation finds the vector $\mathbf{w}$, such that the projection of the dataset on this vector has the greatest variance, with respect to all the other projections.
+\end{itemize}
+
+The condition \ref{argmax} can be rewritten in matrix form as:
 
 \begin{equation}
-\mathbf{w}_{(1)} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \|\mathbf{Xw}\|^2 \right\} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \mathbf{w}^{\mathsf{T}} \mathbf{X}^{\mathsf{T}} \mathbf{Xw} \right\},
+\mathbf{w}_{(1)} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \|\mathbf{Xw}\|^2 \right\} = \arg \max_{\|\mathbf{w}\| = 1} \left\{ \mathbf{w}^{\mathsf{T}} \mathbf{X}^{\mathsf{T}} \mathbf{Xw} \right\}.
 \end{equation}
 
-and since $\mathbf{w}_{(1)}$ is defined as a unit vector, we can redefine it with its normalization:
+Incorporating the normalisation in the analytical form, we get a more straightforward expression:
 
 \begin{equation}
-\mathbf{w}_{(1)} = \arg \max \left\{ \frac{\mathbf{w}^{\mathsf{T}} \mathbf{X}^{\mathsf{T}} \mathbf{Xw}}{\mathbf{w}^{\mathsf{T}} \mathbf{w}} \right\}\label{first_weight}
+\mathbf{w}_{(1)} = \arg \max \left\{ \frac{\mathbf{w}^{\mathsf{T}} \mathbf{X}^{\mathsf{T}} \mathbf{Xw}}{\mathbf{w}^{\mathsf{T}} \mathbf{w}} \right\}.\label{first_weight}
 \end{equation}
 
-The quantity to maximise is recognized as a Rayleigh quotient\cite{horn13}. A positive semidefinite matrix such as $\mathbf{X}^{\mathsf{T}} \mathbf{X}$ has the maximum possible Rayleigh quotient value as its largest eigenvalue, which occurs when $\mathbf{w}$ is the corresponding eigenvector\cite{parlett1998symmetric}.
+The quantity to maximise is recognised as a Rayleigh quotient\cite{horn13}. A positive semidefinite matrix such as $\mathbf{X}^{\mathsf{T}} \mathbf{X}$ has the maximum possible Rayleigh quotient value as its largest eigenvalue, which occurs when $\mathbf{w}$ is the corresponding eigenvector\cite{parlett1998symmetric}.
 
 
 With $\mathbf{w}_{(1)}$ found, the first PC score of a data vector $\mathbf{x}_{(i)}$ can be calculated as:
 
 \begin{equation}
-t_{1(i)} = \mathbf{x}_{(i)} \cdot \mathbf{w}_{(1)}.
+t_{1(i)} = \mathbf{x}_{(i)} \cdot \mathbf{w}_{(1)}.\label{first_score}
 \end{equation}
 
 In order to find subsequent components, the contribution given by $\mathbf{t}_{(1)}$ must be subtracted from the original dataset. This procedure ensures that the subsequent PC focuses on the variance that remains in the data. Iterating the reasoning, the $k$-th PC is found by subtracting the contributions given by the first $k-1$ components. We can hence define a residual matrix $\mathbf{\hat{X}}_{k}$
 
 \begin{equation}
-\mathbf{\hat{X}}_{k} = \mathbf{X} - \sum_{s=1}^{k-1} \mathbf{X} \mathbf{w}_{(s)} \mathbf{w}_{(s)}^{\mathsf{T}}.\label{dim_red_tran}
-\end{equation},
+\mathbf{\hat{X}}_{k} = \mathbf{X} - \sum_{s=1}^{k-1} \mathbf{X} \mathbf{w}_{(s)} \mathbf{w}_{(s)}^{\mathsf{T}},\label{dim_red_tran}
+\end{equation}
 that represents the projection of the data on a subspace orthogonal to the first $k-1$ components.
 
 Creating this matrix, the problem reduces to the case just discussed, with the solution for $\mathbf{w}_{(k)}$ being the eigenvector with the highest corresponding eigenvector of the space $\mathbf{\hat{X}}_{k}^\mathsf{T}\mathbf{\hat{X}}_{k}$. But this eigenvector of the residual space $\mathbf{\hat{X}}_{k}$ is the $k$-th  eigenvector of the $\mathbf{X}^{\mathsf{T}} \mathbf{X}$ space since eigenvectors corresponding to distinct eigenvalues are always orthogonal to one another, as stated by the spectral theorem.
 
-
+This allows us to generalise \eqref{first_score} to a general $k$-th PC score:
+\begin{equation}
+t_{k(i)} = \mathbf{x}_{(i)} \cdot \mathbf{w}_{(k)}.\label{score}
+\end{equation}
 
 
 %\mathbf{w}_{(k)} = \operatorname{arg\,max}_{\|\mathbf{w}\| = 1} \left\{\|\mathbf{\hat{X}}_{k} \mathbf{w}\|^{2}\right\} = \operatorname{arg\,max} \left\{ \frac{\mathbf{w}^{\mathsf{T}} \mathbf{\hat{X}}_{k}^{\mathsf{T}} \mathbf{\hat{X}}_{k} \mathbf{w}}{\mathbf{w}^{\mathsf{T}} \mathbf{w}} \right\}.
@@ -160,7 +171,7 @@ where $\mathbf{W}$ is a $p \times p$ matrix containing the eigenvectors of $\mat
 \section{The Monte Carlo simulations}
 To assess the relationship between measured rates on both luminosity and beamline position, I perform feasibility studies using official LHCb simulations. These simulations allow us to evaluate how variations in luminosity and beamline parameters impact the detector's response.
 
-The LHCb simulation workflow encompasses multiple software applications, each responsible for a specific task. The generation of primary particles from proton-proton collisions is handled by the \textsc{Pythia} package \cite{Sj_strand_2006}, a versatile event generator. Particle decays are simulated through the \textsc{EvtGen} framework \cite{Lange:2001uf}, while the propagation of particles through the detector is modeled with the \textsc{Geant4} toolkit \cite{Agostinelli:2002hh}, which includes a detailed geometric description of all detector components.
+The LHCb simulation workflow encompasses multiple software applications, each responsible for a specific task. The generation of primary particles from proton-proton collisions is handled by the \textsc{Pythia} package \cite{Sj_strand_2006}, a versatile event generator. Particle decays are simulated through the \textsc{EvtGen} framework \cite{Lange:2001uf}, while the propagation of particles through the detector is modelled with the \textsc{Geant4} toolkit \cite{Agostinelli:2002hh}, which includes a detailed geometric description of all detector components.
 
 All these tasks are managed by the \textsc{Gauss} application \cite{Miglioranzi:1322402}, which integrates the different simulation stages. \textsc{Gauss} also manages various luminosity-related parameters such as pile-up, luminous region position (in \(x, y,\) and \(z\)), its width, beam crossing angle, and beamline inclination.
 
@@ -168,23 +179,78 @@ The sub-detectors' responses to simulated particles are generated by the \textsc
 
 To investigate the impact of the VELO cluster counters on the beamline and luminosity estimations, a software version of the firmware for the luminosity counters was implemented in the \textsc{Moore} framework. This modification allows for the emulation of the hardware's functionality, enabling studies of how changes in beamline parameters affect the counters' readings.
 
-Multiple simulation scenarios were conducted to examine the effects of different settings for instantaneous luminosity and beamline parameters. All simulations are based on Minimum Bias events, representing generic pp inelastic collisions. They use the LHCb Upgrade I detector simulation with a center-of-mass energy of $\sqrt{s} = \SI{13.6}{\tera\eV}$ and a bunch spacing of \SI{25}{\nano\second}. Unless specified otherwise, each simulation analyzed $100,000$ events. The simulations covered various configurations:
+Multiple simulation scenarios were conducted to examine the effects of different settings for instantaneous luminosity and beamline parameters. All simulations are based on Minimum Bias events, representing generic pp inelastic collisions. They use the LHCb Upgrade I detector simulation with a center-of-mass energy of $\sqrt{s} = \SI{13.6}{\tera\eV}$ and a bunch spacing of \SI{25}{\nano\second}. Unless specified otherwise, each simulation analyzed $10^5$ events. The simulations covered various configurations:
 
+\begin{enumerate}
+
+    \item[(i)] A scan of the luminous region's mean $z$-position from \SI{-120}{\milli\meter} to \SI{120}{\milli\meter} at $\Delta z=\SI{20}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $x = \SI{0}{\milli\meter}$, and $y = \SI{0}{\milli\meter}$, in MagDown configuration. A file for each nominal position is produced.
+
+    \item[(ii)] A scan of the luminous region's mean $y$-position from \SI{-1.5}{\milli\meter} to \SI{1.5}{\milli\meter} at $\Delta y =\SI{0.5}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $x = \SI{0}{\milli\meter}$, and $z = \SI{0}{\milli\meter}$, in MagDown configuration. A file for each nominal position is produced.
+
+     \item[(iii)] A scan of the luminous region's mean $x$-position from \SI{-1.5}{\milli\meter} to \SI{1.5}{\milli\meter} at $\Delta x =\SI{0.5}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $y = \SI{0}{\milli\meter}$, and $z = \SI{0}{\milli\meter}$, in MagDown configuration. A file for each nominal position is produced.
+
+     \item[(iv)] A scan of event pile-up \(\nu\) from $3.8$ to $35.8$, corresponding to an instantaneous luminosity range of \SI{1e33}{\per\centi\meter\squared\per\second} to \SI{9.4e33}{\per\centi\meter\squared\per\second}. The mean position of the interaction region was set to $(0.0, 0.0, 0.0)$ mm. Simulations were conducted with both MagDown and MagUp magnet configurations. A file for each nominal position is produced.
+
+\end{enumerate}
+
+
+The beamline position is defined as the distribution of the PVs, hence the value reported on the bullet list above indicate the average position of the PVs. The luminous region is spread for about \SI{30}{\milli\meter} in the $z$ component, while it has a width of \SI{15}{\micro\meter} in both the $x$ and $y$ directions.  
+
+These simulations are used for various purposes. 
 \begin{itemize}
-    \item A scan of event pile-up \(\nu\) from $3.8$ to $35.8$, corresponding to an instantaneous luminosity range of \SI{1e33}{\per\centi\meter\squared\per\second} to \SI{9.4e33}{\per\centi\meter\squared\per\second}. The mean position of the interaction region was set to $(0.0, 0.0, 0.0)$ mm. Simulations were conducted with both MagDown and MagUp magnet configurations.
+\item The simulations in (i), (ii), (iii) are used to construct datasets on which the PCA is performed. As explained in the previous section, the PCA furnish a new set of coordinates such that the first coordinate describes the direction of maximal variance of the dataset. If we can construct a dataset in which the only varying component is the beamline position along one direction and execute the PCA on that dataset, some of the first PCs should be quantities depending on the beamline position. This procedure is explained in detail in the next section.
+\item The simulations in (iv) are used to check for the dependency of the beamline estimators to the luminosity. If the luminosity is linear in the counter as explained in Chapter \ref{chap:luminosity}, it follows straightforwardly that the luminosity will also bias the beamline estimation linearly. This MC simulations are used to check this behaviour.
+\end{itemize}
 
-    \item A scan of the luminous region's mean $z$-position from \SI{-120}{\milli\meter} to \SI{120}{\milli\meter} at $\Delta z=\SI{20}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $x = \SI{0}{\milli\meter}$, and $y = \SI{0}{\milli\meter}$, in MagDown configuration. 
+From each one of the simulation files in (i), (ii), (iii) we produce a tuple containing 212 features:
+\begin{itemize}
+    \item The event number: it is the index of the tuple indicating the label of the event. It is an integer running from $0$ to $10^5$.
+    \item $x$-position [mm]: the $x$ position of the beamline reconstructed as the mean of PVs. It is a float number that can assume 7 possible values: $-1.5$, $-1.0$, $-0.5$, $0.0$, $0.5$, $1.0$, $1.5$
+    \item $y$-position [mm]: the $y$ position of the beamline reconstructed as the mean of PVs. It is a float number that can assume 7 possible values: $-1.5$, $-1.0$, $-0.5$, $0.0$, $0.5$, $1.0$, $1.5$
+    \item $z$-position [mm]: the $z$ position of the beamline reconstructed as the mean of PVs. It is a float number that can assume 13 possible values: \\
+    $-120.0$, $-100.0$, $-80.$, $-60.0$, $-40.0$, $-20.0$, $0.0$, $20.0$, $40.0$, $60.0$, $80.0$, $100.0$, $120.0$
+    \item the 208 counters: the remaining 208 features indicate the number of clusters counted by each specific counter in that event. It is an integer number that can assume any positive value.
+\end{itemize}
 
-    \item A scan of the luminous region's mean $y$-position from \SI{-1.5}{\milli\meter} to \SI{1.5}{\milli\meter} at $\Delta y =\SI{0.5}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $x = \SI{0}{\milli\meter}$, and $z = \SI{0}{\milli\meter}$, in MagDown configuration.
+Subsequently, we append together the tuples files created from (i), (ii) and (iii), in order to obtain three different files, one relative to each position $x$, $y$ or $z$. We end up with three tuples: the ones for $x$ and $y$ contain 600 thousand events, while the one for $z$ contain 1.2 million events. 
 
-     \item A scan of the luminous region's mean $x$-position from \SI{-1.5}{\milli\meter} to \SI{1.5}{\milli\meter} at $\Delta x =\SI{0.5}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $y = \SI{0}{\milli\meter}$, and $z = \SI{0}{\milli\meter}$, in MagDown configuration.
+In order to create the datasets used to estimate the Principal Components we have to perform one further step.
+The quantities read in the firmware are the rates of clusters, hence we need to create a dataset in which the feature of the 208 counters are not the counts of clusters, but rather the mean number of clusters per event. This can be done mediating over $N$ entries of the dataset. The choice of this integration constant is no matter to take lightly. The counters are read in firmware once every $3$ seconds, meaning that at a crossing rate of \SI{40}{\mega\hertz} they integrate 120 million events. Unfortunately, we do not have such high statistics in the Monte Carlo, meaning that this integration constant needs to be set lower. It was decided to have 5 points per position in each dataset, meaning that the integration constant is set to $10^5/5=20\times10^3$. Therefore, we create the final tuples on which we perform the PCA by integrating chunks of $20000$ events at the same nominal position. By doing so, we create a dataset for each position containing 30 entries for $x$ and $y$ and 60 entries for $z$. A schematic of this last procedure is depicted in Figure \ref{fig:tabular_dataset}. 
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/tabular_dataset.png}
+    \caption{Scheme of the last step in the creation of the tabular dataset used for estimating the PCA. An example regarding the x dataset is depicted. In the table on the left the dataset containing the raw events obtained from the simulation files are depicted. Notice that we have 100 thousand points for each nominal position and that the variables Counter1, Counter2, etc. indicate an integer, i.e. the number of clusters counted in that specific event. The tabular dataset on the right is obtained by integrating chunks of 20 thousand events at the same nominal position. Notice that in the dataset on the right we have 5 points per position, and that the features indicating the counters are float values that indicate the \textit{rate} of the counters, i.e. the mean number of clusters per event.}
+    \label{fig:tabular_dataset}
+\end{figure}
+
+The very last step of this dataset creation procedure involves splitting each dataset in two, in order to create the final datasets: 
+\begin{itemize}
+    \item the train dataset: in the training dataset only the first 2 points per position are kept. We end up with a dataset containing 12 entries for $x$ and $y$, and $24$ entries for $z$. This dataset is used to estimate the weights $\mathbf{w}_{(k)}$ as described in the previous section.
+    \item the test dataset: in the test dataset the last 3 points per position are stored. These points are used to estimate the scores $\mathbf{t}_{(i)}$ and asses their relationship with the beamline position. By fitting this yet-to-discover relationship we can also calculate the residuals in order to estimate the resolution of the estimators.
 \end{itemize}
 
 
-The beamline position is defined as the distribution of the PVs, hence the value reported on the bullet list indicate the average position of the PVs. The luminous region is spread for about \SI{30}{\milli\meter} in the $z$ component, while it has a width of \SI{15}{\micro\meter} in both the $x$ and $y$ directions.  
-
 \section{Creating the estimators on MC}
+
+We want to construct three different quantities $\hat{x}$, $\hat{y}$, $\hat{z}$ to estimate the beamline position components using $l$ scores $t_k$ derived with the PCA algorithm.
+\begin{align}
+    \hat{x} &= \hat{x}(t^x_1, \dots, t^x_l)_{(k)} \\
+    \hat{y} &= \hat{y}(t^y_1, \dots, t^y_l)_{(k)} \\
+    \hat{z} &= \hat{z}(t^z_1, \dots, t^z_l)_{(k)} 
+\end{align} 
+
+Each one of the scores $t_k$ is described by \eqref{score}, hence we need to properly define $\mathbf{x}_{(i)}$ and $\mathbf{w_{(k)}}$. The $\mathbf{x}_{(i)}$ vector is a p-dimenisonal vector containing the mean counts per events on each one of the p implemented counters. The  $\mathbf{w_{(k)}}$ is the vector of weights for calculating the $k$-th component with the PCA algorithm and we will use the MC to estimate them. 
+As anticipated, we need to construct a dataset on which the only varying component is the beamline position along one of the direction. This can be done using the simulations (i), (ii), (iii) described in the previous section. 
+
+
+Let $\mathbf{c}=(c_1, \dots, c_p)$ be the counts registered by each counter $k$ with $k$ iterating from $1$ to $p=208$. Let $\mathbf{\mu}=(\mu_1, \dots, \mu_p)$ be the mean counts per event associated to each counter $k$ and $\mathbf{\Sigma}$ the $p\times p$ covariance matrix describing the correlation between the counters. Since it is a counting experiment, the assumption is that the variable $\mathbf{c}$ follows a multivariate Poisson distribution described by the parameters $\mathbf{\mu}$ and $\mathbf{\Sigma}$. We introduce the parameter $\mathbf{x}=(x,y,z)$ representing the beamline position as a further parameter of the distribution. 
+%and we porform a change of variable from the raw counts $\mathbf{c}$ to the mean counts per event $\mathbf{m}$.
+In the central limit theorem (CLT), this distribution can be approximated with a multivariate gaussian of the form 
+\begin{equation}
+    P(\mathbf{c} ; \mathbf{\mu},\mathbf{\Sigma} |\mathbf{x}) = \frac{\exp \bigl(-\frac{1}{2}(\mathbf{c}-\mathbf{\mu})^{\mathsf{T}}\mathbf{\Sigma}^{-1}(\mathbf{c}-\mathbf{\mu})\bigr)}{\sqrt{(2\pi)^p\det\mathbf{\Sigma}}}
+\end{equation} 
+
 
 The counters position on each station of the VELO furnish a base for a conceptual 208-dimensional vector space. Each one of these counter is a feature $p$. 
 
