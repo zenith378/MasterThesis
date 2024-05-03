@@ -288,9 +288,10 @@
 	  \vspace{1pt}
 	  \@advisor \hfill \@author\\
 	  %\@university \\
-	  \vspace{6pt}
-	   \hfill \textit{Student ID}\\
-	   \hfill \@studentId \\
+        \vspace{10pt}
+        \textit{Co-Supervisor}  \hfill \textit{Student ID}\\
+        \@coadvisorOne \hfill \@studentId \\
+	  
 	  %\@coadvisorTwo \\
 	  %\@coadvisorsUniversity \\
 	\vspace{30pt}

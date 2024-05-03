@@ -29,7 +29,7 @@ As already stated various times, both HLT$1$ and HLT$2$ PVs reconstruction algor
 
 In this chapter, we explore an innovative approach to determining the beamline position in real-time without relying on traditional track reconstruction algorithms. This method provides accurate information on the beamline position, facilitating timely corrections for both luminosity estimation and track reconstruction. Through this approach, we aim to improve the overall accuracy and efficiency of the experiment's data analysis processes.
 
-It was already shown in an earlier work\cite{dan}, that the counters implemented for the luminosity are sensible to beamline displacement. An example of this sensibility is depicted in Figure \ref{fig:z_lumi_dependency}, where one can clearly see how the mean of the outer counters per event is slightly different depending on the luminus region position. 
+It was already shown in an earlier work\cite{dan}, that the counters implemented for the luminosity are sensible to beamline displacement. An example of this sensibility is depicted in Figure \ref{fig:z_lumi_dependency}, where one can clearly see how the mean of the outer counters per event is slightly different depending on the luminous region position. 
 
 \begin{figure}
     \centering
@@ -43,7 +43,7 @@ In this chapter, I study a way to combine the 208 implemented counters to give a
 %The Principal Component Analysis is not the only possibility 
 
 
-\section[The Principal Component Analysis]{The Principal Component Analysis $\bigl($PCA$\bigr)$}
+\section[The Principal Component Analysis]{The Principal Component Analysis $\bigl($PCA$\bigr)$}\label{sec:PCA}
 
 The Principal Component Analysis (PCA) is a widely used statistical technique for dimensionality reduction, feature extraction, and data compression. It involves transforming a dataset into a new coordinate system with a linear orthogonal transformation designed to maximize the variance along the first principal component (the first coordinate of the transformed system), with the subsequent components containing successively decreasing variance.
 An intuition and visualizationof this transformation is given in Figure \ref{fig:pca}.
@@ -168,7 +168,7 @@ where $\mathbf{W}$ is a $p \times p$ matrix containing the eigenvectors of $\mat
 
 
 
-\section{The Monte Carlo simulations}
+\section{The Monte Carlo simulations}\label{sec:MC}
 To assess the relationship between measured rates on both luminosity and beamline position, I perform feasibility studies using official LHCb simulations. These simulations allow us to evaluate how variations in luminosity and beamline parameters impact the detector's response.
 
 The LHCb simulation workflow encompasses multiple software applications, each responsible for a specific task. The generation of primary particles from proton-proton collisions is handled by the \textsc{Pythia} package \cite{Sj_strand_2006}, a versatile event generator. Particle decays are simulated through the \textsc{EvtGen} framework \cite{Lange:2001uf}, while the propagation of particles through the detector is modelled with the \textsc{Geant4} toolkit \cite{Agostinelli:2002hh}, which includes a detailed geometric description of all detector components.
@@ -189,7 +189,7 @@ Multiple simulation scenarios were conducted to examine the effects of different
 
      \item[(iii)] A scan of the luminous region's mean $x$-position from \SI{-1.5}{\milli\meter} to \SI{1.5}{\milli\meter} at $\Delta x =\SI{0.5}{\milli\meter}$ steps relative to the LHCb reference frame, with $\nu = 7.6$, $y = \SI{0}{\milli\meter}$, and $z = \SI{0}{\milli\meter}$, in MagDown configuration. A file for each nominal position is produced.
 
-     \item[(iv)] A scan of event pile-up \(\nu\) from $3.8$ to $35.8$, corresponding to an instantaneous luminosity range of \SI{1e33}{\per\centi\meter\squared\per\second} to \SI{9.4e33}{\per\centi\meter\squared\per\second}. The mean position of the interaction region was set to $(0.0, 0.0, 0.0)$ mm. Simulations were conducted with both MagDown and MagUp magnet configurations. A file for each nominal position is produced.
+     \item[(iv)] A scan of event pile-up \(\nu\) from $7.6$ to $35.8$. The mean position of the interaction region was set to $(0.0, 0.0, 0.0)$ mm. Simulations were conducted with both MagDown and MagUp magnet configurations. A file for each nominal position is produced.
 
 \end{enumerate}
 
@@ -215,7 +215,14 @@ From each one of the simulation files in (i), (ii), (iii) we produce a tuple con
 Subsequently, we append together the tuples files created from (i), (ii) and (iii), in order to obtain three different files, one relative to each position $x$, $y$ or $z$. We end up with three tuples: the ones for $x$ and $y$ contain 600 thousand events, while the one for $z$ contain 1.2 million events. 
 
 In order to create the datasets used to estimate the Principal Components we have to perform one further step.
-The quantities read in the firmware are the rates of clusters, hence we need to create a dataset in which the feature of the 208 counters are not the counts of clusters, but rather the mean number of clusters per event. This can be done mediating over $N$ entries of the dataset. The choice of this integration constant is no matter to take lightly. The counters are read in firmware once every $3$ seconds, meaning that at a crossing rate of \SI{40}{\mega\hertz} they integrate 120 million events. Unfortunately, we do not have such high statistics in the Monte Carlo, meaning that this integration constant needs to be set lower. It was decided to have 5 points per position in each dataset, meaning that the integration constant is set to $10^5/5=20\times10^3$. Therefore, we create the final tuples on which we perform the PCA by integrating chunks of $20000$ events at the same nominal position. By doing so, we create a dataset for each position containing 30 entries for $x$ and $y$ and 60 entries for $z$. A schematic of this last procedure is depicted in Figure \ref{fig:tabular_dataset}. 
+The quantities read in the firmware are the rates of clusters, hence we need to create a dataset in which the feature of the 208 counters are not the counts of clusters, but rather the mean number of clusters per event. 
+Let $\mathbf{c}=(c_1, \dots, c_p)$ be the counts registered by each counter $k$ with $k$ iterating from $1$ to $p=208$. Let $\mathbf{\mu}=(\mu_1, \dots, \mu_p)$ be the mean counts per event associated to each counter $k$ and $\mathbf{\Sigma}$ the $p\times p$ covariance matrix describing the correlation between the counters. Since it is a counting experiment, the assumption is that the variable $\mathbf{c}$ follows a multivariate Poisson distribution, with its parameters depending on the parameter $\mathbf{x}=(x,y,z)$ representing the beamline position. In the central limit theorem (CLT), this distribution can be approximated with a multivariate normal distribution of the form 
+\begin{equation}
+    P(\mathbf{c} ; \mathbf{\mu},\mathbf{\Sigma} |\mathbf{x}) = \frac{\exp \bigl(-\frac{1}{2}(\mathbf{c}-\mathbf{\mu})^{\mathsf{T}}\mathbf{\Sigma}^{-1}(\mathbf{c}-\mathbf{\mu})\bigr)}{\sqrt{(2\pi)^p\det\mathbf{\Sigma}}}\label{mvgaussian}
+\end{equation} 
+We know that for this distribution the Maximum Likelihood Estimator (MLE) for  $\mathbf{\mu}=(\mu_1, \dots, \mu_p)$ are the sample means of the counter and that the MLE for $\mathbf{\Sigma}$ is the sample covariance matrix.
+This asses the possibility of computing the parameters  $\mathbf{\mu}=(\mu_1, \dots, \mu_p)$ mediating each feature over $N$ entries of the dataset. The precision on the estimation scales with $\sqrt{N}$, meaning that the more statistics we integrate, the more accurate the estimation will be. 
+The counters are read in firmware once every $3$ seconds, meaning that at a crossing rate of \SI{40}{\mega\hertz} they integrate 120 million events. Unfortunately, we do not have such high statistics in the Monte Carlo, meaning that this integration constant needs to be set lower. It was decided to have 5 points per position in each dataset, meaning that the integration constant is set to $10^5/5=20\times10^3$. Therefore, we create the final tuples on which we perform the PCA by integrating chunks of $20000$ events at the same nominal position. By doing so, we create a dataset for each position containing 30 entries for $x$ and $y$ and 60 entries for $z$. A schematic of this last procedure is depicted in Figure \ref{fig:tabular_dataset}. 
 
 \begin{figure}
     \centering
@@ -226,8 +233,8 @@ The quantities read in the firmware are the rates of clusters, hence we need to 
 
 The very last step of this dataset creation procedure involves splitting each dataset in two, in order to create the final datasets: 
 \begin{itemize}
-    \item the train dataset: in the training dataset only the first 2 points per position are kept. We end up with a dataset containing 12 entries for $x$ and $y$, and $24$ entries for $z$. This dataset is used to estimate the weights $\mathbf{w}_{(k)}$ as described in the previous section.
-    \item the test dataset: in the test dataset the last 3 points per position are stored. These points are used to estimate the scores $\mathbf{t}_{(i)}$ and asses their relationship with the beamline position. By fitting this yet-to-discover relationship we can also calculate the residuals in order to estimate the resolution of the estimators.
+    \item the train dataset: in the training dataset only the first 2 points per position are kept. We end up with a dataset containing 12 entries for $x$ and $y$, and 24 entries for $z$. For the sake of clarity, let us name these datasets respectively $\mathbf{X}_{train}$, $\mathbf{Y}_{train}$ and $\mathbf{Z}_{train}$.  This dataset is used to estimate the weights $\mathbf{w}_{(k)}$ as it will be described in the next section.
+    \item the test dataset: in the test dataset the last 3 points per position are stored. These datasets comprehend 18 entries for $x$ and $y$, and 36 entries for $z$. For the sake of clarity, let us name these datasets respectively $\mathbf{X}_{test}$, $\mathbf{Y}_{test}$ and $\mathbf{Z}_{test}$. These points are used to estimate the scores $\mathbf{t}_{(i)}$ and asses their relationship with the beamline position. By fitting this yet-to-discover relationship we can also calculate the residuals in order to estimate the resolution of the estimators.
 \end{itemize}
 
 
@@ -235,45 +242,49 @@ The very last step of this dataset creation procedure involves splitting each da
 
 We want to construct three different quantities $\hat{x}$, $\hat{y}$, $\hat{z}$ to estimate the beamline position components using $l$ scores $t_k$ derived with the PCA algorithm.
 \begin{align}
+\begin{split}
     \hat{x} &= \hat{x}(t^x_1, \dots, t^x_l)_{(k)} \\
-    \hat{y} &= \hat{y}(t^y_1, \dots, t^y_l)_{(k)} \\
+    \hat{y} &= \hat{y}(t^y_1, \dots, t^y_l)_{(k)} \\\label{x_hat}
     \hat{z} &= \hat{z}(t^z_1, \dots, t^z_l)_{(k)} 
+    \end{split}
 \end{align} 
 
-Each one of the scores $t_k$ is described by \eqref{score}, hence we need to properly define $\mathbf{x}_{(i)}$ and $\mathbf{w_{(k)}}$. The $\mathbf{x}_{(i)}$ vector is a p-dimenisonal vector containing the mean counts per events on each one of the p implemented counters. The  $\mathbf{w_{(k)}}$ is the vector of weights for calculating the $k$-th component with the PCA algorithm and we will use the MC to estimate them. 
-As anticipated, we need to construct a dataset on which the only varying component is the beamline position along one of the direction. This can be done using the simulations (i), (ii), (iii) described in the previous section. 
-
-
-Let $\mathbf{c}=(c_1, \dots, c_p)$ be the counts registered by each counter $k$ with $k$ iterating from $1$ to $p=208$. Let $\mathbf{\mu}=(\mu_1, \dots, \mu_p)$ be the mean counts per event associated to each counter $k$ and $\mathbf{\Sigma}$ the $p\times p$ covariance matrix describing the correlation between the counters. Since it is a counting experiment, the assumption is that the variable $\mathbf{c}$ follows a multivariate Poisson distribution described by the parameters $\mathbf{\mu}$ and $\mathbf{\Sigma}$. We introduce the parameter $\mathbf{x}=(x,y,z)$ representing the beamline position as a further parameter of the distribution. 
-%and we porform a change of variable from the raw counts $\mathbf{c}$ to the mean counts per event $\mathbf{m}$.
-In the central limit theorem (CLT), this distribution can be approximated with a multivariate gaussian of the form 
-\begin{equation}
-    P(\mathbf{c} ; \mathbf{\mu},\mathbf{\Sigma} |\mathbf{x}) = \frac{\exp \bigl(-\frac{1}{2}(\mathbf{c}-\mathbf{\mu})^{\mathsf{T}}\mathbf{\Sigma}^{-1}(\mathbf{c}-\mathbf{\mu})\bigr)}{\sqrt{(2\pi)^p\det\mathbf{\Sigma}}}
-\end{equation} 
-
-
-The counters position on each station of the VELO furnish a base for a conceptual 208-dimensional vector space. Each one of these counter is a feature $p$. 
-
-
+Each one of the scores $t_k$ is described by \eqref{score}, hence we need to properly define $\mathbf{x}_{(i)}$ and $\mathbf{w_{(k)}}$. The $\mathbf{x}_{(i)}$ vector is a 208-dimensional vector containing the mean counts per events on each one of the p implemented counters. The  $\mathbf{w_{(k)}}$ is the vector of weights for calculating the $k$-th component with the PCA algorithm and we will use the $\mathbf{X}_{train}$, $\mathbf{Y}_{train}$ and $\mathbf{Z}_{train}$ datasets to estimate them. As described in Section \ref{sec:PCA}, we calculate the covariance matrices of these datasets and we diagonalize them in order to get $k$ 208-dimensional weights vectors $\mathbf{w_{(k)}}$, that represent the new basis of the space computed by the PCA. 
+Once the diagonalization is performed, the eigenvalues of the covariance matrices furnish a first statistics to look at. In figure \ref{fig:scree_plot} we report a scree plot, i.e. a bar chart displaying the normalised eigenvalues, which represents the percentage of variance explained by that specific component. As one can see, more than 90\% of the variance is explained by the first PC, while the others give marginal contributions. This plot suggest that probably only the first PC is enough to characterise the beamline position.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/explained_variance_new_y.pdf}
-    \caption{Percentage of explained variance varying the number of integrated events for computing the mean number of clusters per event.}
-    \label{fig:explained_variance}
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/x_eigenvalues.png}
+    \caption{$x$ dataset}\label{fig:x_eigenvalues}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/y_eigenvalues.png}
+    \caption{$y$ dataset}\label{fig:y_eigenvalues}
+    \end{subfigure}
+    \caption{Scree plot for the $x$ and $y$ dataset. For both datasets the first component explains more than 90\% of the variance, meaning that the first PC is probably enough to perform the beamline estimation.}
+    \label{fig:scree_plot}
 \end{figure}
+
+ We can calculate the first PC scores $\mathbf{t^j}_{1(i)}$ as \eqref{first_score} using the test datasets $j$ for each $j=x,y,z$ in order to check the relationships between $\mathbf{t^{j}}_{1(i)}$ and the beamline positions. The scores are calculated using the rates $\mathbf{x^{j}_{(i)}}$ of the test datasets and the vectors $\mathbf{w^{j}}_{(1)}$ estimated from the train datasets. We use two different datasets in order to ensure that the vectors $\mathbf{w^{j}}_{(1)}$ do not provide a biased estimation towards the train datasets. Being the test datasets completely independent from the train datasets, we can asses the validity of this method by computing the scores $\mathbf{t^{j}}_{1(i)}$ using the readout of the clustering $\mathbf{x_{(i)}}$ in real time and some pre-calculated vectors $\mathbf{w^{j}}_{(1)}$. The relationship between the first PC calculated as \eqref{first_score} and the beamline position can be assessed in the test datasets as depicted in the Figures \ref{fig:xfit_MC}, \ref{fig:yfit_MC}, \ref{fig:z_cubic_MC} for respectively the $x$, $y$ and $z$ components. As one can see, the relationship is linear for $x$ and $y$, while it is cubic for the $z$ displacements. In the Figures \ref{fig:xfit_MC}, \ref{fig:yfit_MC}, \ref{fig:z_cubic_MC} we also perform a best fit using the minimal $\chi^2$ method using a linear or cubic function to better validate this hypothesis. 
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=\textwidth]{figures/explained_variance_new_y.pdf}
+%    \caption{Percentage of explained variance varying the number of integrated events for computing the mean number of clusters per event.}
+%    \label{fig:explained_variance}
+%\end{figure}
 
 
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/x_fit.pdf}
+    \includegraphics[width=\linewidth]{figures/x_fit_MC.pdf}
     \caption{Linear Fit}\label{fig:xfit_MC}
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/x_res.png}
-    \caption{Residuals from the fit}\label{fig:xres_Mc}
+    \includegraphics[width=\linewidth]{figures/x_res_MC.png}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:xres_MC}
     \end{subfigure}
-    \caption{Linearity of the first component calculated with the PCA with respect to beamline position shifts in x component}
+    \caption{Linearity of the first component calculated with the PCA with respect to beamline position shifts in x component, alongside the residuals distribution fitted with a Gaussian distribution.}
     \label{fig:x_MC}
 \end{figure}
 
@@ -281,14 +292,14 @@ The counters position on each station of the VELO furnish a base for a conceptua
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/y_fit.pdf}
+    \includegraphics[width=\linewidth]{figures/y_fit_MC.pdf}
     \caption{Linear Fit}\label{fig:yfit_MC}
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/y_res.png}
-    \caption{Residuals from the fit}\label{fig:yres_MC}
+    \includegraphics[width=\linewidth]{figures/y_res_MC.png}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:yres_MC}
     \end{subfigure}
-    \caption{Linearity of the first component calculated with the PCA with respect to beamline position shifts in y component}
+    \caption{Linearity of the first component calculated with the PCA with respect to beamline position shifts in y component, alongside the residuals distribution fitted with a Gaussian distribution.}
     \label{fig:y_MC}
 \end{figure}
 
@@ -301,31 +312,126 @@ The counters position on each station of the VELO furnish a base for a conceptua
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
     \includegraphics[width=\linewidth]{figures/z_cubic_res.png}
-    \caption{Residuals from the fit}\label{fig:zres_cubic_MC}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:zres_cubic_MC}
     \end{subfigure}
-    \caption{Cubic relationship between the first component calculated with the PCA and beamline position shifts in z component}
+    \caption{Cubic relationship between the first component calculated with the PCA and beamline position shifts in z component, alongside the residuals distribution fitted with a Gaussian distribution.}
     \label{fig:z_cubic_MC}
 \end{figure}
+
+We can therefore rewrite \eqref{x_hat} as a simple quantity depending only on the first PC $\mathbf{t_1}$:
+\begin{align}
+\begin{split}
+    \hat{x} &= \hat{x}(t^x_1) = a_x t^x_1 + b_x \\
+    \hat{y} &= \hat{y}(t^y_1) = a_y t^y_1 + b_y \\\label{x_hat_true}
+    \hat{z} &= \hat{z}(t^z_1) = a_z (t^z_1)^3 + b_z (t^z_1)^2 + c_z  t^z_1 + d,
+    \end{split}
+\end{align} 
+with the various coefficients to be estimated directly from the fit performed. 
+
+In the Figures \ref{fig:xres_MC}, \ref{fig:yres_MC}, \ref{fig:zres_cubic_MC} we report the histogram of the residuals $\mathbf{r}=(r_x, r_y, r_z)$ computed as 
+ \begin{equation}
+     \mathbf{r}=\hat{\mathbf{x}} - \mathbf{x_{true}} \qquad \text{with } \hat{\mathbf{x}} = (\hat{x}, \hat{y}, \hat{z}) \quad \text{ and } \quad \mathbf{x_{true}}=(x_{true}, y_{true}, z_{true}).
+ \end{equation}
+
+ Each one of the histograms is fitted with a Gaussian distribution, in order to provide also a resolution of the estimation. The errorbars of this histograms are asymmetrical confidence intervals at $67$\% of the Poisson counts in the bin.
+ As one can see, the resolution is quoted to be around \SI{20}{\micro\meter} for $x$ and $y$ component and \SI{5}{\milli\meter} for the $z$ component. The resolution that we quote here depends on the two factors that we need to estimate $\mathbf{t^{j}}_{1}$, i.e. the vector of weights $\mathbf{w^j}_{(1)}$ and the mean number of clusters per event in each counter $\mathbf{x^{j}}$. As already stated, the counters are Poisson counts with mean depending on the position of the counter and the beamline position. In first approximation we can treat the counters as independent variables, hence each counter $c_k$ follows a Poisson distribution with mean $\lambda_k$
+ \begin{equation}
+     f(c_k) = \frac{e^{-\lambda_k} \mu^{c_k}}{c_k!}
+ \end{equation}
+
+ We know that the MLE for the parameter $\lambda$ of a Poisson distribution is simply given by the sample mean $\bar{c}=\frac{\sum_i c^i}{N}=x$. 
+ Since the Poisson is additive, the distirbution of the sum of N independent counts of the same counters is still a Poisson distribution with mean $N\lambda_k$
+ \begin{equation}
+     f\bigl(\sum_i c^i_k\bigr) = \frac{e^{-N\lambda_k} \mu^{\sum_i c^i_k}}{(\sum_i c^i_k)!}
+ \end{equation}
+Therefore, the sample mean follows still a Poisson distribution with parameter $N\lambda_k$. The variance associated to the sample mean and therefore to mean number of counts per event in each counter $k$:
+\begin{equation}
+    \text{Var}(x_k) =\text{Var}\biggl(\frac{\sum_i c^i_k}{N}\biggr) = \frac{\lambda_k}{N}
+\end{equation}
+
+The contribution to the uncertainty given by the weights $\mathbf{w^j}_{(1)}$ is much more complicated, because its estimation depends on the diagonalization process. On way to estimate the variance on the $\mathbf{w^j}_{(1)}$ would by bootstrapping over multiple copies of PCAs, performed generating the points $\mathbf{x^{j}}$ from a 208-dimensional Gaussian distribution defined in \eqref{mvgaussian} using as parameters the data-inferred means $\mathbf{\mu}$ and covariance matrix $\mathbf{\Sigma}$.  For the purpose of this thesis, this exercise was not performed, but this is of utterly importance for a more refined estimator.
+
+\subsection{$\mu$ dependency}
+All the counters are linear dependent to the mean interaction per event $\mu$ as presented in chapter \ref{chap:luminosity}. If during a Fill we have a change in $\mu$, the counters values will change accordingly. Since we use the counters to estimate the beamline position, the estimate performed will be biased by the $\mu$ quantity. In order to check how the change in $\mu$ affects our beamline estimate, we make use of the simulations 
+of point (iv) of section \ref{sec:MC}. These simulations comprehend four different scans in a $\mu$ range that varies from $\nu=7.6$ to $\nu=35.8$\footnote{The linear relationship between the mean number of interactions per event $\mu$ and the mean number of PVs $\nu$ is given by the factor $\tfrac{\mu}{\nu}=\frac{5.5}{7.6}\approx 0.72$}, all at the nominal beam position at $0$ in the three Cartesian components. 
+The relationship between the beamline estimate and $\mu$ can be assessed by calculating the beamline usin g$\ref{x_hat_true}$. Since the position is set at 0 for each event in this simulations, we should always estimate 0. However, as one can notice from the Figures \ref{fig:x_to_lumi}, \ref{fig:y_to_lumi} and \ref{fig:z_to_lumi}, the estimation is linearly biased by the pile-up $\nu$, as expected. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/x_to_lumi_fit_20000.pdf}
+    \caption{Linear relationship between estimated position in $x$ and pile-up $\nu$}
+    \label{fig:x_to_lumi}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/y_to_lumi_fit_20000.pdf}
+    \caption{Linear relationship between estimated position in $y$ and pile-up $\nu$}
+    \label{fig:y_to_lumi}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/z_to_lumi_fit_20000_numpix.pdf}
+    \caption{Linear relationship between estimated position in $z$ and pile-up $\nu$}
+    \label{fig:z_to_lumi}
+\end{figure}
+The fact that the relationship is linear, offers us a straightforward way to correct for this bias. If we redefine the beamline estimators as
+\begin{equation}
+    \hat{x}_{corrected} =\frac{\hat{x}(t^x_1)}{\mu}, \qquad
+    \hat{y}_{corrected} =\frac{\hat{y}(t^y_1)}{\mu}, \qquad
+    \hat{z}_{corrected} =\frac{\hat{z}(t^z_1)}{\mu}, \label{x_hat_corrected}
+    \end{equation}
+we end up with unbiased estimators of the luminous region.
+\section{Test on collision data}
+%\textit{Results obtained during VdM}
+
+
+In this chapter, we present the results of the beamline estimators derived from real collision data. A suitable environment for conducting this test is a sequence known as the Length Scale Calibration (LSC), typically part of the Van der Meer (VdM) scan fill \cite{reference}. During this sequence, the two beams are moved head-on from an initial position along the x-axis (from \(x = -a\) to \(x = +a\)), and a similar scan is repeated along the y-axis. Given this beam movement, my estimators should be able to track and reconstruct the beamline position, following these scans.
+
+The individual cluster counters are read every three seconds, with all data points passed to WinCC, where they are appropriately combined with the vector estimated from Monte Carlo simulations. After estimating the score \(t_i^j\), this value is divided by the estimated pile-up \(\mu\), calculated from the truncated mean luminosity as described in the previous chapter. Once these data points are generated, they are downloaded and analyzed offline. 
+
+Next, the data from my estimators are compared with the position of primary vertices reconstructed by VELO's monitoring tasks, providing an indication of the average position of the beamline relative to the VELO. These monitoring tasks do not operate in real-time, but they provide about one position estimate per second, offering a solid basis for comparison with my estimators.
+
+
+
+
 
 
 
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/z_fit.pdf}
-    \caption{Linear Fit}\label{fig:zfit_MC}
+    \includegraphics[width=\linewidth]{figures/x_res_new.pdf}
+    \caption{Linear Fit}\label{fig:xfit_data}
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/z_res.png}
-    \caption{Residuals from the fit}\label{fig:zres_MC}
+    \includegraphics[width=\linewidth]{figures/x_fit_new.pdf}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:xres_data}
     \end{subfigure}
-    \caption{Linearity of the first component calculated with the PCA with respect to beamline position shifts in z component}
-    \label{fig:z_MC}
+    \caption{Linearity of the first component calculated with the PCA with respect to beamline position shifts in x component, alongside the residuals distribution fitted with a Gaussian distribution.}
+    \label{fig:x_data}
 \end{figure}
 
 
-\section{Test on collision data}
-\textit{Results obtained during VdM}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/y_fit_new.pdf}
+    \caption{Linear Fit}\label{fig:yfit_data}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/y_res_new.pdf}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:yres_data}
+    \end{subfigure}
+    \caption{Linearity of the first component calculated with the PCA with respect to beamline position shifts in y component, alongside the residuals distribution fitted with a Gaussian distribution.}
+    \label{fig:y_MC}
+\end{figure}
+
+
+
+
+
+
+
+
 
 \section{Integration in LHCb online system}
 \textit{qua ci metto i plot che si vedono nella pagina di Monet e spiego come li abbiamo implementati}
