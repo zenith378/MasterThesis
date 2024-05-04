@@ -1,4 +1,4 @@
-\chapter{Estimating the beamline}
+\chapter{Estimating the luminous region}
 \textit{Definition of luminous region, its importance in Alignment and Calibration, luminosity and other stuff}
 The beamline is defined as the region where the two beams of particles collide, as depicted in Figure \ref{fig:luminous-region}. The position of the beamline corresponds to the area where the primary vertices of these collisions are formed, hence beamline and luminous region are treated as synonyms.
 
@@ -334,7 +334,9 @@ In the Figures \ref{fig:xres_MC}, \ref{fig:yres_MC}, \ref{fig:zres_cubic_MC} we 
  \end{equation}
 
  Each one of the histograms is fitted with a Gaussian distribution, in order to provide also a resolution of the estimation. The errorbars of this histograms are asymmetrical confidence intervals at $67$\% of the Poisson counts in the bin.
- As one can see, the resolution is quoted to be around \SI{20}{\micro\meter} for $x$ and $y$ component and \SI{5}{\milli\meter} for the $z$ component. The resolution that we quote here depends on the two factors that we need to estimate $\mathbf{t^{j}}_{1}$, i.e. the vector of weights $\mathbf{w^j}_{(1)}$ and the mean number of clusters per event in each counter $\mathbf{x^{j}}$. As already stated, the counters are Poisson counts with mean depending on the position of the counter and the beamline position. In first approximation we can treat the counters as independent variables, hence each counter $c_k$ follows a Poisson distribution with mean $\lambda_k$
+ As one can see, the resolution is quoted to be around \SI{20}{\micro\meter} for $x$ and $y$ component and \SI{5}{\milli\meter} for the $z$ component. 
+ \subsection{On the estimated resolution}
+ The resolution that we quote here depends on the two factors that we need to estimate $\mathbf{t^{j}}_{1}$, i.e. the vector of weights $\mathbf{w^j}_{(1)}$ and the mean number of clusters per event in each counter $\mathbf{x^{j}}$. As already stated, the counters are Poisson counts with mean depending on the position of the counter and the beamline position. In first approximation we can treat the counters as independent variables, hence each counter $c_k$ follows a Poisson distribution with mean $\lambda_k$
  \begin{equation}
      f(c_k) = \frac{e^{-\lambda_k} \mu^{c_k}}{c_k!}
  \end{equation}
@@ -351,7 +353,7 @@ Therefore, the sample mean follows still a Poisson distribution with parameter $
 
 The contribution to the uncertainty given by the weights $\mathbf{w^j}_{(1)}$ is much more complicated, because its estimation depends on the diagonalization process. On way to estimate the variance on the $\mathbf{w^j}_{(1)}$ would by bootstrapping over multiple copies of PCAs, performed generating the points $\mathbf{x^{j}}$ from a 208-dimensional Gaussian distribution defined in \eqref{mvgaussian} using as parameters the data-inferred means $\mathbf{\mu}$ and covariance matrix $\mathbf{\Sigma}$.  For the purpose of this thesis, this exercise was not performed, but this is of utterly importance for a more refined estimator.
 
-\subsection{$\mu$ dependency}
+\subsection{$\mu$ dependency}\label{sec:mu_dependency}
 All the counters are linear dependent to the mean interaction per event $\mu$ as presented in chapter \ref{chap:luminosity}. If during a Fill we have a change in $\mu$, the counters values will change accordingly. Since we use the counters to estimate the beamline position, the estimate performed will be biased by the $\mu$ quantity. In order to check how the change in $\mu$ affects our beamline estimate, we make use of the simulations 
 of point (iv) of section \ref{sec:MC}. These simulations comprehend four different scans in a $\mu$ range that varies from $\nu=7.6$ to $\nu=35.8$\footnote{The linear relationship between the mean number of interactions per event $\mu$ and the mean number of PVs $\nu$ is given by the factor $\tfrac{\mu}{\nu}=\frac{5.5}{7.6}\approx 0.72$}, all at the nominal beam position at $0$ in the three Cartesian components. 
 The relationship between the beamline estimate and $\mu$ can be assessed by calculating the beamline usin g$\ref{x_hat_true}$. Since the position is set at 0 for each event in this simulations, we should always estimate 0. However, as one can notice from the Figures \ref{fig:x_to_lumi}, \ref{fig:y_to_lumi} and \ref{fig:z_to_lumi}, the estimation is linearly biased by the pile-up $\nu$, as expected. 
@@ -375,26 +377,37 @@ The relationship between the beamline estimate and $\mu$ can be assessed by calc
 \end{figure}
 The fact that the relationship is linear, offers us a straightforward way to correct for this bias. If we redefine the beamline estimators as
 \begin{equation}
-    \hat{x}_{corrected} =\frac{\hat{x}(t^x_1)}{\mu}, \qquad
-    \hat{y}_{corrected} =\frac{\hat{y}(t^y_1)}{\mu}, \qquad
-    \hat{z}_{corrected} =\frac{\hat{z}(t^z_1)}{\mu}, \label{x_hat_corrected}
+\begin{split}
+    \hat{x}_{corrected} &=\frac{\hat{x}(t^x_1)}{\mu}= a_x ' \frac{t^x_1}{\mu} + b_x '\\%\qquad
+    \hat{y}_{corrected} &=\frac{\hat{y}(t^y_1)}{\mu}= a_y ' \frac{t^y_1}{\mu} + b_y ' \\%\qquad
+    \hat{z}_{corrected} &=\frac{\hat{z}(t^z_1)}{\mu}=  a_z '\biggl(\frac{t^z_1}{\mu}\biggr)^3 + b_z '\biggl(\frac{t^z_1}{\mu}\biggr)^2 + c_z ' \frac{t^z_1}{\mu} + d ' \label{x_hat_corrected}
+    \end{split}
     \end{equation}
 we end up with unbiased estimators of the luminous region.
+
+
+
 \section{Test on collision data}
 %\textit{Results obtained during VdM}
+Once we have a suitable configuration in MC, we can perform some tests on real collision data. A suitable environment for conducting this test is a sequence known as the Length Scale Calibration (LSC), typically part of the VdM scan fill for the determination of the beam sizes and their separation \cite{Balagura_2021}, which are parameters needed to compute the luminosity. During this sequence, the two beams are moved head-on from an initial position along the x-axis $x = -a$ to an end position $x = +a$, with respect to the nominal interaction position set at $x=0$. An analogue scan is repeated along the y-axis from $y=-a$ to $y=+a$. 
+Given the beam movements in LSC, my estimators for the $x$ and $y$ component of the beamline should be able to track it, following these scans.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/lumi_with_counters.png}
+    \caption{Overview of the mini Van Der Meer scan of April 6th, 2024. In the first panel we report the output of the counters as read in WinCC every three seconds, in the second panel the luminosity estimation performed using the trimmed mean as described in Chapter \ref{chap:luminosity}, while in the third and fourth panel the position of the two colliding beams in the $x$ and $y$ plane respectively.}
+    \label{fig:mini-vdm}
+\end{figure}
 
-In this chapter, we present the results of the beamline estimators derived from real collision data. A suitable environment for conducting this test is a sequence known as the Length Scale Calibration (LSC), typically part of the Van der Meer (VdM) scan fill \cite{reference}. During this sequence, the two beams are moved head-on from an initial position along the x-axis (from \(x = -a\) to \(x = +a\)), and a similar scan is repeated along the y-axis. Given this beam movement, my estimators should be able to track and reconstruct the beamline position, following these scans.
+The LSC used for the presented test is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 collisions bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in X is performed, followed almost immediately by a scan in Y. After a rest time of approximately 20 minutes, an additional sequence of scan in X and Y is performed, with the same parameters. The sequence is clearly visible in the plot of Figure \ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of the beamline in the $x$ and $y$ plane, respectively. After the Symmetric VdM scan in both $x$ and $y$, a first LSC in $x$ is performed at approximately 13:25, followed by an analogue scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure \ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by WinCC every 3 seconds, while on the second panel we report the luminosity estimate computed a-posteriori as the trimmed mean of the 208 luminosity estimate performed by each counter. The first VdM sequence is also used to calibrate the counters as described in section \ref{sec:calibration_vdm} for this luminosity estimation. 
 
-The individual cluster counters are read every three seconds, with all data points passed to WinCC, where they are appropriately combined with the vector estimated from Monte Carlo simulations. After estimating the score \(t_i^j\), this value is divided by the estimated pile-up \(\mu\), calculated from the truncated mean luminosity as described in the previous chapter. Once these data points are generated, they are downloaded and analyzed offline. 
+Each readout $i$ of the cluster compose my 208-dimensional array $\mathbf{x}_i$ that is multiplied by the corresponding weight vector $\mathbf{w^j}_{(1)}$, for the estimation of the first PC score $\mathbf{t^j}_{(1)}$ that will be used to perform the estimation of the beamline position in each component $j=x,y$. 
 
-Next, the data from my estimators are compared with the position of primary vertices reconstructed by VELO's monitoring tasks, providing an indication of the average position of the beamline relative to the VELO. These monitoring tasks do not operate in real-time, but they provide about one position estimate per second, offering a solid basis for comparison with my estimators.
-
-
-
-
-
-
+As observed in Section \ref{sec:mu_dependency}, the unbiased scores can be obtained by dividing the calculated $\mathbf{t^j}_{(1)}$ by the value $\mu$ calculated starting from the luminosity estimate provided by the trimmed mean. Once the luminosity estimation is available, we can compute the $\mu$ in a similar way of $\eqref{mu_def}$ by using the cross section for pp inelastic processes at LHCb at \SI{14}{\tera\eV} $\sigma_{LHCb}=\SI{63.4}{\milli\barn}$:
+\begin{equation}
+    \mu = \frac{\mathcal{L}\sigma_{LHCb}}{f N_b}
+\end{equation}
+The final estimator needs to be calibrated by computing the correct coefficients of equations \ref{x_hat_corrected}. This can be done by computing a linear fit between the true position of the beamline and the corrected scores $\mathbf{t^j}'_{(1)}$. As true position, we use the position of primary vertices reconstructed by VELO's monitoring tasks, providing an indication of the average position of the beamline relative to the VELO. These monitoring tasks do not operate in real-time, but they provide about one position estimate per second a-posteriori, offering a solid basis for comparison with my estimators. After the matching between the Timestamp of these series is performed, we perform a comparison of the two data points during the first ramp in both $x$ and $y$. A result of this comparison s shown in the scatter plots of Figure \ref{fig:xfit_data} for the $x$ variable and Figure \ref{fig:yfit_data} for $y$ variable. The relationship is still linear, and the coefficients for the $\hat{x}_{corrected}$ and $\hat{y}_{corrected}$ can be estimated directly from this fit.
 
 \begin{figure}
     \centering
@@ -426,10 +439,35 @@ Next, the data from my estimators are compared with the position of primary vert
 \end{figure}
 
 
+The estimators $\hat{x}_{corrected}$ and $\hat{y}_{corrected}$ (green) are depicted as trending plots alongside with the mean set position of the beamline by LHC (orange), respectively in the first and second panel of Figure \ref{fig:traceplot_outliers}. As one can see, all the ramps are followed quite smoothly, even the ones that were not used in the calibration. However there are two main issues:
+\begin{itemize}
+    \item there are some spikes at 13:38, 13:40 and 13:47. These spikes are due to saturation of the counters at restart of WinCC script or due to a change of Run. They do not represent a phsical displacement of the beamline and therefore they must be treated.
+    \item starting from 13:33 we have a first drop and then a displacement from the nominal position until the change of Run that happened around 13:47. This could appear as a physical displacement of the beamline. However, by looking at the first panel of Figure \ref{fig:mini-vdm} we can see that around 13:33 a few counters dropped from their stable value. As one can see, the purple point indicate that at least one counter counted significantly less than the others. This behaviour is probably due to a drop in efficiency by specific counters. As soon as a Run is restarted (a 13:47), the efficiencies are restored to their nominal values and the correct behaviour of the counters is restored. We shall therefore discuss a robust method for handling this unexpected drops in effeciencies.
+\end{itemize}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/traceplot.png}
+    \caption{Trending plot of the two estimators $\hat{x}_{corrected}$ and $\hat{y}_{corrected}$ (green), superimposed to the set position by LHC (orange).  }
+    \label{fig:traceplot_outliers}
+\end{figure}
 
+To handle these anomalies and ensure robustness in data processing, we apply a filtering procedure to the cluster counter data at each timestamp. The steps are as follows:
+\begin{itemize}
+    \item Calculate the Medians: At each timestamp, we compute the median $m_t$ of all outer counters and the median of all inner counters separately and store.
+    \item Identify Outliers: Using the medians $m_t$ calculated in step 1, we identify outliers by checking if a counter's value $c$ falls outside the interval $0.5 m_t < c < 1.5 m_t$. Any counter whose value lies outside this range is considered an outlier.
+    \item Replace Outlier Values: For counters identified as outliers, we replace their values with the mean of the corresponding counter type.
+    \item Manage Spikes: To address sudden spikes in data, we apply a fixed threshold to the recorded luminosity value. If the recorded luminosity exceeds this threshold, we remove the entire reading for that timestamp, as these spikes typically indicate erroneous readings or other transient issues.
+\end{itemize}
 
+By implementing this filtering procedure, we produce a new traceplot with the new corrected estimators $\hat{x}_{median}$ and $\hat{y}_median$ in Figure \ref{fig:traceplot_off}. 
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/traceplot_zoom.png}
+    \caption{Trending plot of the two estimators $\hat{x}_{median}$ and $\hat{y}_{median}$ (green), superimposed to the reconstructed position of the transverse beamline position by the monitoring reconstruction tasks of the VELO (orange).}
+    \label{fig:traceplot_off}
+\end{figure}
 
 
 
