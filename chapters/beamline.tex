@@ -1,4 +1,4 @@
-\chapter{Estimating the luminous region}
+\chapter{Estimating the luminous region}\label{chap:beamline}
 \textit{Definition of luminous region, its importance in Alignment and Calibration, luminosity and other stuff}
 The beamline is defined as the region where the two beams of particles collide, as depicted in Figure \ref{fig:luminous-region}. The position of the beamline corresponds to the area where the primary vertices of these collisions are formed, hence beamline and luminous region are treated as synonyms.
 
@@ -359,21 +359,25 @@ of point (iv) of section \ref{sec:MC}. These simulations comprehend four differe
 The relationship between the beamline estimate and $\mu$ can be assessed by calculating the beamline usin g$\ref{x_hat_true}$. Since the position is set at 0 for each event in this simulations, we should always estimate 0. However, as one can notice from the Figures \ref{fig:x_to_lumi}, \ref{fig:y_to_lumi} and \ref{fig:z_to_lumi}, the estimation is linearly biased by the pile-up $\nu$, as expected. 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/x_to_lumi_fit_20000.pdf}
-    \caption{Linear relationship between estimated position in $x$ and pile-up $\nu$}
+    \begin{subfigure}{0.31\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/x_to_lumi_fit_20000.pdf}
+    \caption{$x$ component}
     \label{fig:x_to_lumi}
-\end{figure}
-\begin{figure}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.31\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/y_to_lumi_fit_20000.pdf}
-    \caption{Linear relationship between estimated position in $y$ and pile-up $\nu$}
+    \includegraphics[width=\linewidth]{figures/y_to_lumi_fit_20000.pdf}
+    \caption{$y$ component}
     \label{fig:y_to_lumi}
-\end{figure}
-\begin{figure}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.31\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/z_to_lumi_fit_20000_numpix.pdf}
-    \caption{Linear relationship between estimated position in $z$ and pile-up $\nu$}
+    \includegraphics[width=\linewidth]{figures/z_to_lumi_fit_20000_numpix.pdf}
+    \caption{$z$ component}
     \label{fig:z_to_lumi}
+    \end{subfigure}
+    \caption{Linear relationship between each component of the estimated position and pile-up $\nu$}
 \end{figure}
 The fact that the relationship is linear, offers us a straightforward way to correct for this bias. If we redefine the beamline estimators as
 \begin{equation}
@@ -387,9 +391,9 @@ we end up with unbiased estimators of the luminous region.
 
 
 
-\section{Test on collision data}
+\section{Calibration and testing on collision data}
 %\textit{Results obtained during VdM}
-Once we have a suitable configuration in MC, we can perform some tests on real collision data. A suitable environment for conducting this test is a sequence known as the Length Scale Calibration (LSC), typically part of the VdM scan fill for the determination of the beam sizes and their separation \cite{Balagura_2021}, which are parameters needed to compute the luminosity. During this sequence, the two beams are moved head-on from an initial position along the x-axis $x = -a$ to an end position $x = +a$, with respect to the nominal interaction position set at $x=0$. An analogue scan is repeated along the y-axis from $y=-a$ to $y=+a$. 
+Once we have a suitable configuration in MC, we can perform a calibration and some tests on real collision data. The calibration is performed directly on the data because the available simulations used to estimate referred to 2022 conditions. Although these conditions do not differ much from the ones in 2024, the VELO was entirely uninstalled and reinstalled during the 2023 Year End Technical Shutdown (YETS), and completely reconfigured. These reconfiguration may introduce changes in efficiencies of the single sensors, therefore we decided to perform the calibration directly on the data. A suitable environment for the calibration is a sequence known as the Length Scale Calibration (LSC), typically part of the VdM scan fill for the determination of the beam sizes and their separation \cite{Balagura_2021}, which are parameters needed to compute the luminosity. During this sequence, the two beams are moved head-on from an initial position along the x-axis $x = -a$ to an end position $x = +a$, with respect to the nominal interaction position set at $x=0$. An analogue scan is repeated along the y-axis from $y=-a$ to $y=+a$. 
 Given the beam movements in LSC, my estimators for the $x$ and $y$ component of the beamline should be able to track it, following these scans.
 
 \begin{figure}
@@ -399,7 +403,7 @@ Given the beam movements in LSC, my estimators for the $x$ and $y$ component of 
     \label{fig:mini-vdm}
 \end{figure}
 
-The LSC used for the presented test is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 collisions bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in X is performed, followed almost immediately by a scan in Y. After a rest time of approximately 20 minutes, an additional sequence of scan in X and Y is performed, with the same parameters. The sequence is clearly visible in the plot of Figure \ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of the beamline in the $x$ and $y$ plane, respectively. After the Symmetric VdM scan in both $x$ and $y$, a first LSC in $x$ is performed at approximately 13:25, followed by an analogue scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure \ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by WinCC every 3 seconds, while on the second panel we report the luminosity estimate computed a-posteriori as the trimmed mean of the 208 luminosity estimate performed by each counter. The first VdM sequence is also used to calibrate the counters as described in section \ref{sec:calibration_vdm} for this luminosity estimation. 
+The LSC used for the presented calibration is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 collisions bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in X is performed, followed almost immediately by a scan in Y. After a rest time of approximately 20 minutes, an additional sequence of scan in X and Y is performed, with the same parameters. The sequence is clearly visible in the plot of Figure \ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of the beamline in the $x$ and $y$ plane, respectively. After the Symmetric VdM scan in both $x$ and $y$, a first LSC in $x$ is performed at approximately 13:25, followed by an analogue scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure \ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by WinCC every 3 seconds, while on the second panel we report the luminosity estimate computed a-posteriori as the trimmed mean of the 208 luminosity estimate performed by each counter. The first VdM sequence is also used to calibrate the counters as described in section \ref{sec:calibration_vdm} for this luminosity estimation. 
 
 Each readout $i$ of the cluster compose my 208-dimensional array $\mathbf{x}_i$ that is multiplied by the corresponding weight vector $\mathbf{w^j}_{(1)}$, for the estimation of the first PC score $\mathbf{t^j}_{(1)}$ that will be used to perform the estimation of the beamline position in each component $j=x,y$. 
 
@@ -435,7 +439,7 @@ The final estimator needs to be calibrated by computing the correct coefficients
     \caption{Residuals from the fit of the graph on the left. }\label{fig:yres_data}
     \end{subfigure}
     \caption{Linearity of the first component calculated with the PCA with respect to beamline position shifts in y component, alongside the residuals distribution fitted with a Gaussian distribution.}
-    \label{fig:y_MC}
+    \label{fig:y_data}
 \end{figure}
 
 
@@ -454,13 +458,13 @@ The estimators $\hat{x}_{corrected}$ and $\hat{y}_{corrected}$ (green) are depic
 
 To handle these anomalies and ensure robustness in data processing, we apply a filtering procedure to the cluster counter data at each timestamp. The steps are as follows:
 \begin{itemize}
-    \item Calculate the Medians: At each timestamp, we compute the median $m_t$ of all outer counters and the median of all inner counters separately and store.
+    \item Calculate the Medians: At each timestamp, we compute the median of all outer counters and the median of all inner counters separately and store them in a value $m_t$ differentiated based on the type $t$ outer or inner.
     \item Identify Outliers: Using the medians $m_t$ calculated in step 1, we identify outliers by checking if a counter's value $c$ falls outside the interval $0.5 m_t < c < 1.5 m_t$. Any counter whose value lies outside this range is considered an outlier.
     \item Replace Outlier Values: For counters identified as outliers, we replace their values with the mean of the corresponding counter type.
-    \item Manage Spikes: To address sudden spikes in data, we apply a fixed threshold to the recorded luminosity value. If the recorded luminosity exceeds this threshold, we remove the entire reading for that timestamp, as these spikes typically indicate erroneous readings or other transient issues.
+    \item Manage Spikes: To address sudden spikes in data, we apply a fixed threshold to the recorded counter value. If the recorded counter exceeds this threshold, we remove the entire reading for that timestamp, as these spikes typically indicate erroneous readings or other transient issues.
 \end{itemize}
 
-By implementing this filtering procedure, we produce a new traceplot with the new corrected estimators $\hat{x}_{median}$ and $\hat{y}_median$ in Figure \ref{fig:traceplot_off}. 
+By implementing this filtering procedure, we produce a new traceplot with the new corrected estimators $\hat{x}_{median}$ and $\hat{y}_{median}$ in Figure \ref{fig:traceplot_off}. As one can see, both estimators overlap with the position reconstructed by the VELO monitoring tasks. 
 
 \begin{figure}
     \centering
@@ -469,7 +473,105 @@ By implementing this filtering procedure, we produce a new traceplot with the ne
     \label{fig:traceplot_off}
 \end{figure}
 
+A more quantitative analysis of the correctness of the estimated postions $\hat{x}_{median}$ and $\hat{y}_{median}$ can be performed by producing a scatter plot between the estimated positions $\hat{x}_{median}$, $\hat{y}_{median}$ vs the relative reconstructed positions by the montiroing tasks of the VELO during the whole Van der Meer fill. These scatter plot are available in Figures \ref{fig:xfit_comparison} and \ref{fig:yfit_comparison}, where we also performed a linear fit. If there is total accordance between these to quantities we expected the angular coefficients to be $p1=1$ and the offset $p0=0$ of the fitted line. 
+The results of these fit are summarised in Table \ref{tab:summary}. All the estimated coefficients differ less than 3 $\sigma$ from their expected value. 
 
 
-\section{Integration in LHCb online system}
-\textit{qua ci metto i plot che si vedono nella pagina di Monet e spiego come li abbiamo implementati}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/x_comparison.pdf}
+    \caption{Linear Fit}\label{fig:xfit_comparison}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/x_residuals.pdf}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:xres_comparison}
+    \end{subfigure}
+    \caption{$\hat{x}_{median}$ estimator vs beamline position shifts in x component, alongside the residuals distribution fitted with a Gaussian distribution.}
+    \label{fig:x_comaprison}
+\end{figure}
+
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/y_comparison.pdf}
+    \caption{Linear Fit}\label{fig:yfit_comparison}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/y_residuals.pdf}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:yres_comparison}
+    \end{subfigure}
+    \caption{$\hat{y}_{median}$ estimator vs beamline position shifts in y component, alongside the residuals distribution fitted with a Gaussian distribution.}
+    \label{fig:y_comparison}
+\end{figure}
+
+\begin{table}
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c}
+    variable  & $p0$ & $p1$ & $\sigma_{p0}$ & $\sigma_{p1}$ & distance $p0=0$ [$\sigma$] & distance $p1=1$ [$\sigma$]\\
+    \hline
+       x  & 0.00140 & 0.9826 & 0.00064 & 0.0063 & 2.2 & 2.8\\
+       y  & 0.00048 & 0.9901 & 0.00017 & 0.0056 & 2.8 & 1.8 
+    \end{tabular}
+    \caption{Summary of comparison between estimators and monitored positions by the VELO}
+    \label{tab:summary}
+\end{table}
+
+In the Figures \ref{fig:xres_comparison} and \ref{fig:yres_comparison} we report an histogram of the residuals from the fitted function, alongside with a Gaussian fit. From the Sigma of the fitted gaussian we can quote a resolutions of the two estimars $\hat{x}$ and $\hat{y}$, which is quoted to be $\SI{4}{\micro\meter}$.
+
+Considering that in the VdM conditions of April 6th 2024 there were 8 bunches in collisions, this correspond to an approximate trigger rate of $\SI{88}{\kilo\hertz}$, assuming that the trigger was performed on each colling bunch. For a readout every 3 seconds, the counters integrate 264000 events, which correspond to a factor $\tfrac{264000}{20000}=13.2$ more than the events integrated in the MC to compute the counters rate.  The increase in the statistics is responsible for a more accurate estimation in the counters rate $\mathbf{\mu}$ that are used for the estimation of the scores $\mathbf{t}_{(1)}$. Assuming that onlythe counter rates contribute to the uncertainty, we expected that the resolution quoted for the estimators in the data is a factor $\sqrt{13.2}$ better than the one we reported in Figures \ref{fig:xres_MC} and \ref{fig:yres_MC} for the MC.
+\begin{equation}
+    \sigma_{data}^{expected} = \frac{\sigma_{MC}}{13.2} \approx \SI{5.5}{\micro\meter},
+\end{equation}
+which correspond approximately to the value of $\SI{4}{\micro\meter}$ reported in the Figures  \ref{fig:xres_comparison} and \ref{fig:yres_comparison}. 
+This calculation make use of various approximations and it is performed only to have a ballpark on which we can compare the two estimates. 
+
+Regarding the $z$ variable, during this fill its value was maintained constant, therefore it was not possible to calibrate it. It is intended to extract the information of the true PVs from a whole physics fill and perform the calibration directly on this physics fill. Unfortunately, we were not able to perform this calibration before the conclusion of this thesis work. 
+
+
+%recap sull'algoritmo finale
+\section{Final Algorithm}
+In order to summarise what was exposed in this chapter and the various corrections performed on the form of the estimators presented in \eqref{x_hat_true}, we report the Algorithm \ref{alg:beamline} used to compute the beamline position that operates online. This algorithm is rather conceptional than operational, since the script is written using built-in function and optimised the perform the minimal number of for loops possible. %However, this formulation reports all the important passages needed to compute the beamline estimation.
+\begin{algorithm}[H]
+\caption{Beamline Position Estimation}\label{alg:beamline}
+\begin{algorithmic}[1]
+\ENSURE  INT poolPeriod = 3 seconds.
+\ENSURE  FLOAT $w_x$[208]: weights for x estimate
+\ENSURE  FLOAT $w_y$[208]: weights for y estimate
+\ENSURE  FLOAT $a_x$,$ b_x$, $a_y$, $b_y$: coefficients for calibration 
+\WHILE{true}
+    \IF{(current time modulo poolPeriod) == 0}
+        \STATE FLOAT  bb[208]: Get 208 cluster counters of type bb and store it in array.
+        \STATE FLOAT  be[208]: Get 208 cluster counters of type be and store it in array.
+        \STATE FLOAT  eb[208]: Get 208 cluster counters of type eb and store it in array.
+        \STATE FLOAT  ee[208]: Get 208 cluster counters of type ee and store it in array.
+        \STATE FLOAT c[208]: empty array that host counters without background.
+        \STATE FLOAT MU: Get mu value.
+        \FOR{i=0 \TO 208 } 
+        \IF{0 < bb[i], be[i], eb[i], ee[i] < 10}
+        \STATE {c[i] =  bb[i] -  be[i] -  eb[i] +  ee[i]}     
+        \ELSE
+        \STATE c[i] = BADREAD
+        \ENDIF
+        \ENDFOR
+        \STATE Compute median of the counters differentiated by data type excluding BADREAD 
+        \STATE FLOAT x,y=0
+        \FOR{i=0 \TO 208}
+        \IF{(c[i] == BADREAD \OR c[i] < 0.5 * median type \OR c[i] > 1.5 * median type)}
+            \STATE c[i] = median type 
+        \ENDIF
+        \STATE x= x+ c[i]*$w_x$[i]
+        \STATE y= x+ c[i]*$w_y$[i]
+        \ENDFOR
+        \STATE x= $a_x$* x/MU + $b_x$
+        \STATE y= $a_y$ * y/MU +$b_y$
+        \IF{all c[i] != BADREAD}
+        \STATE write x, y in register
+        \ENDIF
+    \ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
