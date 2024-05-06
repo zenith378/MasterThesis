@@ -72,7 +72,9 @@
 \RequirePackage{amsmath}
 \RequirePackage{mathtools}
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
-\RequirePackage[per-mode=reciprocal]{siunitx}
+\RequirePackage[per-mode=reciprocal, binary-units=true]{siunitx}
+\DeclareSIUnit\eVperc{\eV\per\clight}
+\DeclareSIUnit\clight{\text{\ensuremath{c}}}
 \usepackage{epigraph}
 
 %\usepackage{polyglossia}
