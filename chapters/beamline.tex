@@ -26,11 +26,11 @@ Understanding the position of the luminous region is critical for two main reaso
 \item Track Reconstruction Algorithms: The current algorithms for track reconstruction has relied until 2024 on a predefined, ``hardcoded" position of the luminous region. If this position is not updated accurately, the precision of the track reconstruction can be compromised. A real-time estimation of the luminous region position can enhance the efficiency of track reconstruction.
 \end{itemize}
 
-As already stated, both HLT$1$ and HLT$2$ PVs reconstruction algorithms use the luminous region position as an input. Until 2023, the collaboration relied for this information on an iterative track fitting procedure, that computed PVs at HLT$1$ level. The tracks fits were iteratively executed until a convergence was reached,  making the procedure computationally expensive. Starting from the end of 2023, a YML configuration file named ``InteractionRegion" was created, with the intent of comprehending the luminous region information. This file was manually updated when necessary. In February 2024, the LHCb developed ``BeamSpot Monitor", a tool used for the automatically update of the ``InteractionRegion" configuration file.  This tool operates in the Alignment \& Calibration phase of the online trigger, accumulating statistics and booking histograms of the reconstructed PVs. Once the histograms are available, the mean and covariance are calculated, providing an estimation of the luminous region position to both HLT$1$ and HLT$2$. 
+As already stated, both HLT$1$ and HLT$2$ PVs reconstruction algorithms use the luminous region position as an input. Until 2023, the collaboration relied for this information on an iterative track fitting procedure, that computed PVs at HLT$1$ level. The tracks fits were executed in an iterative way until a convergence was reached, making the procedure computationally expensive. Starting from the end of 2023, a YML configuration file named ``InteractionRegion" was created, with the intent of comprehending the luminous region information. This file was manually updated when necessary. In February 2024, the LHCb developed ``BeamSpot Monitor", a tool used for the automatically update of the ``InteractionRegion" configuration file.  This tool operates in the Alignment \& Calibration phase of the online trigger, accumulating statistics and booking histograms of the reconstructed PVs. Once the histograms are available, the mean and covariance are calculated, providing an estimation of the luminous region position to both HLT$1$ and HLT$2$. 
 
-In this chapter, we explore an innovative approach for determining the luminous region position in real-time without relying on traditional track reconstruction algorithms. This approach make use of the cluster counters described in Section \ref{sec:velo_counters}, hence we leverage the capabilities of the clusters provided by the FPGA in order to improve the efficiency of the experiment data analysis processes.
+In this chapter, we explore an innovative approach for determining the luminous region position in real-time without relying on traditional track reconstruction algorithms. This approach make use of the cluster counters described in Section \ref{sec:velo_counters}, hence we leverage the capabilities of the clusters provided by the FPGA in order to improve the efficiency of the experiment data analysis processes. Instead of performing an high-level processing at low rates (such as the method currently used), we rely on the low-level statistics at high rates given by the cluster counting process.
 
-It was already shown in an earlier work\cite{dan}, that the counters implemented for the luminosity are sensible to a displacement of the luminous region. An example of this sensibility is depicted in Figure \ref{fig:z_lumi_dependency}, where one can clearly see how the mean of the outer counters per event is slightly different depending on the luminous region position. 
+It was already shown in an earlier work\cite{dan}, that the counters described in Section \ref{sec:velo_counters} are sensible to a displacement of the luminous region. An example of this sensibility is depicted in Figure \ref{fig:z_lumi_dependency}, where one can clearly see how the mean of the outer counters per event is slightly different depending on the luminous region position. 
 
 \begin{figure}
     \centering
@@ -331,7 +331,7 @@ In the Figures \ref{fig:xres_MC}, \ref{fig:yres_MC}, \ref{fig:zres_cubic_MC} we 
  \end{equation}
 
  Each one of the histograms is fitted with a Gaussian distribution, in order to provide also a resolution of the estimation. The errorbars of this histograms are asymmetrical confidence intervals at $67$\% of the Poisson counts in the bin.
- As one can see, the resolution is quoted to be around \SI{20}{\micro\meter} for $x$ and $y$ component and \SI{5}{\milli\meter} for the $z$ component. 
+ As one can see, the resolution is quoted to be around \SI{20}{\micro\meter} for $x$ and $y$ component, while we quote a resolution of \SI{5}{\milli\meter} for the $z$ component. We expect to have a worse resolution in $z$ compared to the ones in $x$ and $y$ because the luminous region is more spread in this direction, as explained in the description of the dataset in Section \ref{sec:MC}.
  \paragraph{On the estimated resolution}
  The resolution that we quote here depends on the two factors that we need to estimate $\mathbf{t^{j}}_{1}$, i.e. the vector of weights $\mathbf{w^j}_{(1)}$ and the mean number of clusters per event in each counter $\mathbf{x^{j}}$. As already stated, the counters are Poisson counts with mean depending on the position of the counter and the luminous region position. In first approximation we can treat the counters as independent variables, hence each counter $c_k$ follows a Poisson distribution with mean $\lambda_k$
  \begin{equation}
@@ -448,7 +448,7 @@ The estimators $\hat{x}_{corrected}$ and $\hat{y}_{corrected}$ (green) are depic
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/traceplot.png}
+    \includegraphics[width=\textwidth]{figures/traceplot_wo_median.png}
     \caption{Trending plot of the two estimators $\hat{x}_{corrected}$ and $\hat{y}_{corrected}$ (green), superimposed to the set position by LHC (orange).  }
     \label{fig:traceplot_outliers}
 \end{figure}
@@ -471,17 +471,17 @@ By implementing this filtering procedure, we produce a new traceplot with the ne
 \end{figure}
 
 A more quantitative analysis of the correctness of the estimated positions $\hat{x}_{median}$ and $\hat{y}_{median}$ can be performed by producing a scatter plot between the estimated positions $\hat{x}_{median}$, $\hat{y}_{median}$ vs the relative reconstructed positions by the monitoring tasks of the VELO during the whole Van der Meer fill. These scatter plot are available in Figures \ref{fig:xfit_comparison} and \ref{fig:yfit_comparison}, where we also performed a linear fit. If there is total accordance between these to quantities we expected the angular coefficients to be $p1=1$ and the offset $p0=0$ of the fitted line. 
-The results of these fit are summarised in Table \ref{tab:summary}. All the estimated coefficients differ less than 3 $\sigma$ from their expected value. 
+The results of these fit are summarised in Table \ref{tab:summary}. All the estimated coefficients differ less than 2 $\sigma$ from their expected value. 
 
 
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/x_comparison.pdf}
+    \includegraphics[width=\linewidth]{figures/x_comparison_side.pdf}
     \caption{Linear Fit}\label{fig:xfit_comparison}
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/x_residuals.pdf}
+    \includegraphics[width=\linewidth]{figures/x_comparison_res_side.pdf}
     \caption{Residuals from the fit of the graph on the left. }\label{fig:xres_comparison}
     \end{subfigure}
     \caption{$\hat{x}_{median}$ estimator vs beamline position shifts in x component, alongside the residuals distribution fitted with a Gaussian distribution.}
@@ -493,11 +493,11 @@ The results of these fit are summarised in Table \ref{tab:summary}. All the esti
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/y_comparison.pdf}
+    \includegraphics[width=\linewidth]{figures/y_comparison_side.pdf}
     \caption{Linear Fit}\label{fig:yfit_comparison}
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/y_residuals.pdf}
+    \includegraphics[width=\linewidth]{figures/y_comparison_res_side.pdf}
     \caption{Residuals from the fit of the graph on the left. }\label{fig:yres_comparison}
     \end{subfigure}
     \caption{$\hat{y}_{median}$ estimator vs beamline position shifts in y component, alongside the residuals distribution fitted with a Gaussian distribution.}
@@ -509,8 +509,8 @@ The results of these fit are summarised in Table \ref{tab:summary}. All the esti
     \begin{tabular}{c|c|c|c|c|c|c}
     variable  & $p0$ & $p1$ & $\sigma_{p0}$ & $\sigma_{p1}$ & distance $p0=0$ [$\sigma$] & distance $p1=1$ [$\sigma$]\\
     \hline
-       x  & 0.00140 & 0.9826 & 0.00064 & 0.0063 & 2.2 & 2.8\\
-       y  & 0.00048 & 0.9901 & 0.00017 & 0.0056 & 2.8 & 1.8 
+       x  & 0.00096 & 0.9936 & 0.00065 & 0.0064 & 1.5 & 1\\
+       y  & -0.00020 & 0.9911 & 0.00017 & 0.0056 & 1.2 & 1.6 
     \end{tabular}
     \caption{Summary of comparison between estimators and monitored positions by the VELO}
     \label{tab:summary}
