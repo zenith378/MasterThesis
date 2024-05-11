@@ -400,14 +400,11 @@ Given the beam movements in LSC, the estimators for the $x$ and $y$ component of
     \label{fig:mini-vdm}
 \end{figure}
 
-The LSC used for the presented calibration is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 collisions bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in X is performed, followed almost immediately by a scan in Y. After a rest time of approximately 20 minutes where there were no beamline movements, an additional sequence of scan in X and Y is performed, with the same parameters. The sequence is clearly visible in the plot of Figure \ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of both beams (orange and blue) in the $x$ and $y$ plane, respectively. After the Symmetric VdM scan in both $x$ and $y$, a first LSC in $x$ is performed at approximately 13:25, followed by an analogue scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure \ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by WinCC every 3 seconds, while on the second panel we report the luminosity estimate computed a-posteriori as the trimmed mean of the 208 luminosity estimate performed by each counter. The first VdM sequence is also used to calibrate the counters as described in section \ref{sec:calibration_vdm} for this luminosity estimation. 
+The LSC used for the presented calibration is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 collisions bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in X is performed, followed almost immediately by a scan in Y. After a rest time of approximately 20 minutes where there were no beamline movements, an additional sequence of scan in X and Y is performed, with the same parameters. The sequence is clearly visible in the plot of Figure \ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of both beams (orange and blue) in the $x$ and $y$ plane, respectively. After the Symmetric VdM scan in both $x$ and $y$, a first LSC in $x$ is performed at approximately 13:25, followed by an analogue scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure \ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by the TELL40s every 3 seconds, while on the second panel we report the luminosity estimate computed a-posteriori as the trimmed mean of the 208 luminosity estimate performed by each counter. The first VdM sequence is also used to calibrate the counters as described in section \ref{sec:calibration_vdm} for this luminosity estimation. 
 
 Each readout $i$ of the cluster compose the 208-dimensional array $\mathbf{x}_i$ that is multiplied by the corresponding weight vector $\mathbf{w^j}_{(1)}$ computed in MC, for the estimation of the first PC score $\mathbf{t^j}_{(1)}$ that will be used to perform the estimation of the luminous region position in each component $j=x,y$. 
 
-As observed in Section \ref{sec:mu_dependency}, the unbiased scores can be obtained by dividing the calculated $\mathbf{t^j}_{(1)}$ by the value $\mu$ calculated starting from the luminosity estimate provided by the trimmed mean. Once the luminosity estimation is available, we can compute the $\mu$ in a similar way of $\eqref{mu_def}$ by using the cross section $\sigma_{LHCb}~=~\SI{63.4}{\milli\barn}$ for $pp$ inelastic processes at LHCb at $\sqrt{s}~=~\SI{14}{\tera\eV}$:
-\begin{equation}
-    \mu = \frac{\mathcal{L}\sigma_{LHCb}}{f N_b}
-\end{equation}
+As observed in Section \ref{sec:mu_dependency}, the unbiased scores can be obtained by dividing the calculated $\mathbf{t^j}_{(1)}$ by the value of instantaneous $\mu$ of \eqref{inst_mu} calculated starting from the luminosity estimate provided by the trimmed mean.
 The final estimator needs to be calibrated by computing the correct coefficients of equations \ref{x_hat_corrected}. This can be done by computing a linear fit between the true position of the beamline and the corrected scores $\mathbf{t^j}'_{(1)}=\mathbf{t^j}_{(1)}/\mu$. As true position, we use the position of primary vertices reconstructed by VELO monitoring tasks, providing an indication of the average position of the luminous region relative to the VELO. These monitoring tasks do not operate in real-time, but they provide about one position estimate per second a-posteriori, offering a solid basis for comparison with my estimators. After the matching between the Timestamp of these series is performed, we perform a comparison of the two data points during the first ramp in both $x$ and $y$. A result of this comparison s shown in the scatter plots of Figure \ref{fig:xfit_data} for the $x$ variable and Figure \ref{fig:yfit_data} for $y$ variable. The relationship is still linear, and the coefficients for the $\hat{x}_{corrected}$ and $\hat{y}_{corrected}$ can be estimated directly from this fit.
 
 \begin{figure}
@@ -528,9 +525,11 @@ Regarding the $z$ variable, during this fill its value was maintained constant, 
 
 
 %recap sull'algoritmo finale
-\section{Final Algorithm}
+\section{Deployment in the LHCb online system}\label{sec:beamline_integration}
+The estimated luminous region can be integrated into the online monitoring system. In order to construct these estimators we need to leverage the information provided by each counter position in different VELO modules. The ASICs that read each VELO module send the data via optical fibres to the TELL40s board, where the clustering algorithm is performed. As presented in Section \ref{sec:ecs}, ECS has access to the all the TELL40s simultaneously, therefore it is the most suitable environment for performing the combination of the cluster counters with the weight vectors in order to get the luminous region position estimators. By integrating in the WinCC project that handles ECS a WinCC script that compute the various estimators, we can get \textit{datapoints} that allows a monitoring in real time.
 In order to summarise what was exposed in this chapter and the various corrections performed on the form of the estimators presented in \eqref{x_hat_true}, we report the Algorithm \ref{alg:beamline} used to compute the luminous region position that operates online. This algorithm is rather conceptional than operational, since the actual script that runs online is written using built-in function and optimised in order to perform the minimal number of possible for loops. %However, this formulation reports all the important passages needed to compute the beamline estimation.
-\begin{algorithm}[H]
+
+\begin{algorithm}
 \caption{Beamline Position Estimation}\label{alg:beamline}
 \begin{algorithmic}[1]
 \ENSURE  INT poolPeriod = 3 seconds.
@@ -571,3 +570,17 @@ In order to summarise what was exposed in this chapter and the various correctio
 \end{algorithmic}
 \end{algorithm}
 
+
+Once the luminous region position \textit{datapoints} are stored, we can also plot them using the LHCb official tool for the online monitoring, i.e. \textit{Monet}. We created a web-page containing the trending plot of the luminous region position in the both $x$ and $y$ component as a function of the local time.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Monet_beamline_screen.png}
+    \caption{Screenshot of the Monet web-page during the LSC fill of April 6th 2024. The two components of the luminous region position are presented on the left, while on the centre we reported the positions calculated by BeamSpotMonitor. On the right the mean PVs calculated by HLT$1$ with different alignment constants (red and blue)}
+    \label{fig:monet_beamline}
+\end{figure}
+
+In Figure \ref{fig:monet_beamline} a screenshot of the early implementation of this web-page is reported, where we report our estimators (left), alongside the reconstructed position by BeamSpotMonitor (centre) and the reconstructed PVs by HLT$1$ (right), with the red and blue points of the latter corresponding to different alignments constants. The screenshot was taken during the LSC of April 6th 2024. In this early implementation the various corrections for outliers and missing counters were still not implemented, explaining the strange drop at 15:33 we also see in Figure~\ref{fig:traceplot_outliers}\footnote{The online plot is shifted because all the analysis presented in the chapter were performed using UCT time, therefore two hours backwards shifted with respect to local Geneva time.}. Furthermore, in this implementation the estimators were not calibrated and the two components were swapped. Although uncalibrated and uncorrected, in the upper left panel we appreciate the ramp of LSC, proving the sensitivity of the estimators and the correct online deployment.
+A further development of this web-page will be described in Section \ref{sec:integration_detector}, as we will include other parameters in the left plots.
+
+The next step in the integration into the LHCb system can take two paths: either the information of the luminous region position is stored in the raw banks to use for offline analysis or the position is given as input to the PVs reconstruction algorithms that runs at HLT$1$. As this thesis is being written, it is still under investigation which one of these options is to prefer.

@@ -1,0 +1,8 @@
+%!TEX root = ../dissertation.tex
+\label{chp:results}
+\chapter{Integration in LHCb online system}
+\textit{qua ci metto i plot che si vedono nella pagina di Monet e spiego come li abbiamo implementati}
+The cluster counters, detailed in Section \ref{sec:velo_counters}, gather high-rate statistics used to estimate luminosity, the luminous region, and the position of the two VELO halves, as explained in Chapters \ref{chap:luminosity}, \ref{chap:beamline}, and \ref{chap:pos_VELO} respectively. The firmware responsible for clustering and counting the number of clusters in specific VELO regions is implemented within the TELL40 firmware of the VELO's readout board.
+
+Combining the accumulated statistics is a task performed at a higher level of the DAQ system. Since only hits on the same VELO module are directly accessible from one TELL40 board and there is no communication network between different VELO readout boards, counters must be combined and managed at the ECS level. 
+\section{}

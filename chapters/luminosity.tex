@@ -402,7 +402,7 @@ This function describes the expected distribution of counts based on the Gaussia
 Once every visible cross section $\sigma_{vis}$ is calculated, each one of the counters can provide a luminosity estimation based on the definition in \eqref{lumi_per_bunch}.
 
 \subsection{Combining the counters for a single luminosity measurement}
-There is now the issue on how to combine the counters for a single luminosity measurement. In fact, the calibration with the VdM scan allowed to calculate a calibration factor for every counter, leaving potentially 208 different luminosity measurements. 
+We face now the issue of how to combine the counters for a single luminosity measurement. In fact, the calibration with the VdM scan allowed to calculate a calibration factor for every counter, leaving potentially 208 different luminosity measurements. 
 First off, the question is what distribution follow all the different measurement at the same timestamp. 
 The distribution of all the estimation performed during the VdM fill of 7th September 2023 is reported in Figure \ref{fig:lumi_hist_ts} at two different timestamps spaced by 15 minutes. The distribution is not Gaussian, but it has a bell shape. Therefore, we are encouraged to use mean and standard deviation as metrics to describe the peak and the width of the curve. 
 
@@ -498,17 +498,21 @@ panels respectively depict the x and y positions of the two beams.}
     \label{fig:lumi_result_all}
 \end{figure}
 
+Once the luminosity estimation is available, we can compute the value for instantaneous $\mu$ in a similar way of $\eqref{mu_def}$ by using the cross section $\sigma_{LHCb}~=~\SI{63.4}{\milli\barn}$ for $pp$ inelastic processes at LHCb at $\sqrt{s}~=~\SI{14}{\tera\eV}$:
+\begin{equation}
+    \mu = \frac{\mathcal{L}\sigma_{LHCb}}{f N_b}\label{inst_mu}
+\end{equation}
+
+
+
 
 To evaluate the medium-term stability of the calibration from September 7, 2023, we estimated the luminosity for Fill 9168, which took place on September 17, 2023, during the pp reference run. This estimation used the visible cross-section $\sigma_{vis}$ derived from the VdM scan. Figure \ref{fig:fill9168} provides an overview of the results from this study.
-
-In the first panel of Figure \ref{fig:fill9168}, the luminosity readings from each individual counter are displayed. Unfortunately, during this fill, only the C side of the VELO was operational, reducing our available data and resulting in a significant drop in statistics. The second panel shows the combined luminosity estimate, calculated as the trimmed mean of the functional counters. The third panel displays the relative standard deviation of the luminosity measurements for each counter. As seen in the figure, the relative standard deviation stabilises at around 3\%, which is reasonably close to the 5\% observed during the VdM scan, considering that the statistics were effectively halved.
-
-Despite the reduced data due to limited VELO operation, the relative stability of the combined luminosity estimate indicates that the calibration from the earlier VdM scan remains reliable in the medium term. The consistency of the relative standard deviation suggests that the estimation method is robust, even with reduced sample sizes, providing confidence in the calibration's effectiveness across different datasets and time periods.
-
-
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/fill9168.png}
     \caption{Luminosity during pp reference Run - Fill 9168.}
     \label{fig:fill9168}
 \end{figure}
+In the first panel of Figure \ref{fig:fill9168}, the luminosity readings from each individual counter are displayed. Unfortunately, during this fill, only the C side of the VELO was operational, reducing our available data and resulting in a significant drop in statistics. The second panel shows the combined luminosity estimate, calculated as the trimmed mean of the functional counters. The third panel displays the relative standard deviation of the luminosity measurements for each counter. As seen in the figure, the relative standard deviation stabilises at around 3\%, which is reasonably close to the 5\% observed during the VdM scan, considering that the statistics were effectively halved.
+
+Despite the reduced data due to limited VELO operation, the relative stability of the combined luminosity estimate indicates that the calibration from the earlier VdM scan remains reliable in the medium term. The consistency of the relative standard deviation suggests that the estimation method is robust, even with reduced sample sizes, providing confidence in the calibration's effectiveness across different datasets and time periods.
