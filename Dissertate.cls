@@ -259,7 +259,7 @@
 	\begin{center}
 	\vbox to0pt{\vbox to\textheight{\vfill \includegraphics[width=11.5cm]{resources/cherubino_white.png} \vfill}\vss}
 	%\vspace*{\fill}
- \setstretch{-10}
+ \setstretch{-20}
 	\begin{figure}
 	\centering
   		\includegraphics[height=6.55cm]{resources/marchio_unipi_pant541.png}
@@ -276,14 +276,14 @@
 
 	\vspace{2pt}
 
-	\setstretch{2.5}
+	\setstretch{1.8}
 
-	\vspace{10pt}
-	\scshape{\LARGE{\bfseries{\textcolor{SchoolColor}{\thetitle}}}} \normalsize \\
-	\vspace{15pt}
+	\vspace{5pt}
+	\scshape{\huge{\bfseries{\textcolor{SchoolColor}{\thetitle}}}} \normalsize \\
+	\vspace{25pt}
 	
-	\setstretch{1.2}
- \vspace{25pt}
+	\setstretch{1.4}
+ \vspace{15pt}
 	\vfill
 	\begin{normalsize}
 	\begin{flushleft}
@@ -297,7 +297,7 @@
 	  
 	  %\@coadvisorTwo \\
 	  %\@coadvisorsUniversity \\
-	\vspace{30pt}
+	\vspace{50pt}
 	\centering
 	\large{\textit{Academic Year} \\ \@academicYear}
 	\end{flushleft}
