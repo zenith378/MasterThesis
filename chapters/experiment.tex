@@ -16,12 +16,12 @@ Before reaching the LHC, protons are extracted from hydrogen gas and subjected t
     \label{fig:LHC_scheme}
 \end{figure}
 The accelerator contains over 1200 superconducting dipole magnets, each about 15 metres long, to bend the beams, while 392 quadrupole magnets maintain beam focus. To ensure optimal performance, these magnets are cooled to \SI{1.9}{\kelvin} using superfluid helium. The LHC operates with two beams of protons or heavy ions circulating in opposite directions in separate beam pipes. Proton beams within the LHC are divided into 2808 bunches, each containing approximately $10^{11}$ protons. These bunches are time-spaced by multiples of \SI{25}{\nano\second}, resulting in a bunch-crossing frequency of up to \SI{40}{\mega\hertz}, with an average bunch-crossing rate of approximately \SI{30}{\mega\hertz}. 
-The LHC started operating in 2008 and collided the first beams at an energy of $\sqrt{s}=\SI{450}{\giga\eV}$ in 2009. Since then, it has undergone significant upgrades during its operation. The start of the physics research programme was marked by the beginning of Run~1 in 2010 with collisions at a centre-of-mass energy of  $\sqrt{s}=\SI{7}{\tera\eV}$, subsequently upgrading this energy to \SI{8}{\tera\eV} in 2012. After LS1, in 2015 the LHC began Run~2 colliding beams at a ground breaking energy of  $\sqrt{s}=\SI{13}{\tera\eV}$. During Run~3, begun in 2022, the LHC aims at reaching its peak design parameters, including a centre-of-mass energy of $\sqrt{s}=\SI{14}{\tera\eV}$ and an instantaneous luminosity of $\mathcal{L}\approx\SI{2e34}{\per\centi\meter\squared\per\second}$.
+The LHC started operating in 2008 and collided the first beams at an energy of $\sqrt{s}=\SI{450}{\giga\eV}$ in 2009. Since then, it has undergone significant upgrades during its operation. The start of the physics research programme was marked by the beginning of Run~1 in 2010 with collisions at a centre-of-mass energy of  $\sqrt{s}=\SI{7}{\tera\eV}$, subsequently upgrading this energy to \SI{8}{\tera\eV} in 2012. After LS1, in 2015 the LHC began Run~2 colliding beams at a ground breaking energy of  $\sqrt{s}=\SI{13}{\tera\eV}$. During Run~3, begun in 2022, the LHC aims at reaching its peak design parameters, including a centre-of-mass energy of $\sqrt{s}=\SI{14}{\tera\eV}$ and an instantaneous luminosity of $\mathcal{L}\approx\SI{2e33}{\per\centi\meter\squared\per\second}$.
 
 The high-energy beams collide at four designated points along the LHC ring, which house the major experiments: ATLAS, CMS, ALICE, and LHCb.
 The experiments at the LHC serve different purposes. ATLAS and CMS are general-purpose detectors focusing on high-luminosity collisions to study a wide range of physics phenomena, including the search for new particles, extra dimensions, and dark matter. ALICE, a heavy-ion experiment, explores the quark-gluon plasma, a state of matter present shortly after the Big Bang. LHCb specializes in heavy-quark physics and operates at mid-range luminosity, focusing on flavor physics and $\mathcal{CP}$ violation studies.
 
-\section{The LHCb Detector}
+\section{The LHCb Detector}\label{sec:detector}
 
 The LHCb detector, depicted in Figure~\ref{fig:lhcb-detector}, is a single-arm forward spectrometer, with a pseudorapidity $\eta$ coverage of 2 to 5. This unique design allows it to study particles containing heavy quarks, primarily bottom ($b$) and charm ($c$), which are typically produced at high pseudorapidity during proton-proton ($pp$) collisions. The LHCb underwent a significant upgrade during LS$2$ to accommodate increased luminosity and handle the elevated event rate associated with the upgraded LHC.
 \begin{figure}[h]
@@ -32,7 +32,7 @@ The LHCb detector, depicted in Figure~\ref{fig:lhcb-detector}, is a single-arm f
 \end{figure}
 With the upgrade, LHCb will operate at an average bunch-crossing rate of approximately \SI{30}{\mega\hertz}, with an average number of pp collisions per bunch-crossing anticipated to be around $\mu=5.5$. The expected peak value of the instantaneous luminosity is expected to be about \SI{2e33}{\per\centi\meter\squared\per\second}. As it will later explained in Section \ref{sec:lumi_levelling}, the luminosity value exponentially decrease during a Fill, due to beam intensity degradation effects. Unlike the other experiments on LHC, LHCb adopts a system called luminosity levelling to maintain the luminosity at a fixed value.  During Run~3 and Run~4, the experiment aims to collect at least \SI{50}{\per\femto\barn} of data, enabling unprecedented precision in measurements within the flavor sector of the Standard Model.
 
-Key upgrades include:
+In order to sustain such high luminosity and to enable more precision measurements, key upgrades include:
 \begin{itemize}
 \item \textbf{Tracking System}: The tracking system has been renewed, with a new silicon pixel detector, the Vertex Locator (VELO), which measures primary and secondary vertex positions with high precision. Additionally, a new silicon strips upstream tracker (UT) and a scintillating fibers tracker (SciFi) for track fitting were installed.
 
@@ -45,7 +45,7 @@ The Vertex Locator (VELO)~\cite{Bediaga:2013tje} is a silicon pixel detector des
 %The spacial resolution of the VELO needs to be better than the typical length of $b$ and $c$ hadrons, ranging from $100$ to \SI{500}{\micro\meter}.  
 
 The VELO consists of 26 stations, which are pairs of retractable modules placed within the LHC vacuum pipe, in order to be as close as possible to the beamline. 
-A brief schematics of the geometry is reported in Figure~\ref{fig:velo-geometry}~\cite{LHCbVelo:2019flq}. Figure~\ref{fig_velo-xy} shows the behaviour of the two retractable modules in the fully closed (left) and fully open (right) configuration. In its fully closed configuration, the innermost VELO sensor is just \SI{5.1}{\milli\meter} from the nominal interaction point, making it the closest detector to the beamline in any HEP experiment at CERN. During beam ramping, the modules are moved to a safer position of approximately \SI{3}{\centi\meter} from the beamline, in order to prevent damage from instabilities of the high-energy beams in the LHC.
+A brief schematics of the geometry is reported in Figure~\ref{fig:velo-geometry}~\cite{LHCbVelo:2019flq}. Figure~\ref{fig_velo-xy} shows the behaviour of the two retractable modules in the fully closed (left) and fully open (right) configuration. During beam ramping, the modules are maintained at a safe position of approximately \SI{3}{\centi\meter} from the beamline (fully open), in order to prevent damage from instabilities of the high-energy beams in the LHC. As soon as stable beams are the declared, the VELO moves to its fully closed configuration. In this case, the innermost VELO sensor is just \SI{5.1}{\milli\meter} from the nominal interaction point, making it the closest detector to the beamline in any HEP experiment at CERN. 
 
 A top view of the 26 stations is visible in Figure~\ref{fig_velo-side}, together with the illustrations of the $z$-extent of the luminous region at $y=0$ and the nominal LHCb acceptance given by the pseudorapidity $\eta$. 
 
@@ -69,7 +69,7 @@ The VELO sensors are read out by VeloPix ASICs, each featuring a 256~×~256 matr
 
 At the trigger level, the VELO detects tracks with high impact parameters, which are indicative of heavy-flavored particle decays, helping reducing the minimum bias rate by providing initial track information. Offline, high-resolution vertex reconstruction is key to studying heavy-meson oscillations and $\mathcal{CP}$-dependent time asymmetries.
 \subsection{Upstream Tracker}
-The UT is a micro-strip silicon detector made of four layers~\cite{LHCb:2014uqj}. It replaced the former TT detector, retired to due irradiation. Each UT sensor is composed of \SI{250}{\micro\meter} thick silicon and a \SI{10}{\micro\meter} metalization layer. The segmentation is finer than the TT, with near-beam sensor pitch of \SI{95}{\micro\meter} and dimension of $98$×\SI{49}{\milli\meter\squared}, against the TT sensor pitch of \SI{183}{\micro\meter}. In Figure~\ref{fig:UT} a view of the detector is shown~\cite{ut}. 
+The UT is a micro-strip silicon detector made of four layers~\cite{LHCb:2014uqj}. It replaced the former TT detector, retired due to irradiation. Each UT sensor is composed of \SI{250}{\micro\meter} thick silicon and a \SI{10}{\micro\meter} metalization layer. The segmentation is finer than the TT, with near-beam sensor pitch of \SI{95}{\micro\meter} and dimension of $98$×\SI{49}{\milli\meter\squared}, against the TT sensor pitch of \SI{183}{\micro\meter}. In Figure~\ref{fig:UT} a view of the detector is shown~\cite{ut}. 
 The UT is a core part of the LHCb physics case, being required to constrain important decays such as $K_S \rightarrow\pi\pi$ that happen beyond the VELO acceptance. The UT also boosts the momentum resolution and helps identify ghost tracks.
 
 \begin{figure}
@@ -131,7 +131,8 @@ RICH$2$ is downstream of the spectrometer magnet, after the last T-station, cove
 
 The RICH detectors use spherical mirrors to focus Cherenkov light, with secondary flat mirrors to guide the photons onto Hybrid Photon Detectors (HPDs). These HPDs are sensitive to photons in the $200-\SI{600}{\nano\meter}$ wavelength range, and they are placed outside the detector acceptance, reducing material costs and protecting them from the spectrometer's magnetic field.
 
-Arrays of multi-anode photomultiplier tubes (MaPMTs) are used to detect individual Cherenkov photons, with RICH$1$ having a total detection area of $\SI{1.6}{\squared\meter}$ and RICH$2$ having a detection area of $\SI{2.2}{\squared\meter}$. This arrangement ensures efficient collection and processing of Cherenkov light for particle identification.
+Arrays of multi-anode photomultiplier tubes (MaPMTs) are used to detect individual Cherenkov photons, with RICH$1$ having a total detection area of $\SI{1.6}{\squared\meter}$ and RICH$2$ having a detection area of $\SI{2.2}{\squared\meter}$. 
+%This arrangement ensures efficient collection and processing of Cherenkov light for particle identification.
 
 \begin{figure}
     \centering
@@ -151,7 +152,7 @@ Arrays of multi-anode photomultiplier tubes (MaPMTs) are used to detect individu
 \subsection{Calorimeters}
 \sloppy
 The calorimeter system in the LHCb experiment~\cite{LHCb:2000vji} plays its role in identifying electrons, photons, and hadrons, providing a measurement of their energies and positions. The system comprises the Electromagnetic Calorimeter (ECAL) and an  Hadron Calorimeter (HCAL). Both of them are  placed between the RICH$2$ and the second muon station, with an angular acceptance ranging from \SI{25}{\milli\radian} to \SI{250}{\milli\radian} in the bending plane and to \SI{300}{\milli\radian} in the non-bending plane. 
-The ECAL is responsible for measuring the energy and position of electrons and photons. It is built with shashlik calorimeter technology, consisting of alternating \SI{4}{\milli\meter}-thick polystyrene scintillating tiles and \SI{2}{\milli\meter} lead sheets. The scintillation light is collected using wavelength-shifting fibers and read out by individual photomultipliers (PMTs) mounted at the back of the tiles. The total thickness of the ECAL is 25 radiation lengths, providing sufficient thickness to contain most electromagnetic showers. The calorimeter structure is segmented into three zones depending on the radial distance from the beamline. The inner section has cells with a lateral dimension of $\SI{40.4}{\milli\meter}$, the middle section has cells with a $\SI{60.6}{\milli\meter}$ lateral dimension, and the outer section comprises cells with a $\SI{121.2}{\milli\meter}$ lateral dimension. The energy resolution for the ECAL is approximately 
+The ECAL is responsible for measuring the energy and position of electrons and photons. It is built with shashlik calorimeter technology\cite{Badier:293003}, consisting of alternating \SI{4}{\milli\meter}-thick polystyrene scintillating tiles and \SI{2}{\milli\meter} lead sheets. The scintillation light is collected using wavelength-shifting fibers and read out by individual photomultipliers (PMTs) mounted at the back of the tiles. The total thickness of the ECAL is 25 radiation lengths, providing sufficient thickness to contain most electromagnetic showers. The calorimeter structure is segmented into three zones depending on the radial distance from the beamline. The inner section has cells with a lateral dimension of $\SI{40.4}{\milli\meter}$, the middle section has cells with a $\SI{60.6}{\milli\meter}$ lateral dimension, and the outer section comprises cells with a $\SI{121.2}{\milli\meter}$ lateral dimension. The energy resolution for the ECAL is approximately 
  $\sigma_E/E~\text{(GeV)}~=~1\%~\oplus~10\%/\sqrt{E\text{(GeV)}}$.
 
 \sloppy
@@ -175,18 +176,18 @@ A scheme of the muon stations (including M1 no longer part of the detector) is d
     \caption{A scheme of the muon stations. M$1$ was removed during Upgrade~1.}
     \label{fig:muon}
 \end{figure}
-The stations are equipped with Multi-Wire Proportional Chambers (MWPCs) for muon detection. These chambers use a gas mixture of argon, carbon dioxide, and tetrafluoromethane (CF4) in varying mixing proportions for optimal muon detection and signal collection. The iron absorbers between the stations add to the muon filtering capacity, ensuring that only muons with momentum greater than \SI[per-mode=symbol]{6}{\giga\eVperc} can traverse the entire system.
+The stations are equipped with Multi-Wire Proportional Chambers (MWPCs) for muon detection. These chambers use a gas mixture of argon, carbon dioxide, and tetrafluoromethane (CF4). The iron absorbers between the stations add filtering capacity, ensuring that only muons with momentum greater than \SI[per-mode=symbol]{6}{\giga\eVperc} can traverse the entire system.
 
 Stations M$2$-M$3$ focus on transverse momentum measurements, while M$4$ and M$5$ serve to confirm if a particle has traversed the entire detector system. The system achieves a 95\% detection efficiency, providing robust muon identification. 
 
 The unique feature of the LHCb muon detector system is its segmented structure, with each station divided into four regions (R$1$-R$4$), with cells scaling in the ratio 1:2:4:8 with distance from the beam axis. This segmentation allows the system to manage varying particle rates and optimise detection efficiency. Additionally, the independent halves (A and C sides) offer flexibility during installation and maintenance, enabling quick access to the beam pipe and detector chambers when needed.
 
 
-\section[Real Time Analysis]{Real Time Analysis (RTA)}\label{sec:rta}
+\section[Real Time Analysis]{Real Time Analysis $\bigl($RTA$\bigr)$}\label{sec:rta}
 
 With the increase in instantaneous luminosity at the LHCb interaction point, the demand for more accurate measurements has driven the collaboration to completely renew its readout and trigger systems. The upgraded system operates at an average event rate of \SI{30}{\mega\hertz}, processing every event with a fully software-based trigger system that integrates information from all sub-detectors. The need for more efficient trigger systems emerged from simulation studies showing that the trigger sequence used during Run~1 and Run~2 would lead to a loss of efficiency in hadronic B-meson decay channels as the instantaneous luminosity increased~\cite{CERN-LHCC-2011-001}. The first stage of the previous trigger system, L$0$, relied on transverse energy $E_T$ measurements from several sub-detectors. This resulted in high efficiencies for dimuon events but reduced efficiency for fully hadronic decays and for decays including electrons and photons in the final state. Additionally, the increase in the $E_T$ threshold to manage trigger rates with higher luminosities compromised signal efficiency, causing saturation of the trigger yield.
 
-The renewed DAQ and trigger system at LHCb is designed to overcome these limitations~\cite{CERN-LHCC-2018-014}. The new system operates at full LHC bunch crossing rate, with event reconstruction based on precise measurements of momentum and impact parameters. The readout system can handle high input data flow, on the order of \SI[per-mode=symbol]{50}{\tera\byte\per\second}, while the software-based trigger can process events at an average rate of \SI{30}{\mega\hertz}. 
+The renewed DAQ and trigger system at LHCb is designed to overcome these limitations~\cite{CERN-LHCC-2018-014}. The readout system can handle high input data flow, on the order of \SI[per-mode=symbol]{50}{\tera\byte\per\second}, while the software-based trigger can process events at an average rate of \SI{30}{\mega\hertz}, mathcing the full LHC crossing rate.
 
 \begin{figure}
     \centering
@@ -204,15 +205,20 @@ HLT$2$ has a very detailed precision, but it suffers from great slowness. In ord
 The buffer serves also the purpose of data source for the Alignment \& Calibration phase of the detector. While the data awaits to be processed by HLT$2$, a subset of them is used to perform this task. Once available, the Alignment \& Calibration information is then back-propagated to all the events in HLT$1$, in order to enhance the resolution of estimated parameters (e.g. PVs), and also forth-propagated to HLT$2$ for the offline-quality level reconstruction.
 
 
-\subsection{The HLT$1$ and HLT$2$ subsytems}
+
 The DAQ system~\cite{CERN-LHCC-2014-016} is composed of several sub-systems:
 \begin{itemize}
-\item The Event Builder (EB) hosts the early stage reconstruction (HLT$1$) which is performed on GPUs mounted on the EB nodes
-\item Event Filter Farm (EFF), hosts the farm of CPUs dedicated to perform the selection at HLT$2$ level.
 \item The Timing and Fast Control (TFC) system is responsible for distributing critical clock, timing, and trigger information to the front-end and readout systems. It synchronises to the LHC master clock, ensuring precise timing across all components. The TFC provides global signals, including the \SI{40}{\mega\hertz} clock, synchronous commands to control event processing, calibration commands for detectors, and electronics configuration distribution from the ECS.
-\item Experimental Control System (ECS) oversees the entire LHCb experiment, from infrastructure to data acquisition.
+
+\item The Event Builder (EB) hosts the early stage reconstruction (HLT$1$) which is performed on GPUs mounted on the EB nodes
+
+\item The Event Filter Farm (EFF), hosts the farm of CPUs dedicated to perform the selection at HLT$2$ level.
+
+\item The Experimental Control System (ECS) oversees the entire LHCb experiment, from infrastructure to data acquisition.
 \end{itemize}
-In Figure~\ref{fig:architecture_readout} a scheme of their interaction is shown. In the following subsections, a more detailed description of the sub-systems will be given.
+In Figure~\ref{fig:architecture_readout} a scheme of their interaction is shown.
+In Section \ref{sec:HLT1eHLT2} we present a more detailed description of the sub-systems relative to the HLT$1$ and HLT$2$, while the Alignment \& Calibration procedure is explained in Section \ref{sec:alignment}. Finally, in Section \ref{sec:ecs} we provide a description in ECS. 
+%In the following subsections, a more detailed description of the sub-systems will be given.
 
 \begin{figure}
     \centering
@@ -229,12 +235,28 @@ In Figure~\ref{fig:architecture_readout} a scheme of their interaction is shown.
 \end{figure}
 
 
-
+\subsection{The HLT$1$ and HLT$2$ subsytems}\label{sec:HLT1eHLT2}
 \subsubsection{Event Builder (EB)}
-To collect data from all sub-detector channels and assemble them into complete event datasets, a process known as event building is employed. This entails gathering all data fragments corresponding to a single event and consolidating them centrally. This task is handled by a dedicated server farm called the Event-Builder (EB), which comprises 173 interconnected nodes. These nodes are linked to the detector front-end, other EB nodes, the buffer towards HLT$2$ farm, and the other control systems, such as TFC and ECS.
+To collect data from all sub-detector channels and assemble them into complete event datasets, a process known as event building is employed. This entails gathering all data fragments corresponding to a single event and consolidating them centrally. This task is handled by a dedicated server farm called the Event-Builder (EB), which comprises 163 interconnected nodes. These nodes are linked to the detector front-end, other EB nodes, the buffer towards HLT$2$ farm, and the other control systems, such as TFC and ECS.
 
-The data from all the sub-detectors in the underground area are transmitted to the surface through radiation-hard 300-meter-long optical fibres with zero-suppression. Each EB node processes a portion of the event data, requiring to exchange information with other EB nodes to assemble complete event information via the Event Builder Network. Once the Event Builder Network has gained access to all the information regarding the event, the whole information of each single event is send back to a single EB node, which will complete the build, leveraging the parallel processing of each one of the three GPUs mounted in each EB node. 
+The workflow of the event building is as follows: 
+The data from all the sub-detectors in the underground area are transmitted to the EB nodes in the surface through radiation-hard 300-meter-long optical fibres with zero-suppression. Each EB node receives data from a specific sub-detector, and it is responsible for its readout. The initial information at each EB node corresponds to the data of a specific sub-detector contained in multiple events. The data of each EB node are shared with other EB nodes to assemble complete event information via the Event Builder Network. Once the Event Builder Network has gained access to all the information regarding the events, the data of each sub-module regarding the same event is send back to a single EB node, which will complete the build in the GPUs installed in the EB node. The Event Builder adopts therefore two levels of parallelisation in order to match the data throughput: on one hand, the EB nodes reconstruct different events simultaneously; on the other, the reconstruction of a single event in each of the EB node leverage the parallel processing of the hardware accelerators mounted inside each EB node.
+Once the full event is reconstructed, the data is sent from the EB node to the buffer, awaiting for the full reconstruction by HLT2. 
+
+In the next paragraph we give a description of the EB nodes architecture, in order to better understand how the EB nodes can perform the operations we just described. In the subsequent paragraph we present the operation that HLT$1$ performs within the GPUs mounted in the EB nodes. 
+
+\paragraph{EB node architecture}
+An overview of all the modules installed in a single EB network is schematised in Figure \ref{devices_EBnode}. The detector front-end is connected with $\sim10^{4}$ optical fibres to the Readout Boards, also referred to as TELL40 boards. These custom-built PCI Express (PCIe) boards are equipped with an Intel Arria 10 Field Programmable Logic Arrays (FPGA)\footnote{A more detailed description of the FPGA will be given in Section \ref{sec:FPGA}}, boasting one of the largest FPGA sizes available during their development phase. With a PCIe Gen3 interface, these boards can write data to host memory via Direct Memory Access (DMA) at speeds of up to $100$~Gbit/s. Each Readout Board contains logical units, such as the Readout Unit (RU), responsible for transmitting event fragments to other EB nodes through the EB network, with the communication relying on 200~Gbit/s InfiniBand NICs in order to handle the high bandwidth. On the other hand, the Builder Unit (BU) on each node collects fragments corresponding to the same event. Each EB node has the capacity to accommodate up to three accelerator boards for data processing, with GPUs mounted on these slots to execute HLT$1$ operations. The selected events from HLT$1$ are then forwarded to the Event Filter Farm (EFF) via the HLT network, transmitting via 10~Gbit/s Ethernet NICs, which are commonly integrated into server motherboards. 
+
+\begin{figure}
+\centering
+    \includegraphics[width=0.5\textwidth]{figures/zoom_EB_node.png}
+    \caption{Devices installed at each EB node, which comprehend three TELL40s (Readout), three GPUs (Accelerator) and communication ports for the other EB nodes (200G EB net) and EFF (10G HLT net).}\label{devices_EBnode}
+\end{figure}
+
 \paragraph{HLT$1$}
+HLT$1$, installed directly within the EB, significantly reduces the data rate by a factor of 30-60, enabling the use of a smaller and more cost-effective network between the EB and the EFF. This reduction is crucial considering the raw data immense bandwidth requirement of 40~Tbit/s.
+
 The HLT$1$ stage aims to reject events that do not contain particles of interest while retaining those that do. It uses a subset of the full offline charged particle reconstruction and implements inclusive single or two-track selections to determine the event interest. HLT$1$ is entirely implemented on GPUs in the same servers hosting the Event Builder. The \textit{Allen} application, written in C++ with CUDA extensions, executes the following tasks~\cite{CERN-LHCC-2020-006}:
 \begin{itemize}
 \item Decoding raw input into the LHCb global coordinate system
@@ -243,38 +265,18 @@ The HLT$1$ stage aims to reject events that do not contain particles of interest
 \item Fitting track candidates using a Kalman Filter to estimate momentum and other parameters
 \item Reconstructing primary and secondary vertices from fitted tracks
 \item Making trigger decisions based on track parameters like impact parameter and momentum
-\end{itemize}Once the events are selected they are propagated to the Event Filter Farm. 
-\paragraph{EB nodes}
-At the heart of each EB node are devices known as TELL40 boards. These custom-built PCI Express (PCIe) boards are equipped with an Intel Arria 10 Field Programmable Logic Arrays (FPGA)\footnote{A more detailed description of the FPGA will be given in Section \ref{sec:FPGA}}, boasting one of the largest FPGA sizes available during their development phase. With a PCIe Gen3 interface, these boards can write data to host memory via Direct Memory Access (DMA) at speeds of up to $100$~Gbit/s. Each Readout Board contains logical units, such as the Readout Unit (RU), responsible for transmitting event fragments to other EB nodes through the EB network, with the communication relying on 200~Gbit/s InfiniBand NICs in order to handle the high bandwidth. On the other hand, the Builder Unit (BU) on each node collects fragments corresponding to the same event. Each EB node has the capacity to accommodate up to three accelerator boards for data processing, with GPUs mounted on these slots to execute HLT$1$ operations. The selected events from HLT$1$ are then forwarded to the Event Filter Farm (EFF) via the HLT network, transmitting via 10~Gbit/s Ethernet NICs, which are commonly integrated into server motherboards. An overview of all the modules installed in a single EB network is schematised in Figure \ref{devices_EBnode}.
+\end{itemize}
+Once the events are selected they are propagated to the Event Filter Farm. 
 
-HLT$1$, installed directly within the EB, significantly reduces the data rate by a factor of 30-60, enabling the use of a smaller and more cost-effective network between the EB and the EFF. This reduction is crucial considering the raw data immense bandwidth requirement of 40~Tbit/s.
-
-\begin{figure}
-\centering
-    \includegraphics[width=0.5\textwidth]{figures/zoom_EB_node.png}
-    \caption{Devices installed at each EB node, which comprehend three TELL40s (Readout), three GPUs (Accelerator) and communication ports for the other EB nodes (200G EB net) and EFF (10G HLT net).}\label{devices_EBnode}
-\end{figure}
 
 \subsubsection{Event Filter Farm (EFF)}
 
-The EFF is exclusively dedicated to running HLT2 and comprises a heterogeneous mixture of servers with varying generations and core counts. Given the asynchronous nature of HLT2 processing, load balancing among these servers is handled as an implementation detail.
-The majority of tracks are created near the interaction point, and these are reconstructed as long tracks. However, some neutral long-lived particles, like $K^0_S$ and $\Lambda^0$, are reconstructed as downstream tracks because they decay outside the acceptance of the VELO detector. While HLT$1$ focuses on long tracks, HLT$2$ includes downstream tracks in its reconstruction sequence, allowing more comprehensive event analysis using information from tracking detectors and particle identification systems (RICHs, calorimeters, and muon chambers). It applies specialised cuts to select events of interest to LHCb.
+The EFF is exclusively dedicated to running HLT2 and comprises a heterogeneous mixture of CPUs servers with various generations and core counts. 
+%Given the asynchronous nature of HLT2 processing, load balancing among these servers is handled as an implementation detail.
+While HLT$1$ makes a first-stage cut on events based on long tracks (i.e. created near interaction point) information, HLT$2$ includes allows a more comprehensive event analysis using information from all the sub-detectors. It applies specialised cuts to select events of interest to LHCb. 
 
+HLT$2$ allows also for the reconstruction of downstream tracks, i.e. tracks generated outside the VELO acceptance. This information is crucial, because some neutral long-lived particles, like $K^0_S$ and $\Lambda^0$, are reconstructed as downstream tracks as they decay outside the acceptance of the VELO detector. 
 
-\subsubsection{Experimental Control System (ECS)}\label{sec:ecs}
-
-The ECS~\cite{GranadoCardoso:2702137} oversees the entire LHCb experiment, from infrastructure to data acquisition. It is a distributed system based on the commercial SCADA system WinCC OA, and custom-developed components. The ECS features user interfaces, data archiving, alarm handling, and various device interfaces. Its tree-like control hierarchy, based on a Finite State Machine (FSM), allows commands to be propagated downstream and state information to be propagated upward, as depicted in Figure~\ref{fig:ECS_tree}.
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/ECS_tree.png}
-    \caption{ECS schematic structure. The topmost node (the ECS itself) propagates commands to the downstream units (FE, DAQ systems, Trigger, ...) and is interfaced with the LHC system.}
-    \label{fig:ECS_tree}
-\end{figure}
-
-Of particular interest of this thesis, is that ECS has simultaneous access to all TELL40 boards, allowing it to perform this combination and manage the counters' data. As it will later presented, this feature is important in order to combine the information from the different Readout Boards of the VELO, allowing the computations for the statistics of interest in this thesis. To automate the process and ensure regularity, a WinCC control-script is developed inside the VELO WinCC project. The WinCC script allows for the computation of \textit{datapoints} representing the value of the quantity of interest at specific timestamps. The LHCb online monitoring system application, \textit{Monet}, can display them in trending plots or histograms accessible from any browser \cite{Adinolfi:2298467}.
-
-At any moment, it is possible to view and manage the entire LHCb experiment from a central location. An important component of ECS is the Run Control, which oversees all tasks essential for data collection. The Run Control is in charge of setting up the sub-detectors front-end electronics, voltage system and readout boards, the TFC system, and initialising and configuring all necessary DAQ processes. 
-This structure provides centralised control and monitoring, ensuring efficient management of the LHCb experiment.
 
 \subsection{The Alignment and Calibration phase}\label{sec:alignment}
 LHCb distinguishes between two phases~\cite{Dziurda:2640712}:
@@ -282,21 +284,37 @@ LHCb distinguishes between two phases~\cite{Dziurda:2640712}:
 \item Alignment focuses on correcting shifts and rotations in the detector's components, ensuring that the data obtained from these detectors are accurate. This process is applied to tracking detectors like VELO, UT, SciFi, and Muon systems, ensuring that their positioning aligns with the expected geometry.
 \item Calibration involves fine-tuning the responses of various sub-detectors to ensure accurate measurements. This includes calibrating the RICH, ECAL, and HCAL.
 \end{itemize}
-Both processes are triggered at the beginning of each LHC fill, and they are fully integrated into the LHCb control system. 
+Both processes are triggered at the beginning of each LHCb run, and they are fully integrated into the LHCb control system. 
 \paragraph{Alignment}
-Alignment at LHCb involves minimising the chi-squared $\chi^2$ of all tracks with respect to alignment parameters $\alpha$, which account for translations and rotations of detector elements. The procedure employs the iterative Newton-Raphson method, where the first and second derivatives of $\chi^2$ with respect to $\alpha$ are calculated to determine the optimal adjustments needed for alignment. The data for this alignment procedure comes from tracks obtained through a Kalman filter used in track reconstruction~\cite{HULSBERGEN2009471}, with the option to add vertex and mass constraints for increased precision.
+Alignment at LHCb involves minimising the chi-squared $\chi^2$ of all tracks with respect to alignment parameters $\alpha$, which account for translations and rotations of detector elements. The procedure employs the iterative Newton-Raphson method\cite{raphson2011analysis}, where the first and second derivatives of $\chi^2$ with respect to $\alpha$ are calculated to determine the optimal adjustments needed for alignment. The data for this alignment procedure comes from tracks obtained through a Kalman filter used in track reconstruction~\cite{HULSBERGEN2009471}, with the option to add vertex position and mass constraints for increased precision.
 
 The alignment process has two key components~\cite{Saur:20230E}:
 \begin{itemize}
 \item Analyzer: This part runs the track reconstruction, computes the $\chi^2$ derivatives, and saves them to binary files. It uses multi-threaded reconstruction based on 163 nodes, allowing for efficient data processing.
 \item Iterator: This component collects the derivatives from the Analyzer, performs the minimization step, and checks for convergence. If there is a significant difference between the previous and new alignment constants, the updated constants are used in the HLT2 trigger, ensuring that subsequent data collection reflects the corrected alignment.
 \end{itemize}
+
+Apart from the track alignments, the RICH mirrors also need to be aligned. This is done by creating histograms of the difference ($\Delta \theta_c$ ) of each detected photon reconstructed Cherenkov angle and its expected one. By fitting the appropriate distribution and correcting for deviations of its mean value from zero in each bin, the RICH mirrors can be aligned. This procedure can take several hours, in contrast to the real-time tracker alignments.
 \paragraph{Calibration}
-Calibration at LHCb involves ensuring that the detector responses are accurate and consistent. It typically includes:
+Calibration at LHCb involves ensuring that the detector responses are accurate and consistent. It includes:
 \begin{itemize}
-\item RICH Calibration: This involves calibrating the mirror positions and alignment to ensure accurate Cherenkov angle measurements.
+\item RICH Calibration: This involves evaluating the refractive index that depends on the RICH temperature and gas pressure;
 \item Calorimeter Calibration: ECAL and HCAL calibration focuses on ensuring accurate energy measurements.
 \end{itemize}
 The calibration process leverages dedicated HLT$1$ trigger lines to select events suitable for calibration and alignment. These events are stored in a buffer until sufficient statistics are accumulated to run the calibration and alignment procedure. This buffering allows HLT$2$ reconstruction to use the most accurate and relevant alignment and calibration constants.
 
 
+\subsection{Experimental Control System (ECS)}\label{sec:ecs}
+
+The ECS~\cite{GranadoCardoso:2702137} oversees the entire LHCb experiment, from infrastructure to data acquisition. It is a distributed system based on the commercial Supervisory Control And Data Acquisition (SCADA) system WinCC OA, and custom-developed components. The ECS features user interfaces, data archiving, alarm handling, and various device interfaces. Its tree-like control hierarchy, based on a Finite State Machine (FSM), allows commands to be propagated downstream and state information to be propagated upward, as depicted in Figure~\ref{fig:ECS_tree}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/ECS_tree.png}
+    \caption{ECS schematic structure. The topmost node (the ECS itself) propagates commands to the downstream units (FE, DAQ systems, Trigger, ...) and is interfaced with the LHC system.}
+    \label{fig:ECS_tree}
+\end{figure}
+
+Of particular interest of this thesis, is that ECS has simultaneous access to all TELL40 boards. As it will later presented, this feature is important in order to combine the information from the different Readout Boards of the VELO, allowing the computations for the statistics of interest in this thesis. To automate the process and ensure regularity, a WinCC control-script is developed inside the VELO WinCC project. The WinCC script allows for the computation of \textit{datapoints} representing the value of the quantity of interest at specific timestamps. The LHCb online monitoring system application, \textit{Monet}, can display them in trending plots or histograms accessible from any browser \cite{Adinolfi:2298467}.
+
+ECS allows to view and manage the entire LHCb experiment from a central location, at any moment. An important component of ECS is the Run Control, which oversees all tasks essential for data collection. The Run Control is in charge of setting up the sub-detectors front-end electronics, voltage system and readout boards, the TFC system, and initialising and configuring all necessary DAQ processes. 
+This structure provides centralised control and monitoring, ensuring efficient management of the LHCb experiment.
