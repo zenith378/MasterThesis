@@ -18,7 +18,7 @@ Let us defined the average number of events in a visible process $\mu_{\text{vis
 
 where:
 \begin{itemize}
-\item  $\Rho_{\text{vis}}$ is the interaction rate of a visible process,
+\item  $\Rho_{\text{vis}}=\tfrac{dR}{dt}$ is the interaction rate of a visible process,
 \item  $f$ is the frequency of collisions,
 \item  $\mathcal{L}$ is the instantaneous luminosity,
 \item  $\sigma_{\text{vis}}$ is the cross section of the chosen visible process.
@@ -33,7 +33,7 @@ Once $\mu_{\text{vis}}$ is measured, the luminosity is derived as follows:
 \mathcal{L} = \frac{\mu_{\text{vis}} \cdot f}{\sigma_{\text{vis}}}
 \end{equation}
 
-This approach is referred to as ``relative luminosity determination" because it relies on the known cross section $\sigma_{\text{vis}}$ to ``calibrate" the luminosity, using it as a normalisation factor. During periods of data-taking at LHCb, different ``luminosity counters" record the values of visible interactions, allowing to calculate $\mu_{\text{vis}}$. This data is then used to estimate the instantaneous luminosity, enabling accurate cross-section measurements and experimental calibration.
+This approach is referred to as ``relative luminosity determination" because it relies on the known visible cross section $\sigma_{\text{vis}}$ to ``calibrate" the luminosity, using it as a normalisation factor. During periods of data-taking at LHCb, different ``luminosity counters" record the values of visible interactions, allowing to calculate $\mu_{\text{vis}}$. This data is then used to estimate the instantaneous luminosity with various counters that will be presented in Section \ref{sec:luminometers}, enabling accurate cross-section measurements and experimental calibration.
 
 
 % Integrated Luminosity Definition
@@ -55,10 +55,10 @@ A key factor influencing integrated luminosity is the decay of instantaneous lum
 \begin{equation}
 \mathcal{L}(t) = \mathcal{L}_0 \exp\left( -\frac{t}{\tau} \right)
 \end{equation}
-where $\mathcal{L}_0$ is the initial luminosity, \(t\) is the elapsed time, and \(\tau\) is the lifetime associated with the decay. 
+where $\mathcal{L}_0$ is the initial luminosity, $t$ is the elapsed time, and $\tau$ is the lifetime associated with the luminosity decay. 
 
-In the following paragraphs, a theoretical description of the instantaneous luminosity concept will be given.
-In the next section, I will describe the luminosity at LHCb and explain how at this experiment we can avoid the exponential introducing the luminosity levelling.
+In the following paragraphs, the formula that is widely used for computing the luminosity at a collider experiment will be derived.
+Subsequently, I will describe the luminosity at LHCb and explain how at this experiment we can avoid the exponential decay introducing the luminosity levelling. The process of ``calibrating" the counters, i.e. calculating the visible cross section $\sigma_{\text{vis}}$, is carried out in a procedure called Van Der Meer Scan, that will be presented from a theoretical in Section \ref{sec:calibration_vdm}. In Section~\ref{lumi_measure} I will finally introduce the counters used in this thesis and explain how the calibration has been carried out, as well as showing the rationale behind the combination of them for a single luminosity measurement.
 
 \paragraph{Luminosity in Fixed Target Experiments}
 In fixed target experiments, the luminosity is influenced by the properties of both the incoming beam and the stationary target. The incoming beam is characterised by its flux $\Phi$, which is the number of particles per second. Let us consider an homogeneous target thin enough to let only a small fraction of beam particles actually
@@ -91,9 +91,9 @@ The luminosity is proportional to the overlap integral of the two  $\rho_1$, $\r
 \end{equation}
 Assuming colliding bunches moving against each other that meet at $s_0$, we have to take into account the kinematic factor\cite{Moller}:
 \begin{equation}
-    K = \sqrt{\bigl(\vec{v_1}-\vec{v_2}\bigr)^2-\bigl(\vec{v_1} \times \vec{v_2}\bigr)^2/c^2}.
+    K = \sqrt{\bigl(\vec{v_1}-\vec{v_2}\bigr)^2-\bigl(\vec{v_1} \times \vec{v_2}\bigr)^2}/c.
 \end{equation}
-By further assuming head-on collisions ($\vec{v_1}=-\vec{v_2}$) and that all densities are uncorrelated in all planes, we can write:
+By further assuming head-on collisions ($\vec{v_1}=-\vec{v_2}$) in the relativistic limit ($K=2$) and that all densities are uncorrelated in all planes, we can write:
 \begin{equation}
         \mathcal{L} = 2 N_1 N_2 f N_b\cdot\iiiint_{\infty}^{+\infty}\rho_{1x}(x)\rho_{1y}(y)\rho_{1s}(s+s_0)\rho_{2x}(x)\rho_{2y}(y)\rho_{2s}(s+s_0)dxdydsds_0.\label{beam_overlap}
 \end{equation}
@@ -112,7 +112,7 @@ Given Gaussian profiles, we can write the distribution function for a Gaussian b
 \begin{equation}
 \rho_{s}(s\pm s_0) =\frac{1}{\sigma_s\sqrt{2\pi}} \exp\left( -\frac{(s\pm s_0)^2}{2 \sigma_s^2} \right)
 \end{equation}
-Let us assume equal beams, i.e.  $\sigma_{iz} = \sigma_{jz}$ for $i=j$, z=$x,y,s$ and that the number of particles per bunch $N_1$ and $N_2$, revolution frequency $f$, and number of bunches $N_b$ are known. For exactly head-on collisions, in the relativistic limit the kinematic factor becomes 2.
+Let us assume equal beams, i.e.  $\sigma_{iz} = \sigma_{jz}$ for $i=j$, z=$x,y,s$ and that the number of particles per bunch $N_1$ and $N_2$, revolution frequency $f$, and number of bunches $N_b$ are known. 
 
 Using this information, the integral for luminosity can be derived by first considering the overlap integral of the Gaussian distributions as in equation \eqref{beam_overlap}:
 
@@ -158,13 +158,15 @@ In 2011, the number of bunches in the machine increased to about 1300, allowing 
 To cope with this issue, in 2011 the LHCb experiment introduced a luminosity levelling procedure at the LHCb interaction point to keep the instantaneous luminosity stable within about 5\% during a fill. This was achieved by adjusting the transverse overlap of the beams, as it will be better explained in the next subsection.
 %For one particularly long fill, a maximum overlap with head-on beams was reached only after 15 hours. This levelling minimised the effects of luminosity decay and allowed LHCb to maintain a consistent trigger configuration, reducing systematic uncertainties due to changing detector occupancy.
 
-In 2012, the LHC beam energy was increased to $\SI{4}{\tera\eV}$, and LHCb took data at a luminosity of $\sim \SI{4e32}{\per\centi\meter\squared\per\second}$, twice the LHCb design luminosity. An effort was made in 2012 to use more efficiently the processing power available in the Event-Filter-Farm (EFF), deferring a fraction of the HLT processing to the inter-fill time ($\sim$ several hours) between the LHC collision periods. This value of luminosity was kept as target until the end of Run2.  
+In 2012, the LHC beam energy was increased to $\SI{4}{\tera\eV}$, and LHCb took data at a luminosity of $\sim \SI{4e32}{\per\centi\meter\squared\per\second}$, twice the LHCb design luminosity. An effort was made in 2012 to use more efficiently the processing power available in the Event-Filter-Farm (EFF), deferring a fraction of the HLT processing to the inter-fill time ($\sim$ several hours) between the LHC collision periods. This value of luminosity was kept as target until the end of Run~2.  
 %in order to cope with the increase in luminosity, allowing LHCb to increase the data sample available for physics analysis. 
 
 
-For Run3, LHCb plan to further increase this value, reaching an instantaneous luminosity of $\SI{2e33}{\per\centi\meter\squared\per\second}$, corresponding to a pile-up $\mu=5.5$.
+For Run~3, LHCb plan to further increase this value, reaching an instantaneous luminosity of $\SI{2e33}{\per\centi\meter\squared\per\second}$, corresponding to a pile-up $\mu=5.5$.
 %An overview of the luminosity integrated until the end of Run 2 is depicted in Figure \ref{fig:lumiRun1Run2}.
-This goal is now reachable thanks to the renewed TDAQ system presented in Section \ref{sec:rta} and a complete renovation in the tracking system as explained in Section \ref{sec:detector}.
+This goal is now reachable thanks to the renewed TDAQ system presented in Section \ref{sec:rta} and a complete renovation in the tracking system as explained in Section \ref{sec:detector}. 
+
+Furthermore, the high-luminosity project will bring LHCb to increase the instantaneous luminosity reaching in Run~5 the peak value of $\mathcal{L}=\SI{2e34}{\per\centi\meter\squared\per\second}$ corresponding to a mean pile-up $\mu=55$.
 
 \subsection{Luminosity levelling}\label{sec:lumi_levelling}
 
@@ -193,23 +195,24 @@ The LHCb luminosity control manager, part of the ECS, is a FSM driven by LHC ope
     \label{fig:lumi-control}
 \end{figure}
 
-\subsection{Luminometers}
+\subsection{Luminometers}\label{sec:luminometers}
 The target luminosity for LHCb is a compromise between physics priorities, trigger selection efficiencies, detector performance limitations, DAQ system constraints, and offline data-processing capabilities. For Run~2, this value was set to $\SI{4e32}{\per\centi\meter\squared\per\second}$, while for Run~3, the optimal target luminosity is estimated at $\SI{2e33}{\per\centi\meter\squared\per\second}$, corresponding to a pile-up per bunch-crossing of approximately $\mu = 5.5$.
 
 During Run~1 and Run~2, online luminosity estimates had a precision of 10\% and were derived from two primary sources: 
 \begin{enumerate}
     \item Transverse Energy Deposition: Observations of energy depositions over a fixed threshold in the calorimeter system;
-    \item Muon Station Counts: Counts in the muon stations, provided by the Level-0 (L0) hardware-trigger.
+    \item Muon Station Counts: Counts in the muon stations.
 \end{enumerate}
+Both of these quantities were available for the Level-zero L$0$ hardware-trigger.
 During Run~2, the systematic uncertainty on the integrated luminosity was of 3.9\%, by far the principal source of systematics in most of the measurements of cross-sections (e.g.~\cite{j-psi}). The aim of the collaboration for Run~3 is to increase the precision in the integrated luminosity measurement, aiming at reaching an accuracy of 1\%\cite{Aaij:1951625}. For this reason, the collaboration decided to implement for Run~3 as many detector and systems as possible to monitor the instantaneous luminosity at the interaction point during the data-taking period.
 One approach is to count the number of reconstructed primary vertices per event $\nu$, which is directly proportional to the pile-up $\mu$, up to an acceptance-efficiency factor $\epsilon$. Another method is to measure count rates, such as the number of tracks per bunch crossing, hits on a detector, or reconstructed particles. These count rates exploits the method of ``relative luminosity determination" of equation~\eqref{rel_lumi}.
 
 \subsubsection{PLUME}
 A dedicated luminometer sub-detector, PLUME (Probe for LUminosity MEasurement), was introduced for Run~3 to improve both online and offline luminosity measurement precision. PLUME consists of 24 hodoscopes (couples of detector modules read out for coincidences in both modules) surrounding the beampipe, pointing at the nominal interaction point, and located approximately 1.7~meters upstream from the collision region. It covers a high-pseudorapidity range $(2.4 < \eta < 3.1)$.
 
-Each hodoscope module is composed of $10 × 10 × \SI{5}{\milli\meter\tothe{3}}$ quartz crystals, coupled with photomultipliers that detect Cherenkov light generated when high-speed particles traverse the quartz. Online luminosity measurement is performed by counting coincidences in at least one hodoscope, identifying tracks coming from the interaction region, and suppressing background activity.
+Each hodoscope module is composed of 10 × 10 × \SI{5}{\milli\meter\tothe{3}} quartz crystals, coupled with photomultipliers that detect Cherenkov light generated when high-speed particles traverse the quartz. Online luminosity measurement is performed by counting coincidences in at least one hodoscope, identifying tracks coming from the interaction region, and suppressing background activity.
 
-A problem with the luminosity linearity has been discovered in September 2022: due to non-negligible rate of random coincidences the PLUME showed divergencies from the expected linear behaviour. Since 7th of July 2022 PLUME luminosity corrected for non-linearity using HLT$1$ counters, rendering de-facto PLUME an offline luminosity estimator.
+A problem with the luminosity linearity has been discovered in September 2022: due to non-negligible rate of random coincidences the PLUME showed divergencies from the expected linear behaviour. Since July 7th 2022 PLUME luminosity corrected for non-linearity using HLT$1$ counters, rendering de-facto PLUME an offline luminosity estimator.
 
 
 \subsubsection{Other counters} 
@@ -227,7 +230,7 @@ These counters are primarily used for online monitoring and include:
 
 
 \section{An absolute luminosity calibration: the Van der Meer scan}
-Most of the luminometers that LHCb implemented rely on the ``relative luminosity determination" defined in equation~\eqref{rel_lumi}. This method is based on counting some quantity $\mu_{vis}$ that is directly proportional to the luminosity. In order to pass from the counter to the luminosity value, the visible cross-section $\sigma_{\text{vis}}$ of the counter must be known. 
+Most of the luminometers that LHCb implemented rely on the ``relative luminosity determination" defined in equation~\eqref{rel_lumi}. This method is based on counting some quantity $\mu_{vis}$ that is directly proportional to the luminosity. In order to obtain the luminosity value from a counter, the visible cross-section $\sigma_{\text{vis}}$ of the counter must be known. 
 
 This quantity $\sigma_{\text{vis}}$ can be computed with the help of the Van der Meer (VdM) method, a technique widely used in HEP to calibrate luminosity counters. The VdM method involves separating beams in the transverse plane by some quantities $\Delta x$, $\Delta y$ and measuring the average number of interactions $\mu$ between two colliding bunches. 
 Rewriting \eqref{spec_lumi_gaus} for a case of two general distribution $\rho_{1,2} (x,y)$
@@ -248,7 +251,7 @@ as can be easily proved by substituting $x_2+\Delta x=x_1,\ y_2+\Delta y=y_1$. I
 
 From \eqref{vdm_1} and \eqref{vdm_2} we obtain the VdM formula:
 \begin{equation}
-     \sigma = \frac{1}{N_b} \iint \frac{\mu (\Delta x,\, \Delta y)}{N_1N_2} d\Delta x\, d\Delta y= \iint \mu_{sp}d\Delta x\, d \Delta y \label{sigma_vdm}
+     \sigma = \frac{1}{N_b} \iint \frac{\mu (\Delta x,\, \Delta y)}{N_1N_2} d\Delta x\, d\Delta y= \iint \mu_{sp}(\Delta x,\, \Delta y)d\Delta x\, d \Delta y \label{sigma_vdm}
     \end{equation}
 
 where we defined the specific number of interactions
@@ -261,10 +264,6 @@ The derivation of \eqref{sigma_vdm} uses only $\mu _{sp}$ but not $\mu$ or $N_{1
 Achieving precise parallel translations of particle beams in the transverse plane requires complex configurations of magnets. To translate a single beam in one direction, four magnets are needed, positioned at the corners of a trapezoid-shaped trajectory. Consequently, for steering two beams in both transverse directions, a total of 16 magnets are necessary at each interaction point. Given this complexity, ensuring consistent and synchronised movement of all magnets becomes challenging.
 
 Due to these synchronisation difficulties, continuous scans are generally avoided in favour of a step-wise approach. At the LHC, for example, the specific interaction rate $\mu_{sp}(\Delta x,\Delta y)$ is measured at predefined discrete points. As beams are moved from one point to another, the process waits until the slowest magnet reaches its designated current value before starting the counting measurement.
-
-The step-wise scanning technique originated with Van der Meer, who invented it over 50 years ago for the Intersecting Storage Rings (ISR) accelerator\cite{Carboni:156499}. Since then, it has been successfully applied with variations at other major accelerators\cite{Rubbia:1025746}, including the LHC. The method's accuracy can range from 0.7\% to a few percent, establishing it as a reliable approach for luminosity calibration.
-
-Despite its success in hadron colliders, the Van der Meer method can face challenges in electron-positron colliders due to strong beam–beam interactions. In these environments, luminosity is typically measured indirectly through Bhabha scattering events, where the quantum electrodynamics cross-section is well understood. In contrast, in hadron colliders, such as the LHC, it is harder to identify processes with accurately predicted cross-sections. Thus, in hadron accelerators, the best accuracy is typically achieved by directly measuring luminosity, following its definition.
 
 In accelerator physics, it is common for particle beams to oscillate in the transverse plane due to beam optics elements designed to keep particles on a stable trajectory. This phenomenon shapes the transverse bunch widths and determine the density profiles $\rho _{1,2}(x, y)$. However, the accelerator is designed to maintain separate stability and independence for oscillatory motions along the transverse components $x$ and $y$. Any coupling between coordinates risks introducing additional resonances in the oscillatory motions.
 
@@ -285,7 +284,7 @@ The integrals in the enumerator can be measured in two one-dimensional scans ove
 
 While the XY factorisation provides a powerful framework for simplifying luminosity calibration, it is not always perfect. Imperfections in accelerator design or other factors can lead to coupling between $x$ and $y$ coordinates, which may affect the accuracy of the factorisation. These deviations are typically small but can introduce systematic errors in the calibration process.
 
-To address this, the shape of the interaction vertex distributions is studied to identify any signs of non-factorisability. If the projections of the luminous region profiles onto one coordinate remain invariant when scanning the other, the factorisation assumption holds. Otherwise, systematic corrections are required.
+To address this, the shape of the interaction vertex distributions is studied to identify any signs of non-factorisability. If the projections of the luminous region profiles onto one coordinate remain invariant when scanning the other, the factorisation assumption holds. Otherwise, systematic corrections are required. Furthermore, any error in the beam displacements directly affects the cross-section. An accurate measurement of $\Delta x, \Delta y$ scale is performed in a dedicated Length Scale Calibration (LSC), which always accompanies van der Meer scans. 
 
 The best way to further improve accuracy is to perform two-dimensional scans, focusing on the central region where the majority of interactions occurs. This approach was pioneered at LHCb in 2017 and can significantly reduce non-factorisation systematics and improve calibration accuracy\cite{Balagura_2021}.
 
@@ -300,10 +299,12 @@ Currently, at LHCb both in mono-directional and 2 dimensional scans are performe
 
 
 
+The step-wise scanning technique originated with Van der Meer, who invented it over 50 years ago for the Intersecting Storage Rings (ISR) accelerator\cite{Carboni:156499}. Since then, it has been successfully applied with variations at other major accelerators\cite{Rubbia:1025746}, including the LHC. The method's accuracy can range from 0.7\% to a few percent, establishing it as a reliable approach for luminosity calibration.
 
+%Despite its success in hadron colliders, the Van der Meer method can face challenges in electron-positron colliders due to strong beam–beam interactions. In these environments, luminosity is typically measured indirectly through Bhabha scattering events, where the quantum electrodynamics cross-section is well understood. In contrast, in hadron colliders, such as the LHC, it is harder to identify processes with accurately predicted cross-sections. Thus, in hadron accelerators, the best accuracy is typically achieved by directly measuring luminosity, following its definition.
 
-\section{Online VELO Luminosity estimation}
-The primitives described in Section~\ref{sec:velo_counters} aligns well with a luminosity measurement. In fact, we already stated various time in this chapter how a luminosity measurement can be obtained from simple counts, as defined equation~\eqref{rel_lumi}. Disposing of 208 different counters, we can provide 208 different luminosity measurements. 
+\section{Online VELO Luminosity estimation}\label{lumi_measure}
+The primitives described in Section~\ref{sec:velo_counters} aligns well with a relative luminosity measurement. In fact, we already stated various time in this chapter how a luminosity measurement can be obtained from simple counts, as defined equation~\eqref{rel_lumi}. Disposing of 208 different counters, we can provide 208 different luminosity measurements. 
 In order to proceed, we need to:
 \begin{itemize}
     \item verify the linearity of the counters with respect to the pile-up $\mu$ registered by LHCb;
@@ -338,8 +339,8 @@ Absolute luminosity measurements are possible once the visible cross-section $\s
 Finally, I will present a robust procedure in order to combine the 208 different luminosity counters into a single luminosity measurement.
 
 \subsection{Calibration of each counter with VdM scan}\label{sec:calibration_vdm}
-Each one of the 208 cluster counters is calibrated during the VdM scan independently. To explain the process, I will use the VdM scan conducted on September 7, 2023, as an example.
-It was a full 5 hours program with two symmetric scans and two 2-dimensional scans. Two additional symmetric, 2-dimensional scans two Length Scale Calibrations (LSC) were performed with smog. Figure \ref{fig:inner_vdm_sep} provides an overview of the VdM scan setup, illustrating the raw mean counts per event for the inner counters and the x and y positions of the two beams.
+Each one of the 208 cluster counters is calibrated during the VdM scan independently. To explain the process, I will use the VdM scan conducted on September 7th, 2023, as an example.
+It was a full 5 hours program with two symmetric scans and two 2-dimensional scans. Two additional symmetric and 2-dimensional scans alongside two Length Scale Calibrations (LSC) were performed with smog. Figure \ref{fig:inner_vdm_sep} provides an overview of the VdM scan setup, illustrating the raw mean counts per event for the inner counters and the x and y positions of the two beams.
 
 \begin{figure}
     \centering
@@ -349,9 +350,9 @@ It was a full 5 hours program with two symmetric scans and two 2-dimensional sca
 \end{figure}
 
 
-During the initial phase of the scan, background noise was negligible, allowing the measurements to focus on the counts related to proton-proton (pp) interactions. However, after the SMOG injection ($\approx$17:40), the background due to collisions of proton bunches with empty bunches becomes important. As described in Section \ref{sec:velo_counters}, there are implemented 4 different counters for each bunch crossing type, allowing the subtraction of the background as an online procedure. In the calibration phase, this step is perfected offline. 
+During the initial phase of the scan, background noise was negligible, allowing the measurements to focus on the counts related to proton-proton (pp) interactions. Around 17:30, it is clearly visible an increase in the rate of the counters in Figure~\ref{fig:inner_vdm_sep}. This is due to due SMOG system\cite{CERN-LHCC-2019-005}, that injected a low flow rate of noble gas into the vacuum vessel of the VELO. This system is used to perform fixed-target experiment and Beam-Gas-Imaging for measuring beam position\cite{Coombs:2767576}. For the purpose of this thesis, SMOG introduces a background due to collisions of proton bunches with empty bunches, as seen in the ramp at 17:30 and increased occupancy of the counters.  As described in Section \ref{sec:velo_counters}, we implemented 4 different counters for each bunch crossing type, allowing the subtraction of the background as an online procedure. However, in the calibration phase, this step is perfected offline. 
 
-Another important step in the calibration involves normalising the counters to account for variations in the bunch population throughout the fill. This division allows for the estimation of $\mu_{sp}$ defined in \eqref{mu_sp}. This is crucial for obtaining accurate and consistent results.
+Another important step in the calibration involves normalising the counters to account for variations in the bunch population throughout the fill. This division allows for the estimation of $\mu_{sp}$ defined in \eqref{mu_sp}. 
 
 Figure \ref{fig:bkg_sub_calib} shows the corrected data with the background subtracted, highlighting in a purple box the VdM steps used in the calibration. These steps are, in chronological order, a symmetric X scan, a symmetric Y scan, and a 2D scan (or turtle scan). 
 
@@ -362,11 +363,11 @@ Figure \ref{fig:bkg_sub_calib} shows the corrected data with the background subt
     \label{fig:bkg_sub_calib}
 \end{figure}
 
-The calibration involves integrating the area under the counter data $\mu_{sp}$ as a function of x and y displacements, as described in \eqref{sigma_vdm}. We assume that the underlying density function for the distribution of the counts $\mu_{sp}$ as a function of the displacements $x$ and $y$ is a bivariate Gaussian, whose analytical form is given by Equation \eqref{2d-gaus}. 
+The calibration involves integrating the area under the counter data $\mu_{sp}$ as a function of $x$ and $y$ displacements, as described in \eqref{sigma_vdm}. We assume that the underlying density function for the distribution of the counts $\mu_{sp}(x,y)$ is a bivariate Gaussian, whose analytical form is given by Equation \eqref{2d-gaus}. 
 \begin{equation}
     f(x,y|\mu_{x,y},\sigma_{x,y},\rho)=A\exp{\left(-{\frac {1}{2\left[1-\rho ^{2}\right]}}\left[\left({\frac {x-\mu _{X}}{\sigma _{X}}}\right)^{2}-2\rho \left({\frac {x-\mu _{X}}{\sigma _{X}}}\right)\left({\frac {y-\mu _{Y}}{\sigma _{Y}}}\right)+\left({\frac {y-\mu _{Y}}{\sigma _{Y}}}\right)^{2}\right]\right)}\label{2d-gaus}.
 \end{equation}
-Figure \ref{fig:fit_example} illustrates an example of such a 2D Gaussian fit, along with the corresponding residuals. The $\chi^2$ reported in the Figure asses the validity of the 2D-Gaussian modelling, being this statistic of Goodness-of-fit within 1 standard deviation from its expected value which corresponds to the number of degree of freedom (DF).
+Figure \ref{fig:fit_example} illustrates an example of such a 2D Gaussian fit, along with the corresponding residuals. The $\chi^2$ reported in the Figure asses the validity of the 2D-Gaussian modelling, being this statistic of Goodness-of-fit within $1$ standard deviation from its expected value (i.e. the number of degree of freedom DF).
 
 
 \begin{figure}
@@ -383,7 +384,7 @@ Figure \ref{fig:fit_example} illustrates an example of such a 2D Gaussian fit, a
     \label{fig:fit_example}
 \end{figure}
 
- To ensure proper normalisation, the integral of this function is computed to obtain the normalisation factor, as shown in Equation \eqref{2d-gaus-norm}. This normalisation factor represents the visible cross section, $\sigma_vis$, which is the ultimate quantity to calculate for performing the calibration.
+The integral of this function is computed to obtain the normalisation factor, as shown in Equation \eqref{2d-gaus-norm}. This normalisation factor represents the visible cross section, $\sigma_{vis}$, which is the ultimate quantity to calculate for performing the calibration.
 
 \begin{equation}
     N = 2\pi A \sigma_{X}\sigma_{Y}\sqrt {1-\rho ^{2}}=\sigma_{vis}\label{2d-gaus-norm}
@@ -400,9 +401,9 @@ Figure \ref{fig:fit_example} illustrates an example of such a 2D Gaussian fit, a
 Once every visible cross section $\sigma_{vis}$ is calculated, each one of the counters can provide a luminosity estimation based on the definition in \eqref{rel_lumi}.
 
 \subsection{Combining the counters for a single luminosity measurement}
-We face now the issue of how to combine the counters for a single luminosity measurement. In fact, the calibration with the VdM scan allowed to calculate a calibration factor for every counter, leaving potentially 208 different luminosity measurements. 
+We face now the issue of how to combine the counters for a single luminosity measurement. In fact, the calibration with the VdM scan allowed to calculate a calibration factor for every counter, leaving 208 different luminosity measurements. 
 First off, the question is what distribution follow all the different measurement at the same timestamp. 
-The distribution of all the estimation performed during the VdM fill of 7th September 2023 is reported in Figure \ref{fig:lumi_hist_ts} at two different timestamps spaced by 15 minutes. The distribution is not Gaussian, but it has a bell shape. Therefore, we are encouraged to use mean and standard deviation as metrics to describe the peak and the width of the curve. 
+The distribution of all the luminosity estimation performed during the VdM fill of September 7th 2023 is reported in Figure \ref{fig:lumi_hist_ts} at two different timestamps spaced by 15 minutes. The distribution is not Gaussian, but it has a bell shape. Therefore, we are encouraged to use mean and standard deviation as metrics to describe the peak and the width of the curve. 
 
 
 \begin{figure}
@@ -415,7 +416,7 @@ The distribution of all the estimation performed during the VdM fill of 7th Sept
     \includegraphics[width=\linewidth]{figures/lumi_hist_1639.png}
     \caption{Timestamp 16:39}\label{fig:lumi1639}
     \end{subfigure}
-    \caption{Distribution of the luminosity estimation of all the working counters during the VdM scan fill of 7th September 2023. Two different timestamps are reported at a distance of 15 minutes one to the other. }
+    \caption{Distribution of the luminosity estimation of all the working counters during the VdM scan fill of 7th September 2023. Two different timestamps are reported at a distance of 15 minutes one to the other. The entries are 191 instead of 208, due to various counters not working during VdM.}
     \label{fig:lumi_hist_ts}
 \end{figure}
 
@@ -437,7 +438,7 @@ The relative standard deviation $\sigma_{rel}$ is plotted as a function of time 
 
 This study assures us that the calibration is stable in the short-time term, and that all the counters provide a reasonable luminosity measurement. However, when combining a large set of measurements, it is critical to choose an appropriate estimator to ensure that the final result is reliable and robust. With a dataset containing 208 individual measurements, the presence of outliers or deviations from the assumed probability distribution cannot be excluded. Consequently, choosing a robust estimator becomes essential to mitigate the impact of such anomalies.
 
-Robustness in statistics refers to the ability of an estimator to resist the influence of outliers and remain relatively stable under deviations from standard assumptions. A robust estimator does not significantly change due to a small number of atypical values or when the distribution deviates from a presumed normality.
+Robustness in statistics refers to the ability of an estimator to resist the influence of outliers and remain relatively stable under deviations from distribution assumptions. A robust estimator does not significantly change due to a small number of atypical values or when the distribution deviates from a presumed normality.
 
 In this context, I tested the performance of three different estimators to determine the best approach for combining my measurements: the mean, the median, and the trimmed mean. Each estimator has its strengths and weaknesses in terms of robustness.
 
@@ -504,13 +505,14 @@ Once the luminosity estimation is available, we can compute the value for instan
 
 
 
-To evaluate the medium-term stability of the calibration from September 7, 2023, we estimated the luminosity for Fill 9168, which took place on September 17, 2023, during the pp reference run. This estimation used the visible cross-section $\sigma_{vis}$ derived from the VdM scan described in this chapter. Figure \ref{fig:fill9168} provides an overview of the results from this study.
+To evaluate the medium-term stability of the calibration from September 7th, 2023, we estimated the luminosity for Fill 9168, which took place on September 17th, 2023, during the pp reference run. This estimation used the visible cross-section $\sigma_{vis}$ derived from the VdM scan described in this chapter. Figure \ref{fig:fill9168} provides an overview of the results from this study.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/fill9168.png}
     \caption{Luminosity during pp reference Run - Fill 9168.}
     \label{fig:fill9168}
 \end{figure}
-In the first panel of Figure \ref{fig:fill9168}, the luminosity readings from each individual counter are displayed. Unfortunately, during this fill, only the C side of the VELO was operational, reducing our available data and resulting in a significant drop in statistics. The second panel shows the combined luminosity estimate, calculated as the trimmed mean of the functional counters. The third panel displays the relative standard deviation of the luminosity measurements for each counter. As seen in the figure, the relative standard deviation stabilises at around 3\%, which is reasonably close to the 5\% observed during the VdM scan, considering that the statistics were effectively halved.
+In the first panel of Figure \ref{fig:fill9168}, the luminosity readings from each individual counter are displayed. Unfortunately, during this fill, only the C side of the VELO was operational, reducing our available data and resulting in a significant drop in statistics. The second panel shows the combined luminosity estimate, calculated as the trimmed mean of the functional counters. The third panel displays the relative standard deviation of the luminosity measurements for each counter. As seen in the figure, the relative standard deviation stabilises at around 3\%, which is reasonably close to the 5\% observed during the VdM scan, considering that only half of the statistics were available (due to the fact that only VELO C was working).
 
 Despite the reduced data due to limited VELO operation, the relative stability of the combined luminosity estimate indicates that the calibration from the earlier VdM scan remains reliable in the medium term. The consistency of the relative standard deviation suggests that the estimation method is robust, even with reduced sample sizes, providing confidence in the calibration's effectiveness across different datasets and time periods.
+Furthermore, we can evaluate a global error on the estimator. Since we observe a relative standard deviation of 3\% stable in time, we can quote an error for the trimmed mean by dividing this value by the squared root of the available statistics, in this case given by the 99 operational counters. Therefore, the relative uncertainty quoted for the trimmed mean estimation corresponds to approximately 0.3\%. 
