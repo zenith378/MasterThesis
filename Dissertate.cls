@@ -76,7 +76,7 @@
 \DeclareSIUnit\eVperc{\eV\per\clight}
 \DeclareSIUnit\clight{\text{\ensuremath{c}}}
 \usepackage{epigraph}
-
+\usepackage{rotating}
 %\usepackage{polyglossia}
 
 %\setmainlanguage{english}

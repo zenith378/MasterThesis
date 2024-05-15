@@ -222,12 +222,12 @@ The Maximum Likelihood Estimator (MLE) for  $\mathbf{\lambda}=(\lambda_1, \dots,
 This assess the possibility of computing the parameters  $\mathbf{\lambda}=(\lambda_1, \dots, \lambda_p)$ mediating each feature over $N$ entries of the dataset. The precision on the estimation scales with $1/\sqrt{N}$, meaning that the more statistics we integrate, the more accurate the estimation will be. 
 The counters are read in firmware once every $3$ seconds, meaning that, at a bunch crossing rate of \SI{40}{\mega\hertz}, they integrate 120 million events. Unfortunately, we do not have such high statistics in the Monte Carlo, meaning that this integration constant needs to be set lower. We decided to set this integration constant to $2\times10^4$. Integrating chunks of $2\times10^4$ we can estimate 5 different set of $\mathbf{\lambda}=(\lambda_1, \dots, \lambda_p)$ per nominal position. Therefore, we create the final tuples on which we perform the PCA by integrating chunks of $20000$ events at the same nominal position. By doing so, we create a dataset for each position containing 30 entries for $x$ and $y$ and 60 entries for $z$. A schematic of this procedure is depicted in Figure~\ref{fig:tabular_dataset}. 
 
-\begin{figure}
+\begin{sidewaysfigure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/tabular_dataset.png}
     \caption{Scheme of the last step in the creation of the tabular dataset used for estimating the PCA. An example regarding the $x$ dataset is depicted. In the table on the left the dataset containing the raw events obtained from the simulation files are depicted. Notice that we have 100 thousand points for each nominal position and that the variables Counter1, Counter2, etc. indicate an integer, i.e. the number of clusters counted in that specific event by that specific counter. The tabular dataset on the right is obtained by integrating chunks of 20 thousand events at the same nominal position. Notice that in the dataset on the right we have 5 points per position, and that the features indicating the counters are float values that indicate the \textit{rate} of the counters, i.e. the mean number of clusters per event.}
     \label{fig:tabular_dataset}
-\end{figure}
+\end{sidewaysfigure}
 
 The very last step of this dataset creation procedure involves splitting each dataset in two, in order to create the final datasets: 
 \begin{itemize}
@@ -349,37 +349,38 @@ Therefore, the sample mean follows a Poisson distribution with parameter $N\lamb
     \text{Var}(x_k) =\text{Var}\biggl(\frac{\sum_i c^i_k}{N}\biggr) = \frac{\lambda_k}{N}
 \end{equation}
 
-The contribution to the uncertainty given by the weights $\mathbf{w^j}_{(1)}$ is much more complicated, because its estimation depends on the diagonalization process. One way to estimate the variance on the $\mathbf{w^j}_{(1)}$ would be a  bootstrap~\cite{10.1214/aos/1176344552} over multiple copies of PCAs, performed generating the points $\mathbf{x^{j}}$ from a 208-dimensional Gaussian distribution defined in \eqref{mvgaussian} using as parameters the data-inferred means $\mathbf{\lambda}$ and covariance matrix $\mathbf{\Sigma}$.  For the purpose of this thesis, this exercise was not performed, but this is of utterly importance for a more refined estimator.
+The contribution to the uncertainty given by the weights $\mathbf{w^j}_{(1)}$ is more complicated, because its estimation depends on the diagonalization process. One way to estimate the variance on the $\mathbf{w^j}_{(1)}$ would be a  bootstrap~\cite{10.1214/aos/1176344552} over multiple copies of the PCAs, performed generating the points $\mathbf{x^{j}}$ from a 208-dimensional Gaussian distribution defined in \eqref{mvgaussian} using as parameters the data-inferred means $\mathbf{\lambda}$ and covariance matrix $\mathbf{\Sigma}$.  For the purpose of this thesis, this exercise was not performed, but this is of utter importance for a more refined estimator.
 
-By considering the Poisson uncertainty, only the number of integrated events $N$ influences the statistical error. In the case of Monte Carlo simulation presented in this thesis, we integrated over $N=2\cdot10^{4}$ events at $\mu=5.5$, that in Physics conditions (trigger rate $f=\SI{23}{\mega\hertz}$) corresponds to performing a measurement every $N/f=\SI{870}{\micro\second}$, corresponding to a frequency $\SI{1.5}{\kilo\hertz}$. As it will be shown in the following section of data testing, the resolution will increase due to the augmented statistics used for computing the mean cluster counts per event.
+By considering the Poisson uncertainty, only the number of integrated events $N$ influences the statistical error. In the case of the Monte Carlo simulation presented in this thesis, we integrated over $N=2\cdot10^{4}$ events at $\mu=5.5$, that in expected normal data-taking conditions in Run~3 (trigger rate $f=\SI{23}{\mega\hertz}$) corresponds to performing a measurement every $N/f=\SI{870}{\micro\second}$, corresponding to a frequency of $\SI{1.5}{\kilo\hertz}$. As will be shown in Section~\ref{sec:beamline_calib}, the resolution will increase due to the increased statistics used to compute the mean cluster counts $\lambda_k$ per event.
 
 \paragraph{On the dependency on $\mu$}\label{sec:mu_dependency}
-All the counters are linear dependent to the mean interaction per event $\mu$ as presented in chapter~\ref{chap:luminosity}. If we have a change in $\mu$, the counters values will change accordingly. Since we use the counters to estimate the luminous region position, the estimate performed will be biased by the $\mu$ quantity. In order to check how the change in $\mu$ affects our luminous region estimate, we make use of the simulations 
-of point (iv) of section~\ref{sec:MC}. These simulations comprehend four different scans in a $\mu$ range that varies from $\nu=7.6$ to $\nu=35.8$, all at the nominal beam position at $0$ in the three Cartesian components. 
-The relationship between the luminous region estimate and $\mu$ can be assessed by calculating the luminous region position using $\ref{x_hat_true}$. Since the position is set at $(0,0,0)$~mm for each event in this simulations, we should always estimate $(0,0,0)$~mm. However, as one can notice from the Figures~\ref{fig:x_to_lumi},~\ref{fig:y_to_lumi} and~\ref{fig:z_to_lumi}, the estimation is linearly biased by the pile-up $\nu$, as expected. 
+All the counters are linearly dependent on the mean number of interaction per event $\mu$ as presented in chapter~\ref{chap:luminosity}. If we have a change in $\mu$, the counters values will change accordingly. Since we use the counters to estimate the position of the luminous region, the latter can be biased. In order to check how the change in $\mu$ affects our luminous region estimate, we  use of the simulations of point (iv) of section~\ref{sec:MC}. These simulations comprehend four different scans in a $\mu$ range that varies from $\mu=5.5$ to $\mu=25.9$, all with the luminous region in the nominal $(0,0,0)$ position. 
+The relation between the luminous region estimate and $\mu$ can be assessed by calculating the luminous region position using equation~\eqref{x_hat_true}. Since the position is set at $(0,0,0)$~mm for each event in this simulations, we should always estimate $(0,0,0)$~mm. However, as one can notice from the Figures~\ref{fig:x_to_lumi},~\ref{fig:y_to_lumi} and~\ref{fig:z_to_lumi}, the estimation is linearly biased by the pile-up $\mu$, as expected. 
 \begin{figure}
     \centering
-    \begin{subfigure}{0.31\textwidth}
+    \begin{subfigure}{0.6\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/x_to_lumi_fit_20000.pdf}
     \caption{$x$ component}
     \label{fig:x_to_lumi}
-    \end{subfigure}\hfill
-    \begin{subfigure}{0.31\textwidth}
+    \end{subfigure}%\hfill
+    
+    \begin{subfigure}{0.6\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/y_to_lumi_fit_20000.pdf}
     \caption{$y$ component}
     \label{fig:y_to_lumi}
-    \end{subfigure}\hfill
-    \begin{subfigure}{0.31\textwidth}
+    \end{subfigure}%\hfill
+    
+    \begin{subfigure}{0.6\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/z_to_lumi_fit_20000_numpix.pdf}
     \caption{$z$ component}
     \label{fig:z_to_lumi}
     \end{subfigure}
-    \caption{Linear relationship between each component of the estimated position and pile-up $\nu$}
+    \caption{Linear relation between each component of the estimated position of the luminous region and mean number of primary vertices $\nu$}
 \end{figure}
-The fact that the relationship is linear, offers us a straightforward way to correct for this bias. If we redefine the luminous region estimators as
+The fact that the relation is linear offers us a straightforward way to correct for this bias. If we redefine the luminous region estimators as
 \begin{equation}
 \begin{split}
     \hat{x}_{corrected} &=\frac{\hat{x}(t^x_1)}{\mu}= a_x ' \frac{t^x_1}{\mu} + b_x '\\%\qquad
@@ -391,9 +392,9 @@ we end up with unbiased estimators of the luminous region.
 
 
 
-\section{Calibration and testing on collision data}
+\section{Calibration and testing on collision data}\label{sec:beamline_calib}
 %\textit{Results obtained during VdM}
-Once we have a suitable configuration in MC, we can perform a calibration and some tests on real collision data. The calibration is performed directly on the data because the available simulations used to estimate referred to 2022 conditions. Although these conditions do not differ much from the ones in 2024, the VELO was entirely uninstalled and reinstalled during the 2023 Year End Technical Shutdown (YETS), and completely reconfigured. These reconfiguration may introduce changes in efficiencies of the single sensors, therefore we decided to perform the calibration directly on the data. A suitable environment for the calibration is a sequence known as the Length Scale Calibration (LSC), typically part of the VdM scan fill for the determination of the beam sizes and their separation ~\cite{Balagura_2021}, which are parameters needed to compute the luminosity. During this sequence, the two beams are moved head-on from an initial position along the x-axis $x = -a$ to an end position $x = +a$, with respect to the nominal interaction position set at $x=0$. An analogue scan is repeated along the y-axis from $y=-a$ to $y=+a$. 
+Once we have a suitable configuration in MC, we can perform a calibration and some tests on real collision data. The calibration is performed directly on collision data because the available simulations refer to 2022 conditions. Although these conditions do not differ much from the ones of 2024, the VELO was entirely uninstalled and reinstalled during the 2023 Year End Technical Shutdown (YETS), and completely reconfigured. This reconfiguration may introduce changes in the sensor efficiencies, therefore we decided to perform the calibration directly on data. A suitable environment for the calibration is a sequence known as the Length Scale Calibration (LSC), typically part of the VdM scan fill for the determination of the beams sizes and their separation ~\cite{Balagura_2021}, which are parameters needed to compute the luminosity. During this sequence, the two beams are moved head-on from an initial position along the x-axis $x=-a$ to an end position $x=+a$, with respect to the nominal interaction position set at $x=0$. An analogue scan is repeated along the y-axis from $y=-a$ to $y=+a$. 
 Given the beam movements in LSC, the estimators for the $x$ and $y$ component of the luminous region should be able to track it, following these scans.
 
 \begin{figure}
@@ -403,7 +404,7 @@ Given the beam movements in LSC, the estimators for the $x$ and $y$ component of
     \label{fig:mini-vdm}
 \end{figure}
 
-The LSC used for the presented calibration is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 collisions bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in X is performed, followed almost immediately by a scan in Y. After a rest time of approximately 20 minutes where there were no beamline movements, an additional sequence of scan in X and Y is performed, with the same parameters. The sequence is clearly visible in the plot of Figure~\ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of both beams (orange and blue) in the $x$ and $y$ plane, respectively. After the Symmetric VdM scan in both $x$ and $y$, a first LSC in $x$ is performed at approximately 13:25, followed by an analogue scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure~\ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by the TELL40s every 3 seconds, while on the second panel we report the luminosity estimate computed a-posteriori as the trimmed mean of the 208 luminosity estimate performed by each counter. The first VdM sequence is also used to calibrate the counters as described in section~\ref{sec:calibration_vdm} for this luminosity estimation. 
+The LSC used for the presented calibration is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 colliding bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in $x$ is performed, followed almost immediately by a scan in $y$. After a rest time of approximately 20 minutes, where there were no beam movements, an additional sequence of scans in $x$ and $y$ is performed, with the same parameters. The sequence is clearly visible in the plot of Figure~\ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of both beams (orange and blue) in the $x$ and $y$ planes, respectively. After the Symmetric VdM scan in $x$ and $y$, a first LSC is performed in $x$ at approximately 13:25, followed by an analogue scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure~\ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by the TELL40s every 3 seconds, while on the second panel we report the luminosity estimate computed \textit{a posteriori} as the trimmed mean of the 208 luminosity estimates performed by each counter. The first VdM sequence is also used to calibrate the counters as described in section~\ref{sec:calibration_vdm} for this luminosity estimation. 
 
 Each readout $i$ of the cluster compose the 208-dimensional array $\mathbf{x}_i$ that is multiplied by the corresponding weight vector $\mathbf{w^j}_{(1)}$ computed in MC, for the estimation of the first PC score $\mathbf{t^j}_{(1)}$ that will be used to perform the estimation of the luminous region position in each component $j=x,y$. 
 
