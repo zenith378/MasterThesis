@@ -304,7 +304,7 @@ The step-wise scanning technique originated with Van der Meer, who invented it o
 %Despite its success in hadron colliders, the Van der Meer method can face challenges in electron-positron colliders due to strong beam–beam interactions. In these environments, luminosity is typically measured indirectly through Bhabha scattering events, where the quantum electrodynamics cross-section is well understood. In contrast, in hadron colliders, such as the LHC, it is harder to identify processes with accurately predicted cross-sections. Thus, in hadron accelerators, the best accuracy is typically achieved by directly measuring luminosity, following its definition.
 
 \section{Online VELO Luminosity estimation}\label{lumi_measure}
-The primitives described in Section~\ref{sec:velo_counters} aligns well with a relative luminosity measurement. In fact, we already stated various time in this chapter how a luminosity measurement can be obtained from simple counts, as defined equation~\eqref{rel_lumi}. Disposing of 208 different counters, we can provide 208 different luminosity measurements. 
+The primitives described in Section~\ref{sec:velo_counters} align well with a relative luminosity measurement. In fact, we already stated various time in this chapter how a luminosity measurement can be obtained from simple counts, as defined equation~\eqref{rel_lumi}. From 208 different counters, we could obtain 208 different luminosity measurements. 
 In order to proceed, we need to:
 \begin{itemize}
     \item verify the linearity of the counters with respect to the pile-up $\mu$ registered by LHCb;
@@ -403,7 +403,7 @@ Once every visible cross section $\sigma_{vis}$ is calculated, each one of the c
 \subsection{Combining the counters for a single luminosity measurement}
 We face now the issue of how to combine the counters for a single luminosity measurement. In fact, the calibration with the VdM scan allowed to calculate a calibration factor for every counter, leaving 208 different luminosity measurements. 
 First off, the question is what distribution follow all the different measurement at the same timestamp. 
-The distribution of all the luminosity estimation performed during the VdM fill of September 7th 2023 is reported in Figure \ref{fig:lumi_hist_ts} at two different timestamps spaced by 15 minutes. The distribution is not Gaussian, but it has a bell shape. Therefore, we are encouraged to use mean and standard deviation as metrics to describe the peak and the width of the curve. 
+The distribution of all the luminosity estimates performed during the VdM fill of September 7th 2023 is reported in Figure \ref{fig:lumi_hist_ts} at two different timestamps spaced by 15 minutes. The distribution is not Gaussian, but it has a bell shape. Therefore, we are encouraged to use mean and standard deviation as metrics to describe the peak and the width of the curve. 
 
 
 \begin{figure}
@@ -416,7 +416,7 @@ The distribution of all the luminosity estimation performed during the VdM fill 
     \includegraphics[width=\linewidth]{figures/lumi_hist_1639.png}
     \caption{Timestamp 16:39}\label{fig:lumi1639}
     \end{subfigure}
-    \caption{Distribution of the luminosity estimation of all the working counters during the VdM scan fill of 7th September 2023. Two different timestamps are reported at a distance of 15 minutes one to the other. The entries are 191 instead of 208, due to various counters not working during VdM.}
+    \caption{Distribution of the luminosity estimates of all the working counters during the VdM scan fill of 7th September 2023. Two different timestamps are reported at a distance of 15 minutes one to the other. The entries are 191 instead of 208, due to various counters not working during VdM.}
     \label{fig:lumi_hist_ts}
 \end{figure}
 
