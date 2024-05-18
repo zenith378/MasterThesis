@@ -395,11 +395,11 @@
 
 \renewcommand{\backmatter}{
     %\addcontentsline{toc}{Appendices}
-    \begin{appendices}
-        \appendixA
+    %\begin{appendices}
+        %\appendixA
         
 
-    \end{appendices}
+    %\end{appendices}
             \acronyms
 
     %\input{endmatter/personalize}
