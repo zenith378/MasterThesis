@@ -41,7 +41,7 @@ It was already shown in an earlier work~\cite{dan} that the counters described i
     \label{fig:z_lumi_dependency}
 \end{figure}
 
-In this chapter, we study a way to combine the 208 implemented counters to provide an estimate of the luminous region position in each component $x,\ y$, and $z$. A possibility is to rely on leveraging the capabilities of a dimensionality reduction technique called Principal Component Analysis, which allows to transform the data from the original 208-dimensional space to a space of fewer dimensions. The assumption is that the position of the luminous region correlates with some of the features extracted with this method. In the next sections, we present this technique 
+In this chapter, we study a way to combine the 208 implemented counters to provide an estimate of the luminous region position in each component $x,\ y$, and $z$. A possibility is to rely on leveraging the capabilities of a dimensionality reduction technique called Principal Component Analysis, which allows to transform the data from the original 208-dimensional space to a space of fewer dimensions. The assumption is that the position of the luminous region correlates with some of the features extracted with this method. I found that the output linearly correlates with the desired quantities, reducing the calculation to a simple scalar product. This is particular beneficial for FPGAs equipped with Digital Signal Processors (DSPs), that can perform these scalar products at very high speeds. In the next sections, we present this technique 
 %, the Monte Carlo simulations used to study the estimators, a calibration of this technique 
 and its application on real collision data.
 
@@ -267,7 +267,7 @@ Once the diagonalization is performed, the eigenvalues of the covariance matrice
     \label{fig:scree_plot}
 \end{figure}
 
- We can calculate the first PC scores $\mathbf{t^j}_{1(i)}$ as \eqref{first_score} using the test datasets $j$ for each $j=x,y,z$ coordinate, in order to check the relationships between $\mathbf{t^{j}}_{1(i)}$ and the luminous region positions. The scores are calculated using the rates $\mathbf{x^{j}_{(i)}}$ of the test datasets and the vectors $\mathbf{w^{j}}_{(1)}$ estimated from the training datasets. We use two different datasets in order to ensure that the vectors $\mathbf{w^{j}}_{(1)}$ do not provide a biased estimation towards the training datasets. Being the test datasets completely independent from the training datasets, we can assess the validity of this method. In fact, the scores $\mathbf{t^{j}}_{1(i)}$ will be read in real time using the readout of the clustering $\mathbf{x_{(i)}}$ and the vectors $\mathbf{w^{j}}_{(1)}$ will be pre-calculated using MC. The relationship between the first PC calculated as \eqref{first_score} and the luminous region position can be assessed in the test datasets as depicted in the Figures~\ref{fig:xfit_MC},~\ref{fig:yfit_MC},~\ref{fig:zfit_cubic_MC} for the $x$, $y$ and $z$ components, respectively. As one can see, the relationship is linear for $x$ and $y$, while it is cubic for the $z$ displacements. In Figures~\ref{fig:xfit_MC},~\ref{fig:yfit_MC},~\ref{fig:zfit_cubic_MC} we also perform a best fit using the minimal $\chi^2$ method using a linear or cubic function to better validate this hypothesis. 
+ We can calculate the first PC scores $\mathbf{t^j}_{1(i)}$ as \eqref{first_score} using the test datasets $j$ for each $j=x,y,z$ coordinate, in order to check the relationships between $\mathbf{t^{j}}_{1(i)}$ and the luminous region positions. The scores are calculated using the rates $\mathbf{x_{(i)}}$ of the test datasets and the vectors $\mathbf{w^{j}}_{(1)}$ estimated from the training datasets. We use two different datasets in order to ensure that the vectors $\mathbf{w^{j}}_{(1)}$ do not provide a biased estimation towards the training datasets. Being the test datasets completely independent from the training datasets, we can assess the validity of this method. In fact, the scores $\mathbf{t^{j}}_{1(i)}$ will be read in real time using the readout of the clustering $\mathbf{x_{(i)}}$ and the vectors $\mathbf{w^{j}}_{(1)}$ will be pre-calculated using MC. The relationship between the first PC calculated as \eqref{first_score} and the luminous region position can be assessed in the test datasets as depicted in the Figures~\ref{fig:xfit_MC},~\ref{fig:yfit_MC},~\ref{fig:zfit_cubic_MC} for the $x$, $y$ and $z$ components, respectively. As one can see, the relationship is linear for $x$ and $y$, while it is cubic for the $z$ displacements. In Figures~\ref{fig:xfit_MC},~\ref{fig:yfit_MC},~\ref{fig:zfit_cubic_MC} we also perform a best fit using the minimal $\chi^2$ method using a linear or cubic function to better validate this hypothesis. 
 
 The approximation of linearity is valid only for $x$ and $y$ because in this case the shifts in the luminous region are small with respect to the dimension of the detector. In the $z$ component -- where the observed range is comparable to the size of the detector -- a simple cubic non-linearity is still a a sign that the can approximate the $z$ estimate as a simple statistic of the first component. 
 
@@ -342,24 +342,57 @@ In Figures~\ref{fig:xres_MC},~\ref{fig:yres_MC},~\ref{fig:zres_cubic_MC} we repo
  As one can see, the resolution is measured to be around \SI{20}{\micro\meter} for the $x$ and $y$ components, while we measure a resolution of \SI{5}{\milli\meter} for the $z$ component. A possible explanation of the worse resolution in the $z$ component could rely on the fact that the first PC explains only 50\% of the variance in the z dataset, which is way less than the 90\% depicted in Figure~\ref{fig:scree_plot} for the $x$ and $y$ datasets. This could imply the existence of a more complicated function in an hyperplane comprehending multiple components other than the first only. By restricting the space in only one component, it is expected for the residuals to be larger than $x$ and $y$.
  
  \paragraph{On the estimated resolution}
- The resolution that we quote here depends on the two factors that we need to estimate, i.e. the vector of weights $\mathbf{w^j}_{(1)}$ and the mean number of clusters per event in each counter $\mathbf{x^{j}}$. As already stated, the values $\mathbf{x^{j}}$ are Poisson counts with mean depending on the position of the counter and the luminous region position. At first approximation we can treat the counters as independent variables, hence each counter $c_k$ follows a Poisson distribution with mean $\lambda_k$
+ In equation \eqref{x_hat_true} we defined the estimator as a simple function of the score $t^j_1=(\mathbf{w^j}_{(1)},\mathbf{x})$, which is a scalar product between the vector of weights $\mathbf{w^j}_{(1)}$ and the mean number of clusters per event in each counter $\mathbf{x}$. The vector $\mathbf{x}$ is influenced by statistical fluctuations that we want to evaluate in this paragraph. As already stated, the values $x_k$ originate from $k$ Poisson counters with a mean depending on the position of the counter and the luminous region position. We can treat the counters as independent variables, hence the counts $c_k$ have a Poisson distribution with mean $\lambda_k$
  \begin{equation}
-     f(c_k) = \frac{e^{-\lambda_k} \mu^{c_k}}{c_k!}
+     f(c_k) = \frac{e^{-\lambda_k} \lambda_k^{c_k}}{c_k!}
  \end{equation}
 
-The MLE for the parameter $\lambda$ of a Poisson distribution is simply given by the sample mean $\bar{c}=\frac{\sum_i c^i}{N}=x$. 
- Since the Poisson is additive, the distribution of the sum of N independent counts of the same counters is still a Poisson distribution with mean $N\lambda_k$
+The MLE for the parameter $\lambda_k$ of a Poisson distribution is simply given by the sample mean $\bar{c_k}=\tfrac{\sum_i c_k^i}{N} \equiv x_k$. 
+
+ Since the Poisson is additive, the distribution of the sum of N independent counts of the same counter is still a Poisson distribution with mean $N\lambda_k$
  \begin{equation}
      f\bigl(\sum_i c^i_k\bigr) = \frac{e^{-N\lambda_k} \mu^{\sum_i c^i_k}}{(\sum_i c^i_k)!}
  \end{equation}
-Therefore, the sample mean follows a Poisson distribution with parameter $N\lambda_k$. The variance associated to the sample mean, and therefore to the mean number of counts per event in each counter $k$ is:
+%Therefore, the sample mean has a Poisson distribution with parameter $N\lambda_k$. 
+The variance associated to the sample mean, and therefore to the mean number of counts per event $x_k$ in each counter $k$ is:
 \begin{equation}
     \text{Var}(x_k) =\text{Var}\biggl(\frac{\sum_i c^i_k}{N}\biggr) = \frac{\lambda_k}{N}
 \end{equation}
 
-The contribution to the uncertainty given by the weights $\mathbf{w^j}_{(1)}$ is more complicated, because its estimation depends on the diagonalization process. One way to estimate the variance on the $\mathbf{w^j}_{(1)}$ would be a  bootstrap~\cite{10.1214/aos/1176344552} over multiple copies of the PCAs, performed generating the points $\mathbf{x^{j}}$ from a 208-dimensional Gaussian distribution defined in \eqref{mvgaussian} using as parameters the data-inferred means $\mathbf{\lambda}$ and covariance matrix $\mathbf{\Sigma}$.  For the purpose of this thesis, this exercise was not performed, but this is of utter importance for a more refined estimator.
+Let us study how this impacts on the estimation of the score $t^j$. For the sake of simplicity of notation, let us drop the apex $j$ that was referring to a generic coordinate $j=x,y,z$. 
 
-By considering the Poisson uncertainty, only the number of integrated events $N$ influences the statistical error. In the case of the Monte Carlo simulation presented in this thesis, we integrated over $N=2\cdot10^{4}$ events at $\mu=5.5$, that in expected normal data-taking conditions in Run~3 (trigger rate $f=\SI{23}{\mega\hertz}$) corresponds to performing a measurement every $N/f=\SI{870}{\micro\second}$, corresponding to a frequency of $\SI{1.5}{\kilo\hertz}$. As will be shown in Section~\ref{sec:beamline_calib}, the resolution will increase due to the increased statistics used to compute the mean cluster counts $\lambda_k$ per event.
+First we calculate an expected value:
+\begin{equation}
+        \mathbb{E}[t]=\sum_k w_k \mathbb{E}[x_k]=\sum_k w_k \lambda_k,
+\end{equation}
+and then the second momentum:
+\begin{align}
+\begin{split}
+    \mathbb{E}[(t)^2]&= \mathbb{E}\biggl[\biggl(\sum_k w_k x_k\biggr)^2\biggr] \\
+    &=\mathbb{E}\biggl[\sum_k x_k^2w_k^2 +\sum_i\sum_{i\neq j} w_i w_j x_i x_j\biggr]\\
+    &= \sum_k w_k^2\mathbb{E}[x_k^2] + \sum_i\sum_{i\neq j} \mathbb{E}[x_i] \mathbb{E}[x_j]\\
+     &= \sum_k w_k^2 \bigl(\lambda_k^2 +\frac{\lambda_i}{N}\bigr) + \sum_i\sum_{i\neq j}w_i w_j \lambda_i \lambda_j
+\end{split}
+\end{align}
+where we used the second momentum of $x_k$: $\mathbb{E}[x_k^2]=\lambda_k^2+\tfrac{\lambda_k}{N}$. 
+The variance of the score $t$ can be therefore calculated as:
+\begin{equation}
+\begin{split}
+    \text{Var}(t)= E[t^2]-E[t]^2=& \sum_k w_k^2 \bigl(\lambda_k^2 +\frac{\lambda_k}{N}\bigr) + \sum_i\sum_{i\neq j}w_i w_j \lambda_i \lambda_j\\
+    &- \sum_k w_k^2\lambda_k^2 - \sum_i\sum_{i\neq j}w_i w_j \lambda_i \lambda_j\\
+    =&\sum_k w_k^2\frac{\lambda_k}{N}
+    \end{split}
+\end{equation}
+We can therefore estimate the uncertainty as 
+\begin{equation}
+    \hat{\sigma_t}=\sqrt{\widehat{\text{Var}(t)}}=\sqrt{\sum_k w_k^2\frac{x_k}{N}}.
+\end{equation}
+The statistical uncertainty therefore scale with the quared root of the number of integrated events $N$. In the case of the Monte Carlo simulation presented in this thesis, we integrated over ${N=2\cdot10^{4}}$ events at $\mu=5.5$, that in expected normal data-taking conditions in Run~3 (trigger rate $f=\SI{23}{\mega\hertz}$) corresponds to performing a measurement every $N/f=\SI{870}{\micro\second}$, corresponding to a frequency of $\SI{1.5}{\kilo\hertz}$. As will be shown in Section~\ref{sec:beamline_calib}, the resolution will increase due to the increased statistics used to compute the mean cluster counts $x_k$ per event.
+
+Regarding systematic uncertainties, the contributions are given by the calibration factors of equations~\eqref{x_hat_true} and the vector of weights $\mathbf{w^j}_{(1)}$. 
+The contribution to the uncertainty given by the weights $\mathbf{w^j}_{(1)}$ would be using bootstrap techniques~\cite{10.1214/aos/1176344552} over multiple copies of the PCAs.
+For the purpose of this thesis, this exercise was not performed, but it can be implemented in the future for a more refined estimator.
+
 
 \paragraph{On the dependency on $\mu$}\label{sec:mu_dependency}
 All the average counters are linearly dependent on the mean number of interaction per event $\mu$ as presented in chapter~\ref{chap:luminosity}. If we have a change in $\mu$, the average counters values will change accordingly. Since we use the counters to estimate the position of the luminous region, the latter can be linearly biased. The effect is not seen in simulation due to the fact that all the simulated data had the same luminosity. In order to check how the change in $\mu$ affects our luminous region estimate, we  use of the simulations of point (iv) of section~\ref{sec:MC}. These simulations comprehend four different scans in a $\mu$ range that varies from $\mu=5.5$ to $\mu=25.9$, all with the luminous region in the nominal $(0,0,0)$ position. 
@@ -595,4 +628,5 @@ Once the luminous region position \textit{datapoints} are stored, we can also pl
 In Figure~\ref{fig:monet_beamline} a screenshot of the early implementation of this web-page is shown, where we report our estimators (left), alongside with the reconstructed position by BeamSpotMonitor (centre) and the PVs reconstructed by HLT$1$ (right), with the red and blue points of the latter corresponding to different alignments constants. The screenshot was taken during the LSC of April 6th, 2024. In this early implementation the various corrections for outliers and missing counters were not implemented yet, explaining the strange drop at 15:33 we also see in Figure~\ref{fig:traceplot_outliers}\footnote{The online plot is shifted because all the analysis presented in the chapter were performed using UCT time, therefore two hours backwards shifted with respect to local Geneva time.}. Furthermore, in this implementation the estimators were not calibrated and the two components were swapped. Although uncalibrated and uncorrected, in the upper left panel we appreciate the ramp of LSC, proving the sensitivity of the estimators and the correct online deployment.
 Further development of this web-page will be described in Section~\ref{sec:integration_detector}, as we will include other parameters in the left plots.
 
-The next step in the integration into the LHCb system can take two paths: either the information of the luminous region position is stored in the raw banks to use for offline analysis or the position is given as input to the PVs reconstruction algorithms that runs at HLT$1$. As this thesis is being written, it is still under investigation which one of these options is to prefer.
+As this thesis is being written, it is under investigation how to continue for integrating the information in the LHCb system. We aim at storing the information of the luminous region position in the raw banks to use for offline analysis and to give it as input to the PVs reconstruction algorithms that runs at HLT$1$. 
+%As this thesis is being written, it is still under investigation which one of these options is to prefer.
