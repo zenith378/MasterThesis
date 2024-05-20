@@ -146,7 +146,7 @@
 \RequirePackage[medium, md, sc]{titlesec} % format for the title of the sections
 \setlength{\headheight}{15pt}
 \usepackage{lineno}
-%\linenumbers
+\linenumbers
 
 \RequirePackage{titling}
 
@@ -365,7 +365,7 @@
 
 \newcommand{\acknowledgments}{
 	\phantomsection
-	\chapter*{Acknowledgments}
+	\chapter*{Acknowledgements}
 	\noindent
 	\input{backmatter/thanks}
 	\vspace*{\fill} \newpage

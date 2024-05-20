@@ -232,10 +232,9 @@ Secondly, some of these counters provide a backup in case of PLUME malfunctions.
    \item Number of reconstructed SciFi tracks;
    \item Energy deposition in the ECal and HCal;
     \item Hits in the RICH$1$ and RICH$2$ detectors;
-    \item VELO clusters counters based on FPGA (object of this thesis).
 
 \end{itemize}
-
+ VELO clusters counters based on FPGA have been added in the last year, and are the object of this thesis, that I will discuss in Section~\ref{lumi_measure}.
 
 \section{An absolute luminosity calibration: the Van der Meer scan}
 Most of the luminometers that LHCb implemented rely on the ``relative luminosity determination" defined in equation~\eqref{rel_lumi}. This method is based on counting some quantity $\mu_{vis}$ that is directly proportional to the luminosity. In order to obtain the luminosity value from a counter, the visible cross-section $\sigma_{\text{vis}}$ of the counter must be known or meausured.
@@ -314,7 +313,9 @@ The step-wise scanning technique originated with Van der Meer, who invented it o
 %Despite its success in hadron colliders, the Van der Meer method can face challenges in electron-positron colliders due to strong beam–beam interactions. In these environments, luminosity is typically measured indirectly through Bhabha scattering events, where the quantum electrodynamics cross-section is well understood. In contrast, in hadron colliders, such as the LHC, it is harder to identify processes with accurately predicted cross-sections. Thus, in hadron accelerators, the best accuracy is typically achieved by directly measuring luminosity, following its definition.
 
 \section{Online VELO Luminosity estimation}\label{lumi_measure}
-The primitives described in Section~\ref{sec:velo_counters} are well suited to provide a relative luminosity measurement. In fact, we already stated various times in this chapter how a luminosity measurement can be obtained from simple counts, as defined equation~\eqref{rel_lumi}. From 208 different counters, we could obtain 208 different luminosity measurements. 
+The primitives described in Section~\ref{sec:velo_counters} are well suited to provide a relative luminosity measurement. In fact, we already stated various times in this chapter how a luminosity measurement can be obtained from simple counts, as defined equation~\eqref{rel_lumi}. The approach of performing a luminosity measurement from a pixel detector is not a novelty, but it is not known. The only example found in literature regards an offline measurement by the CMS Collaboration~\cite{CMS-PAS-LUM-13-001}. With accuracy that they reached, they showed the potential on using pixel detectors fur such aims. 
+
+From the 208 different counters implemented in the VELO, we could obtain 208 different luminosity measurements. 
 In order to proceed, we need to:
 \begin{itemize}
     \item verify the linearity of the counters with respect to the pile-up $\mu$ registered by LHCb;
@@ -526,4 +527,4 @@ To evaluate the medium term stability of the calibration from September 7th, 202
 In the first panel of Figure \ref{fig:fill9168}, the luminosity readings from each individual counter are displayed. Unfortunately, during this fill, only the C side of the VELO was operational, reducing our available data and resulting in a significant drop in statistics. The second panel shows the combined luminosity estimate, calculated as the trimmed mean of the functioning counters. The sudden drops are due to a restart of the LHCb run.  The third panel displays the relative standard deviation of the luminosity measurements for each counter. As seen in the figure, the relative standard deviation stabilises at around 3\%. This value is slightly better than the 5\% observed during the VdM scan. The difference between these two value is due to the difference in the number of working counters in the two fills. In fact, in the VdM fill 191 counters were working, while in Fill 9168 we had only 99 working counters. We therefore expect that the standard deviation should reduce by a factor $\sqrt{99/191}=0.7$, i.e. which is the factor binding 5\% with 3\%.
 
 Despite the reduced data due to limited VELO operation, the relative stability of the combined luminosity estimate indicates that the calibration from the earlier VdM scan remains reliable in the medium term. The consistency of the relative standard deviation suggests that the estimation method is robust, even with a reduced sample size, providing confidence in the calibration effectiveness across different datasets and time periods.
-Furthermore, we can evaluate a global uncertainty on the estimator. Since we observe a relative standard deviation of 3\%, stable in time, we can define the uncertainty by dividing this value by the squared root of the number of counters, in this case given by the 99 operational counters. Therefore, the relative uncertainty quoted of the trimmed mean estimator corresponds to approximately 0.3\%. For comparison, in Run~1 the precision obtained offline after a careful analysis and cross-calibration of \textit{all} the available counters in LHCb was 0.3\%~\cite{rosen}.
+Furthermore, we can evaluate a global uncertainty on the estimator. Since we observe a relative standard deviation of 3\%, stable in time, we can define the uncertainty by dividing this value by the squared root of the number of counters, in this case given by the 99 operational counters. Therefore, the relative uncertainty quoted of the trimmed mean estimator corresponds to approximately 0.3\%. For comparison, in Run~2 the precision obtained offline after a careful analysis and cross-calibration of \textit{all} the available counters in LHCb was 0.2\%~\cite{lumi2}.

@@ -187,7 +187,7 @@ The unique feature of the LHCb muon detector system is its segmented structure, 
 
 With the increase in instantaneous luminosity at the LHCb interaction point, the demand for more accurate measurements has driven the collaboration to completely renew its readout and trigger systems. The upgraded system operates at an average event rate of \SI{30}{\mega\hertz}, processing every event with a fully software-based trigger system that integrates information from all sub-detectors. The need for more efficient trigger systems emerged from simulation studies showing that the trigger sequence used during Run~1 and Run~2 would lead to a loss of efficiency in hadronic B-meson decay channels as the instantaneous luminosity increased~\cite{CERN-LHCC-2011-001}. The first stage of the previous trigger system, L$0$, relied on transverse energy $E_T$ measurements from several sub-detectors. This resulted in high efficiencies for dimuon events but reduced efficiency for fully hadronic decays and for decays including electrons and photons in the final state. Additionally, the increase in the $E_T$ threshold to manage trigger rates with higher luminosities compromised signal efficiency, causing saturation of the trigger yield.
 
-The renewed DAQ and trigger system at LHCb is designed to overcome these limitations~\cite{CERN-LHCC-2018-014}. The readout system can handle high input data flow, on the order of \SI[per-mode=symbol]{50}{\tera\byte\per\second}, while the software-based trigger can process events at an average rate of \SI{30}{\mega\hertz}, mathcing the full LHC crossing rate.
+The renewed DAQ and trigger system at LHCb is designed to overcome these limitations~\cite{CERN-LHCC-2018-014}. The readout system can handle high input data flow, on the order of \SI[per-mode=symbol]{50}{\tera\bit\per\second}, while the software-based trigger can process events at an average rate of \SI{30}{\mega\hertz}, mathcing the full LHC crossing rate.
 
 \begin{figure}
     \centering
@@ -214,7 +214,7 @@ The DAQ system~\cite{CERN-LHCC-2014-016} is composed of several sub-systems:
 
 \item The Event Filter Farm (EFF), hosts the farm of CPUs dedicated to perform the selection at HLT$2$ level.
 
-\item The Experimental Control System (ECS) oversees the entire LHCb experiment, from infrastructure to data acquisition.
+\item The Experiment Control System (ECS) oversees the entire LHCb experiment, from infrastructure to data acquisition.
 \end{itemize}
 In Figure~\ref{fig:architecture_readout} a scheme of their interaction is shown.
 In Section \ref{sec:HLT1eHLT2} we present a more detailed description of the sub-systems relative to the HLT$1$ and HLT$2$, while the Alignment \& Calibration procedure is explained in Section \ref{sec:alignment}. Finally, in Section \ref{sec:ecs} we provide a description in ECS. 
