@@ -101,7 +101,7 @@
 \setmonofont[Scale=MatchLowercase]{Source Code Pro}
 \RequirePackage[labelfont={bf,small,color=SchoolColor},
                 textfont={small},
-                justification={justified,RaggedRight},
+                justification={justified},
                 singlelinecheck=false,
                 margin=0pt,
                 figurewithin=chapter,
@@ -146,7 +146,7 @@
 \RequirePackage[medium, md, sc]{titlesec} % format for the title of the sections
 \setlength{\headheight}{15pt}
 \usepackage{lineno}
-\linenumbers
+%\linenumbers
 
 \RequirePackage{titling}
 
@@ -165,13 +165,20 @@
 % References.
 \renewcommand\bibname{References}
 %\RequirePackage[super,comma,numbers]{natbib}
-\RequirePackage[comma,numbers]{natbib}
+%\RequirePackage[comma,numbers]{natbib}
 
-\renewcommand{\bibnumfmt}[1]{[#1]}
+\RequirePackage[backend=biber,
+            sorting=none,
+            style=numeric-comp,
+            firstinits=true,
+            defernumbers=true,
+            sortcites]{biblatex}
+
+%\renewcommand{\bibnumfmt}[1]{[#1]}
 \RequirePackage[palatino]{quotchap}
 \renewcommand*{\chapterheadstartvskip}{\vspace*{-0.5\baselineskip}}
 \renewcommand*{\chapterheadendvskip}{\vspace{1.3\baselineskip}}
-\bibliographystyle{IEEEtran}
+%\bibliographystyle{IEEEtran}
 
 % An environment for paragraph-style section.
 \providecommand\newthought[1]{%
@@ -408,7 +415,8 @@
     \nocite{*}
     \addcontentsline{toc}{chapter}{References}
     %\bibliographystyle{apalike2}
-    \bibliography{references.bib}
+    \renewcommand{\bibname}{References}
+    \printbibliography
     %\include{endmatter/colophon}
 
  % figure listing - required if you have any figures
