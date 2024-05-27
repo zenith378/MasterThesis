@@ -170,7 +170,7 @@
 \RequirePackage[backend=biber,
             sorting=none,
             style=numeric-comp,
-            firstinits=true,
+            giveninits=true,
             defernumbers=true,
             sortcites]{biblatex}
 

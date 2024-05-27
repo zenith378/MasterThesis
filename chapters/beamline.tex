@@ -23,7 +23,7 @@ The luminous region is defined as the region where the collisions of the particl
 
 Understanding the position of the luminous region is critical for two main reasons:
 \begin{itemize}
-\item Correction of Luminosity Estimation : The luminosity that we measure is closely tied to the position of the luminous region position, independently from the detector used to perform the estimate. This is due to the fact that we physical quantity that we measure is a collision rate, i.e. the number of particles per second that hits a sub-detector as explained by equation \eqref{rel_lumi}. This rate depends on the distance of the the sub-detector from the luminous region. If the luminosity estimate is based on an incorrectly estimated luminous region position, the resulting measurements will be skewed. In other words, the calibration provided with the VdM explained in Section~\ref{lumi_measure} is valid only for the precise position and shape that the luminosous region had, as the calibration was performed. To provide accurate online luminosity estimates, a method is needed to correct for errors in the luminous region position and this should happen in real- time if luminosity is needed in real time. This implies implementing a system that continuously monitors the luminous region position and adjusts the luminosity calculation accordingly. Furthermore, the position must be stored offline in order to calculate the corrections to the exact integrated luminosity that eventually will be used to perform cross-section measurement.
+\item Correction of Luminosity Estimation : The luminosity that we measure is closely tied to the position of the luminous region position, independently from the detector used to perform the estimate. This is due to the fact that we physical quantity that we measure is a collision rate, i.e. the number of particles per second that hits a sub-detector as explained by equation \eqref{rel_lumi}. This rate depends on the distance of the the sub-detector from the luminous region. If the luminosity estimate is based on an incorrectly estimated luminous region position, the resulting measurements will be skewed. In other words, the calibration provided with the vdM explained in Section~\ref{lumi_measure} is valid only for the precise position and shape that the luminosous region had, as the calibration was performed. To provide accurate online luminosity estimates, a method is needed to correct for errors in the luminous region position and this should happen in real- time if luminosity is needed in real time. This implies implementing a system that continuously monitors the luminous region position and adjusts the luminosity calculation accordingly. Furthermore, the position must be stored offline in order to calculate the corrections to the exact integrated luminosity that eventually will be used to perform cross-section measurement.
 \item Track Reconstruction Algorithms: The current algorithms for track reconstruction have relied until 2024 on a predefined, ``hardcoded" position of the luminous region. If this position is not kept up to date in real time, the precision and efficiency of the track reconstruction algorithms can be compromised. A real-time estimation of the luminous region position will enhance the algorithm efficiency and reduce its computing time. Furthermore, offline refinements for the position of the luminous region offline are not possible, since the event is reconstructed directly in the TDAQ system, as explained in Section~\ref{sec:rta}. The offline data are saved in a TURBO version, i.e. containing very minimal information, making it impossible to reconstruct this position after the trigger stage.
 \end{itemize}
 
@@ -279,51 +279,6 @@ The approximation of linearity is valid only for $x$ and $y$ because in this cas
 %    \label{fig:explained_variance}
 %\end{figure}
 
-
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/x_fit_MC.pdf}
-    \caption{Linear Fit}\label{fig:xfit_MC}
-    \end{subfigure}
-    \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/x_res_MC.png}
-    \caption{Residuals from the fit of the graph on the left. }\label{fig:xres_MC}
-    \end{subfigure}
-    \caption{Linearity of the first component calculated with the PCA with respect to luminous region position shifts along the $x$ component, alongside the residuals distribution fitted with a Gaussian distribution.}
-    \label{fig:x_MC}
-\end{figure}
-
-
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/y_fit_MC.pdf}
-    \caption{Linear Fit}\label{fig:yfit_MC}
-    \end{subfigure}
-    \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/y_res_MC.png}
-    \caption{Residuals from the fit of the graph on the left. }\label{fig:yres_MC}
-    \end{subfigure}
-    \caption{Linearity of the first component calculated with the PCA with respect to luminous region position shifts along the $y$ component, alongside the residuals distribution fitted with a Gaussian distribution.}
-    \label{fig:y_MC}
-\end{figure}
-
-
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/z_cubic_fit.pdf}
-    \caption{Cubic Fit}\label{fig:zfit_cubic_MC}
-    \end{subfigure}
-    \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/z_cubic_res.png}
-    \caption{Residuals from the fit of the graph on the left. }\label{fig:zres_cubic_MC}
-    \end{subfigure}
-    \caption{Cubic relationship between the first component calculated with the PCA and luminous region position shifts along the $z$ component, alongside the residuals distribution fitted with a Gaussian distribution.}
-    \label{fig:z_cubic_MC}
-\end{figure}
-
 We can therefore rewrite \eqref{x_hat} as a simple quantity depending only on the first PC $\mathbf{t^j_1}$:
 \begin{align}
 \begin{split}
@@ -341,6 +296,46 @@ In Figures~\ref{fig:xres_MC},~\ref{fig:yres_MC},~\ref{fig:zres_cubic_MC} we repo
 
  Each of the histograms is fitted with a Gaussian distribution, in order to also provide a resolution on the estimate. The error bars displayed in these histograms are asymmetrical confidence intervals at $67$\% of the Poisson counts in the bin~\cite{c91e9970-216b-3ca1-adc9-c0f78fd16662}.
  As one can see, the resolution is measured to be around \SI{20}{\micro\meter} for the $x$ and $y$ components, while we measure a resolution of \SI{5}{\milli\meter} for the $z$ component. A possible explanation of the worse resolution in the $z$ component could rely on the fact that the first PC explains only 50\% of the variance in the z dataset, which is way less than the 90\% depicted in Figure~\ref{fig:scree_plot} for the $x$ and $y$ datasets. This could imply the existence of a more complicated function in an hyperplane comprehending multiple components other than the first only. By restricting the space in only one component, it is expected for the residuals to be larger than $x$ and $y$.
+
+ \begin{figure}
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/x_fit_MC.pdf}
+    \caption{Linear Fit}\label{fig:xfit_MC}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/x_res_MC.png}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:xres_MC}
+    \end{subfigure}
+    \caption{Linearity of the first component calculated with the PCA with respect to luminous region position shifts along the $x$ component, alongside the residuals distribution fitted with a Gaussian distribution.}
+    \label{fig:x_MC}
+\end{figure}%
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/y_fit_MC.pdf}
+    \caption{Linear Fit}\label{fig:yfit_MC}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/y_res_MC.png}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:yres_MC}
+    \end{subfigure}
+    \caption{Linearity of the first component calculated with the PCA with respect to luminous region position shifts along the $y$ component, alongside the residuals distribution fitted with a Gaussian distribution.}
+    \label{fig:y_MC}
+\end{figure}%
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/z_cubic_fit.pdf}
+    \caption{Cubic Fit}\label{fig:zfit_cubic_MC}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\linewidth]{figures/z_cubic_res.png}
+    \caption{Residuals from the fit of the graph on the left. }\label{fig:zres_cubic_MC}
+    \end{subfigure}
+    \caption{Cubic relationship between the first component calculated with the PCA and luminous region position shifts along the $z$ component, alongside the residuals distribution fitted with a Gaussian distribution.}
+    \label{fig:z_cubic_MC}
+\end{figure}
  
  \paragraph{On the estimated resolution}
  In equation \eqref{x_hat_true} we defined the estimator as a simple function of the score $t^j_1=(\mathbf{w^j}_{(1)},\mathbf{x})$, which is a scalar product between the vector of weights $\mathbf{w^j}_{(1)}$ and the mean number of clusters per event in each counter $\mathbf{x}$. The vector $\mathbf{x}$ is influenced by statistical fluctuations that we want to evaluate in this paragraph. As already stated, the values $x_k$ originate from $k$ Poisson counters with a mean depending on the position of the counter and the luminous region position. We can treat the counters as independent variables, hence the counts $c_k$ have a Poisson distribution with mean $\lambda_k$
@@ -348,7 +343,7 @@ In Figures~\ref{fig:xres_MC},~\ref{fig:yres_MC},~\ref{fig:zres_cubic_MC} we repo
      f(c_k) = \frac{e^{-\lambda_k} \lambda_k^{c_k}}{c_k!}
  \end{equation}
 
-The MLE for the parameter $\lambda_k$ of a Poisson distribution is simply given by the sample mean $\bar{c_k}=\tfrac{\sum_i c_k^i}{N} \equiv x_k$. 
+The MLE for the parameter $\lambda_k$ of a Poisson distribution is simply given by the sample mean $\bar{c_k}=\tfrac{\sum_i c_k^i}{N} \equiv x_k$~\cite{James:2006zz}. 
 
  Since the Poisson is additive, the distribution of the sum of N independent counts of the same counter is still a Poisson distribution with mean $N\lambda_k$
  \begin{equation}
@@ -435,18 +430,18 @@ we end up with unbiased estimators of the luminous region.
 
 
 \section{Calibration and testing on collision data}\label{sec:beamline_calib}
-%\textit{Results obtained during VdM}
-Once we have a suitable configuration in MC, we can perform a calibration and some tests on real collision data. The calibration is performed directly on collision data because the available simulations refer to 2022 conditions. Although these conditions do not differ much from the ones of 2024, the VELO was entirely uninstalled and reinstalled during the 2023 Year End Technical Shutdown (YETS), and completely reconfigured. This reconfiguration may introduce changes in the sensor efficiencies, therefore we decided to perform the calibration directly on data. A suitable environment for the calibration is a sequence known as the Length Scale Calibration (LSC), typically part of the VdM scan fill for the determination of the beams sizes and their separation ~\cite{Balagura_2021}, which are parameters needed to compute the luminosity. During this sequence, the two beams are moved head-on from an initial position along the x-axis $x=-a$ to an end position $x=+a$, with respect to the nominal interaction position set at $x=0$. An analogue scan is repeated along the y-axis from $y=-a$ to $y=+a$. 
+%\textit{Results obtained during vdM}
+Once we have a suitable configuration in MC, we can perform a calibration and some tests on real collision data. The calibration is performed directly on collision data because the available simulations refer to 2022 conditions. Although these conditions do not differ much from the ones of 2024, the VELO was entirely uninstalled and reinstalled during the 2023 Year End Technical Shutdown (YETS), and completely reconfigured. This reconfiguration may introduce changes in the sensor efficiencies, therefore we decided to perform the calibration directly on data. A suitable environment for the calibration is a sequence known as the Length Scale Calibration (LSC), typically part of the vdM scan fill for the determination of the beams sizes and their separation ~\cite{Balagura_2021}, which are parameters needed to compute the luminosity. During this sequence, the two beams are moved head-on from an initial position along the x-axis $x=-a$ to an end position $x=+a$, with respect to the nominal interaction position set at $x=0$. An analogue scan is repeated along the y-axis from $y=-a$ to $y=+a$. 
 Given the beam movements in LSC, the estimators for the $x$ and $y$ component of the luminous region should be able to track it, following these scans.
 
 \begin{sidewaysfigure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/lumi_with_counters.png}
-    \caption{Overview of the mini Van Der Meer scan of April 6th, 2024. In the first panel we report the output of the counters as read in WinCC every three seconds, in the second panel the luminosity estimation performed using the trimmed mean as described in Chapter~\ref{chap:luminosity}, while in the third and fourth panel the position provided by the LHC system of the two colliding beams in the $x$ and $y$ plane, respectively.}
+    \caption{Overview of the mini van Der Meer scan of April 6th, 2024. In the first panel we report the output of the counters as read in WinCC every three seconds, in the second panel the luminosity estimation performed using the trimmed mean as described in Chapter~\ref{chap:luminosity}, while in the third and fourth panel the position provided by the LHC system of the two colliding beams in the $x$ and $y$ plane, respectively.}
     \label{fig:mini-vdm}
 \end{sidewaysfigure}
 
-The LSC used for the presented calibration is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 colliding bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in $x$ is performed, followed almost immediately by a scan in $y$. After a rest time of approximately 20 minutes, where there were no beam movements, an additional sequence of scans in $x$ and $y$ is performed, with the same parameters. The sequence is clearly visible in the plot of Figure~\ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of both beams (orange and blue) in the $x$ and $y$ planes, respectively. After the Symmetric VdM scan in $x$ and $y$, a first LSC is performed in $x$ at approximately 13:25, followed by an similar scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure~\ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by the TELL40s every 3 seconds, while on the second panel we report the luminosity estimate computed \textit{a posteriori} as the trimmed mean of the 208 luminosity estimates performed by each counter. The first VdM sequence is also used to calibrate the counters as described in section~\ref{sec:calibration_vdm} for this luminosity estimation. 
+The LSC used for the presented calibration is the one performed on April, 6th 2024, with Fill ID 9475. In this Fill, we have 8 colliding bunches at an average $\mu=8.5$. In this scan, there were 4 scans performed. First a scan in $x$ is performed, followed almost immediately by a scan in $y$. After a rest time of approximately 20 minutes, where there were no beam movements, an additional sequence of scans in $x$ and $y$ is performed, with the same parameters. The sequence is clearly visible in the plot of Figure~\ref{fig:mini-vdm}, where in the third and fourth panel we can appreciate the movements of both beams (orange and blue) in the $x$ and $y$ planes, respectively. After the Symmetric vdM scan in $x$ and $y$, a first LSC is performed in $x$ at approximately 13:25, followed by an similar scan in the $y$ plane. A second LSC sequence is then performed around 13:47. In the first panel of Figure~\ref{fig:mini-vdm} we also report the output of the rate of 208 counters as it is read by the TELL40s every 3 seconds, while on the second panel we report the luminosity estimate computed \textit{a posteriori} as the trimmed mean of the 208 luminosity estimates performed by each counter. The first vdM sequence is also used to calibrate the counters as described in section~\ref{sec:calibration_vdm} for this luminosity estimation. 
 
 Each value $i$ of the cluster compose the 208-dimensional array $\mathbf{x}_i$ that is multiplied by the corresponding weight vector $\mathbf{w^j}_{(1)}$ computed in MC, for the estimation of the first PC score $\mathbf{t^j}_{(1)}$ that is then used to perform the estimation of the luminous region position in each component $j=x,y$. 
 
@@ -564,7 +559,7 @@ The results of these fit are summarised in Table~\ref{tab:summary}. All the esti
 
 In Figures~\ref{fig:xres_comparison} and~\ref{fig:yres_comparison} we report an histogram of the residuals from the fitted function, alongside with a Gaussian fit. From the Sigma of the fitted Gaussian we can measure the resolutions of the two estimators which is $\SI{4}{\micro\meter}$.
 
-Considering that in the VdM conditions of April 6th 2024 there were 8 colliding bunches, this corresponds to a approximate trigger rate of approximately $\SI{88}{\kilo\hertz}$. For a read-out every 3 seconds, the counters integrate 264000 events but at a nominal $\mu=8.5$. This is much higher than the nominal value  $\mu_{nom}=5.5$ used  in Run~3 physics condition. The higher number of PVs in this Fill takes us to define a number of ``equivalent events", which are the number of events that at a $\mu=5.5$ would contain the same number of PVs observed in this Fill at $\mu=8.5$. Since the number of PVs scales linearly with $\mu$, in this fill we have a number of equivalent integrated events equal to $N_{data}=264000\tfrac{\mu}{\mu_{nom}}=408000$. This number of equivalent events is useful in order to compare the resolution quoted for the collision data to the one estimated in the MC. In fact, in the data we integrate much more statistics than the one in simulation, corresponding to a factor of about $\tfrac{408000}{20000}=20.4$.  The increase in statistics is responsible for a more accurate estimate of the counters rate $\mathbf{\lambda}$ that are used for the estimation of the scores $\mathbf{t}_{1}$. Assuming that only the counter rates contribute to the statistical uncertainty, we expected that the resolution quoted for the estimators in the MC is a factor $\sqrt{20}$ worse than the one we reported in Figures~\ref{fig:xres_comparison} and~\ref{fig:yres_comparison}. In fact, calculating
+Considering that in the vdM conditions of April 6th 2024 there were 8 colliding bunches, this corresponds to a approximate trigger rate of approximately $\SI{88}{\kilo\hertz}$. For a read-out every 3 seconds, the counters integrate 264000 events but at a nominal $\mu=8.5$. This is much higher than the nominal value  $\mu_{nom}=5.5$ used  in Run~3 physics condition. The higher number of PVs in this Fill takes us to define a number of ``equivalent events", which are the number of events that at a $\mu=5.5$ would contain the same number of PVs observed in this Fill at $\mu=8.5$. Since the number of PVs scales linearly with $\mu$, in this fill we have a number of equivalent integrated events equal to $N_{data}=264000\tfrac{\mu}{\mu_{nom}}=408000$. This number of equivalent events is useful in order to compare the resolution quoted for the collision data to the one estimated in the MC. In fact, in the data we integrate much more statistics than the one in simulation, corresponding to a factor of about $\tfrac{408000}{20000}=20.4$.  The increase in statistics is responsible for a more accurate estimate of the counters rate $\mathbf{\lambda}$ that are used for the estimation of the scores $\mathbf{t}_{1}$. Assuming that only the counter rates contribute to the statistical uncertainty, we expected that the resolution quoted for the estimators in the MC is a factor $\sqrt{20}$ worse than the one we reported in Figures~\ref{fig:xres_comparison} and~\ref{fig:yres_comparison}. In fact, calculating
 \begin{equation}
     \sigma_{MC}^{expected} = \sigma_{data}\sqrt{20.4} \approx \SI{18}{\micro\meter},
 \end{equation}

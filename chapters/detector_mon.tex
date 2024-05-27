@@ -18,14 +18,8 @@ Throughout this chapter, I will describe the implementation of these new estimat
 
 
 \section{Estimation of the weights on MC}
-As shown in Figure \ref{fig:VELO-counters}, the counters are positioned symmetrically throughout the VELO. In particular, on each VELO module there are 4 counters, for a total of 8 counters per station and a grand total of 208 counters. By selecting only the 104 counters relative to one side of the VELO, we can train a PCA on these counters to perform an estimation of the position of that VELO side in the $x$, $y$ and $z$ component, assuming that the luminous region is fixed and centered in $(0,0,0)$. This can be done using the same Monte Carlo simulations and the same approach used in the previous chapter. Although the available MC simulations were produced by shifting the luminous region, in the assumption of a fixed luminous region, these shifts can be interpreted as movements of the VELO. By creating 6 different datasets, one for each combination of position $x,y,z$ and VELO side A and C, we can obtain the 6 estimators $\hat{x}_A$, $\hat{y}_A$, $\hat{z}_A$, $\hat{x}_C$, $\hat{y}_C$, $\hat{z}_C$.  
 
-Since the procedure is the same as the one explained in the previous chapter we do not report it again. There are only two differences to account for:
-\begin{itemize}
-    \item only the 104 counters of the VELO side of interest are used for the estimation of the weights $\mathbf{w}^{j,s}_{(1)}$, with $s=$A,C and at different displacement in the $j=x,y,z$ components.
-    \item the counter readings used to estimate the scores $\mathbf{t}^{j,s}_{(1)}$ are divided by the quantity $\mu=5.5$, i.e. the average number of $pp$ collisions in the MC.
-\end{itemize}
-We report the comparison between the scores $\mathbf{t}^{j,s}_{(1)}$ (divided by $\mu=5.5$) and the relative ``true" position $j=x,y,z$ for each side $s=$A,C of the VELO in Figures \ref{fig:x_veloA_fit_MC}, \ref{fig:y_veloA_fit_MC}, \ref{fig:z_veloA_fit_MC}, \ref{fig:x_veloC_fit_MC}, \ref{fig:y_veloC_fit_MC}, \ref{fig:z_veloC_fit_MC}. These figures are scatter plots showing the estimators $\hat{x}_A$, $\hat{y}_A$, $\hat{z}_A$, $\hat{x}_C$, $\hat{y}_C$$, \hat{z}_C$,  as a function of the true position of the MC.
+\begin{samepage}
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
@@ -39,8 +33,6 @@ We report the comparison between the scores $\mathbf{t}^{j,s}_{(1)}$ (divided by
     \caption{Linearity of the first component PC (divided by $\mu=5.5$) with respect to virtual VELO A position shifts in x component, alongside the residuals distribution fitted with a Gaussian distribution.}
     \label{fig:x_veloA_MC}
 \end{figure}
-
-
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
@@ -54,7 +46,6 @@ We report the comparison between the scores $\mathbf{t}^{j,s}_{(1)}$ (divided by
     \caption{Linearity of the first PC (divided by $\mu=5.5$) with respect to virtual VELO A position shifts in y component, alongside the residuals distribution fitted with a Gaussian distribution.}
     \label{fig:y_veloA_MC}
 \end{figure}
-
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
@@ -62,13 +53,14 @@ We report the comparison between the scores $\mathbf{t}^{j,s}_{(1)}$ (divided by
     \caption{Cubic Fit}\label{fig:z_veloA_fit_MC}
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/z_res_veloA_normalised.pdf}
+    \includegraphics[width=\linewidth]{figures/z_res_veloA_MC.png}
     \caption{Residuals from the fit of the graph on the left. }\label{fig:z_veloA_res_MC}
     \end{subfigure}
-    \caption{Cubic relationship of the first PC (divided by $\mu=5.5$) with the PCA with respect to virtual VELO A position shifts in z component, alongside the residuals distribution fitted with a Gaussian distribution.}
+    \caption{Cubic relationship of the first PC (divided by $\mu=5.5$) with respect to virtual VELO A position shifts in z component, alongside the residuals distribution fitted with a Gaussian distribution.}
     \label{fig:z_veloA_MC}
 \end{figure}
-
+\end{samepage}
+\begin{samepage}
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
@@ -95,7 +87,6 @@ We report the comparison between the scores $\mathbf{t}^{j,s}_{(1)}$ (divided by
     \caption{Linearity of the first PC (divided by $\mu=5.5$) with respect to  virtual VELO C position shifts in y component, alongside the residuals distribution fitted with a Gaussian distribution.}
     \label{fig:y_veloC_MC}
 \end{figure}
-
 \begin{figure}
     \centering
     \begin{subfigure}{0.48\textwidth}
@@ -103,12 +94,23 @@ We report the comparison between the scores $\mathbf{t}^{j,s}_{(1)}$ (divided by
     \caption{Cubic Fit}\label{fig:z_veloC_fit_MC}
     \end{subfigure}
     \begin{subfigure}{0.48\textwidth}
-    \includegraphics[width=\linewidth]{figures/z_res_veloC_MC_normalised.pdf}
+    \includegraphics[width=\linewidth]{figures/z_res_veloC_MC.png}
     \caption{Residuals from the fit of the graph on the left. }\label{fig:z_veloC_res_MC}
     \end{subfigure}
     \caption{Cubic relationship between the first PC (divided by $\mu=5.5$) with respect to virtual VELO C position shifts in the z component, alongside the residuals distribution fitted with a Gaussian distribution.}
     \label{fig:z_veloC_MC}
 \end{figure}
+\end{samepage}
+
+
+As shown in Figure \ref{fig:VELO-counters}, the counters are positioned symmetrically throughout the VELO. In particular, on each VELO module there are 4 counters, for a total of 8 counters per station and a grand total of 208 counters. By selecting only the 104 counters relative to one side of the VELO, we can train a PCA on these counters to perform an estimation of the position of that VELO side in the $x$, $y$ and $z$ component, assuming that the luminous region is fixed and centered in $(0,0,0)$. This can be done using the same Monte Carlo simulations and the same approach used in the previous chapter. Although the available MC simulations were produced by shifting the luminous region, in the assumption of a fixed luminous region, these shifts can be interpreted as movements of the VELO. By creating 6 different datasets, one for each combination of position $x,y,z$ and VELO side A and C, we can obtain the 6 estimators $\hat{x}_A$, $\hat{y}_A$, $\hat{z}_A$, $\hat{x}_C$, $\hat{y}_C$, $\hat{z}_C$.  
+
+Since the procedure is the same as the one explained in the previous chapter we do not report it again. There are only two differences to account for:
+\begin{itemize}
+    \item only the 104 counters of the VELO side of interest are used for the estimation of the weights $\mathbf{w}^{j,s}_{(1)}$, with $s=$A,C and at different displacement in the $j=x,y,z$ components.
+    \item the counter readings used to estimate the scores $\mathbf{t}^{j,s}_{(1)}$ are divided by the quantity $\mu=5.5$, i.e. the average number of $pp$ collisions in the MC.
+\end{itemize}
+We report the comparison between the scores $\mathbf{t}^{j,s}_{(1)}$ (divided by $\mu=5.5$) and the relative ``true" position $j=x,y,z$ for each side $s=$A,C of the VELO in Figures \ref{fig:x_veloA_fit_MC}, \ref{fig:y_veloA_fit_MC}, \ref{fig:z_veloA_fit_MC}, \ref{fig:x_veloC_fit_MC}, \ref{fig:y_veloC_fit_MC}, \ref{fig:z_veloC_fit_MC}. These figures are scatter plots showing the estimators $\hat{x}_A$, $\hat{y}_A$, $\hat{z}_A$, $\hat{x}_C$, $\hat{y}_C$$, \hat{z}_C$,  as a function of the true position of the MC.
 
 For both halves there still is a linear relation between the scores and the VELO positions in the $x$ and $y$ component, while the relation remains cubic for the $z$ scores.  Furthermore, the standard deviation estimated from the Gaussian fitted in the residuals histogram of Figures \ref{fig:x_veloA_res_MC}, \ref{fig:y_veloA_res_MC}, \ref{fig:z_veloA_res_MC}, \ref{fig:x_veloC_res_MC}, \ref{fig:y_veloC_res_MC}, \ref{fig:z_veloC_res_MC} yields a resolution between \SI{25}{\micro\meter} and \SI{81}{\micro\meter} for the transverse components $x$ and $y$, while for the $z$ component the value is around \SI{7}{\milli\meter}. As in the previous chapter, we expect the resolution for the $z$ component to be worse than the ones of the variables in the transverse plane to the beamline. Furthermore, these resolutions quoted here were obtained integrating 20000 events, i.e. computing an estimate every \SI{870}{\micro\second} at $\mu=5.5$.
 
@@ -142,6 +144,8 @@ d &        &        &  $42358$ &        &       & $24954$
 \end{table}
 
 \section{Calibration on real data}
+
+
 We can perform another calibration for the $x$ and $y$ estimators of both VELO halves by directly relying on real collision data, using the same LSC performed on April 6th, 2024. 
 Once again, we perform the exercise of considering the luminous region as fixed in space and the VELO moving with respect to this reference. By doing so, we can use the same LSC scans that were used to calibrate the luminous region estimators in the previous chapter. For the comparison, we rely on the reconstructed position of the VELO halves provided by the monitoring tasks of the VELO system, that reads a subset of minimum bias events at \SI{30}{\kilo\hertz}. 
 
@@ -210,7 +214,7 @@ We can see a preliminary result of this calibration in Figure \ref{fig:traceplot
 \begin{sidewaysfigure}
     \centering
     \includegraphics[width=\textwidth]{figures/traceplot_xy.png}
-    \caption{Trace-plot of the VELO position estimators across the two VdM scans. In the upper panel, the $x$ position is displayed. The red and orange lines correspond to the monitored position of the two VELO halves, while the blue and the green ones to the estimated position presented in this chapter. An analogous situation is displayed in the second panel, for the $y$ position.}
+    \caption{Trace-plot of the VELO position estimators across the two vdM scans. In the upper panel, the $x$ position is displayed. The red and orange lines correspond to the monitored position of the two VELO halves, while the blue and the green ones to the estimated position presented in this chapter. An analogous situation is displayed in the second panel, for the $y$ position.}
     \label{fig:traceplot_xy}
 \end{sidewaysfigure}
 
@@ -328,7 +332,7 @@ c }
   { $0.123\pm0.002 $} &
   $139$%{ $226\% $}
 \end{tabular}
-\caption{Summary and comparison of coefficients estimated from MC and estimated from data. }\label{tab:comparison_coeff}
+\caption{Summary and comparison of coefficients estimated from MC and estimated from data. Deltas refer to the difference between MC and data.}\label{tab:comparison_coeff}
 \end{table}
 This comparison is of great use, as we can see that the calibration for the $x_A$ estimators are similar to one another, with the difference of the order of  $1\sigma$. As for the other estimators, there is strong disagreement with differences reaching $139\sigma$. An explanation for this disagreements could be given by the fact that the MC refers to 2022 conditions and the VELO was fully re-installed after 2023 YETS, thus introducing possible sizeable shifts and changes in detector efficiencies. 
 
@@ -337,7 +341,6 @@ This comparison is of great use, as we can see that the calibration for the $x_A
 %\textit{Se ce la faccio, riporto il grafico del drift del VELO sovraimposto ai miei stimatori}
 
 \section{Integration in the LHCb monitoring system}\label{sec:integration_detector}
-As described in Section \ref{sec:beamline_integration}, the first step needed for the integration into the LHCb online system is the creation and deployment of the datapoints of the quantity estimated. This case is fully analogous to the one already described in Section~\ref{sec:beamline_integration}, therefore we just modified the WinCC script already written for the luminous region position estimators. The web page displaying the luminous region position is therefore updated adding the VELO halves position estimators in the same canvas of the luminous region estimators. As an example, we report in Figure \ref{fig:VELO_closing_xy} a screenshot of the $x$ and $y$ position canvases during the start of the Fill 9602 of May, 5th 2024. During the period displayed the closing procedure of the VELO was performed, and this is clearly visible in the upper panel where the two halves are shown to become closer as the time passes. Around 1:31 a second closing procedure is performed, therefore we see the VELO opening and closing once again along the $x$ component, as expected Adjustments in the $y$ component are also appreciable.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/VELO_closing_xy.png}
@@ -345,28 +348,33 @@ As described in Section \ref{sec:beamline_integration}, the first step needed fo
     \label{fig:VELO_closing_xy}
 \end{figure}
 
-A zoom on the $x$ component estimators is reported in Figure \ref{zoom_velo}. In particular, in Figure \ref{fig:velo_closing_zoom} we see a zoom on the first closing procedure displayed in the upper panel of Figure \ref{fig:VELO_closing_xy}, while in Figure \ref{fig:velo_opens_zoom} we can clearly see the opening movements of the VELO at the end of Fill 9602.
+As described in Section \ref{sec:beamline_integration}, the first step needed for the integration into the LHCb online system is the creation and deployment of the datapoints of the quantity estimated. This case is fully analogous to the one already described in Section~\ref{sec:beamline_integration}, therefore we just modified the WinCC script already written for the luminous region position estimators. The web page displaying the luminous region position is therefore updated adding the VELO halves position estimators in the same canvas of the luminous region estimators. As an example, we report in Figure \ref{fig:VELO_closing_xy} a screenshot of the $x$ and $y$ position canvases during the start of the Fill 9602 of May, 5th 2024. During the period displayed the closing procedure of the VELO was performed, and this is clearly visible in the upper panel where the two halves are shown to become closer as the time passes. Around 1:31 a second closing procedure is performed, therefore we see the VELO opening and closing once again along the $x$ component, as expected Adjustments in the $y$ component are also appreciable.
 
 \begin{figure}
     \centering
-    \begin{subfigure}{0.8\textwidth}
+    \begin{subfigure}{\textwidth}
     \includegraphics[width=\linewidth]{figures/Velo_closing_zoom.png}
     \caption{Zoom on the first VELO closing procedure of Fill 9602}
     \label{fig:velo_closing_zoom}
     \end{subfigure}\hfill
-    \begin{subfigure}{0.8\textwidth}
+    \begin{subfigure}{\textwidth}
     \includegraphics[width=\linewidth]{figures/VELO_opens_zoom.png}
     \caption{Zoom on the opening of the VELO at the end of Fill 9602}
     \label{fig:velo_opens_zoom}
     \end{subfigure}
     \caption{Zoom on two regions of the $x$ component estimators during the start and end of Fill 9602. The closing procedure is appreciated with greater detail in Figure \ref{fig:velo_closing_zoom}, respect to Figure \ref{fig:VELO_closing_xy}.}\label{zoom_velo}
 \end{figure}
-In Figure \ref{fig:fill9602} we report the behaviour of the estimators during the whole Fill 9602. As one can clearly see, both VELO halves in the $x$ component seem to be stable throughout the Run, except for a small drift of VELO A around 6:30. Regarding the $y$ component, the estimators sense shifts in both the luminous region position as well as the VELO C. In particular, at 4:00 a significant shift of $\sim\SI{30}{\micro\meter}$ in the position of the C side of the VELO is captured. Since the VELO A position in the $y$ component stays more or less constant in time (from 2:00 to 6:30), we can infer that the movement at 4:00 is in fact due to a shift of the C side of the VELO and not an artefact due to luminous region movements. The $y$ component of the luminous region (blue line) is shifted at 4:00 because its position is measured with respect to both VELO halves. Since one of them moved, its measured position changes. In the second panel of Figure \ref{fig:fill9602} we notice another movement around 6:30, due to a shift of the A side of the VELO.
+
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/Fill9602.png}
-    \caption{Screenshot of the Monet web page comprehending the whole 9602 Fill}
+    \includegraphics[width=0.9\textwidth]{figures/Fill9602.png}
+    \caption{Screenshot of the Monet web page comprehending the whole 9602 Fill. In the first panel, the VELO halves in the $x$ component seem to be stable throughout the Run, except for a small drift of VELO A around 6:30. In the second panel, the estimators sense shifts in both the luminous region position as well as the VELO C for the $y$ component. In particular, at 4:00 a significant shift of $\sim\SI{30}{\micro\meter}$ in the position of the C side of the VELO is captured.}
     \label{fig:fill9602}
 \end{figure}
 
-These movements need to be confirmed by another monitoring task, but from these plots we can already appreciate how these estimators are of utter importance, sensing movements in real time. Furthermore, the shifts of $\sim\SI{30}{\micro\meter}$ are significant on the resolution scale of a single VELO measurement. 
+A zoom on the $x$ component estimators is reported in Figure \ref{zoom_velo}. In particular, in Figure \ref{fig:velo_closing_zoom} we see a zoom on the first closing procedure displayed in the upper panel of Figure \ref{fig:VELO_closing_xy}, while in Figure \ref{fig:velo_opens_zoom} we can clearly see the opening movements of the VELO at the end of Fill 9602.
+
+In Figure \ref{fig:fill9602} we report the behaviour of the estimators during the whole Fill 9602. As one can clearly see, both VELO halves in the $x$ component seem to be stable throughout the Run, except for a small drift of VELO A around 6:30. Regarding the $y$ component, the estimators sense shifts in both the luminous region position as well as the VELO C. In particular, at 4:00 a significant shift of $\sim\SI{30}{\micro\meter}$ in the position of the C side of the VELO is captured. Since the VELO A position in the $y$ component stays more or less constant in time (from 2:00 to 6:30), we can infer that the movement at 4:00 is in fact due to a shift of the C side of the VELO and not an artefact due to luminous region movements. The $y$ component of the luminous region (blue line) is shifted at 4:00 because its position is measured with respect to both VELO halves. Since one of them moved, its measured position changes. In the second panel of Figure \ref{fig:fill9602} we notice another movement around 6:30, due to a shift of the A side of the VELO.
+
+These movements need to be confirmed by another monitoring task, but from these plots we can already appreciate how these estimators are of utter importance, sensing movements in real time. 
+Furthermore, the shifts of $\sim\SI{30}{\micro\meter}$ are significant on the resolution scale of a single VELO measurement. 
